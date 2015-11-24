@@ -1,0 +1,136 @@
+<div class="pheader clearfix">用户列表</div>
+<div class="pbody clearfix">
+    <form class="form-inline search-form" role="form" method="post" id="myform" action="/admin/user/list.html">
+        <div class="row sousuo_now">
+            <div class="form-group">
+                <label>城市：</label>
+    		    <select name="iCityID" class="form-control">
+    		        <option value="0">选择城市</option>
+    		    <?php foreach ($aCity as $k => $v) {?>
+    		        <option value="<?php echo $k?>" <?php echo isset($aParam['iCityID'])&&$aParam['iCityID']==$k?'selected':''?>><?php echo $v?></option>
+    		    <?php }?>
+    		    </select>
+        	</div>
+            <div class="form-group">
+                <label>角色：</label>
+    		    <select name="iRoleID" class="form-control">
+    		        <option value="0">选择角色</option>
+    		    <?php foreach ($aRole as $k => $v) {?>
+    		        <option value="<?php echo $k?>" <?php echo isset($aParam['iRoleID'])&&$aParam['iRoleID']==$k?'selected':''?>><?php echo $v?></option>
+    		    <?php }?>
+    		    </select>
+        	</div>
+            <div class="form-group">
+                <label>帐号：</label>
+                <input type="text"
+                       value="<?php echo isset($aParam['sAdminName']) ? $aParam['sAdminName'] : '' ?>"
+                       class="form-control" name="sAdminName" style="width: 100px">
+            </div>
+            <div class="form-group">
+                <label>姓名：</label>
+                <input type="text" value="<?php echo isset($aParam['sRealName']) ? $aParam['sRealName'] : '' ?>"
+                       class="form-control" name="sRealName" style="width: 100px">
+            </div>
+            <div class="form-group">
+                <input type="hidden" id="fOrder" name="sOrder"
+                       value="<?php echo isset($aParam['sOrder']) ? $aParam['sOrder'] : '' ?>">
+                <input type="submit" id="formbtn" class="btn btn-default btn-sm" value="搜索">
+            </div>
+        </div>
+    </form>
+    <hr>
+    <div class="btn-toolbar list-toolbar">
+    	<button class="btn btn-primary" id="user_add">
+    		<i class="icon-plus"></i> 增加用户
+    	</button>
+    	<div style="float:right">
+            <label> 排序方式：</label>
+            <select class="input-sm" id="sOrder">
+                <option value="iCityID ASC">按城市排序</option>
+                <option value="sAdminName DESC" <?php echo isset($aParam['sOrder'])&&'sAdminName DESC'==$aParam['sOrder']?'selected':''?>>按帐号排序</option>
+                <option value="sRealName ASC" <?php echo isset($aParam['sOrder'])&&'sRealName ASC'==$aParam['sOrder']?'selected':''?>>按员工姓名排序</option>
+                <option value="iCreateTime DESC" <?php echo isset($aParam['sOrder'])&&'iCreateTime DESC'==$aParam['sOrder']?'selected':''?>>按创建时间排序</option>
+            </select>
+        </div>
+    </div>
+    <table class="table table-bordered table-hover">
+    	<thead>
+    		<tr>
+    			<th class="col-sm-1 text-center">#</th>
+    			<th class="text-center">帐号</th>
+    			<th class="text-center">姓名</th>
+    			<th class="text-center">角色</th>
+    			<th class="text-center">手机号</th>
+    			<th class="text-center">邮箱</th>
+    			<th class="text-center">城市</th>
+    			<th class="text-center">操作</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+        <?php foreach ($aList['aList'] as $aUser) {?>
+            <tr>
+    			<td class="col-sm-1 text-center"><?php echo $aUser['iAdminID']?></td>
+    			<td><?php echo $aUser['sAdminName']?></td>
+    			<td class="text-center"><?php echo $aUser['sRealName']?></td>
+    			<th class="text-center"><?php echo $aUser['sRoleName']?></th>
+    			<td class="text-center"><?php echo $aUser['sMobile']?></td>
+    			<td><?php echo $aUser['sEmail']?></td>
+    			<td class="text-center"><?php echo $aCity[$aUser['iCityID']]?></td>
+    			<td class="text-center">
+    			    <a href="/admin/user/edit?id=<?php echo $aUser['iAdminID']?>" title="编辑"><i class="icon-pencil icon-large"></i></a>
+    			    <a class="user_delete" href="/admin/user/del?id=<?php echo $aUser['iAdminID']?>" title="删除"><i class="icon-trash icon-large"></i></a>
+    			</td>
+    		</tr>
+        <?php }?>
+    	</tbody>
+    </table>
+    <?php echo $aList['aPager']?>
+</div>
+
+<script type="text/javascript" src="<?php echo $sStaticRoot ?>/js/xcConfirm.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo $sStaticRoot ?>/js/xcConfirm.css"/>
+<style type="text/css">
+.sgBtn{width: 135px; height: 35px; line-height: 35px; margin-left: 10px; margin-top: 10px; text-align: center; background-color: #0095D9; color: #FFFFFF; float: left; border-radius: 5px;}
+</style>
+<script>
+$('.user_delete').click(function() {
+	var url = this.href;
+	if (confirm("您确认要删除该用户吗？")) {
+		var txt=  "请输入密码：";
+		window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.input,{
+			onOk:function(v){
+				if (v.trim() != '') {
+					$.post('/admin/user/seditpwd', {'pwd':v.trim()}, function(ret){
+						if (ret.status) {
+							$.get(url, function(ret){
+								alert(ret.data);
+								if (ret.status) {
+									location.reload();
+								}
+							}, 'json');
+						}
+						else {
+							alert(ret.data);
+						}
+					}, 'json');
+				}
+				else {
+					alert('修改密码不可以为空');
+					//return false;
+				}
+			}
+		});
+	}
+	return false;
+});
+$('#formbtn').click(function(){
+    $('#fOrder').val($('#sOrder').val());
+});
+$('#sOrder').change(function(){
+    $('#fOrder').val($('#sOrder').val());
+    $('#myform').submit();
+});
+$('#user_add').click(function(){
+	location.href = '/admin/user/add';
+});
+</script>

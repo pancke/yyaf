@@ -1,0 +1,120 @@
+<div class="cf2 step_o">
+	<div class="cf2 step_o_w">
+		<ul class="step_o cf2 step_3">
+			<li>
+				<span class="eng"></span>
+				<p>添加推广</p>
+			</li>
+			<li>
+				<span class="eng"></span>
+				<p>选择媒介</p>
+			</li>
+			<li class="light">
+				<span class="eng"></span>
+				<p>设置广告</p>
+			</li>
+			<li>
+				<span class="eng">4</span>
+				<p>支付款项</p>
+			</li>
+		</ul>
+	</div>
+	<!--end宽度-->
+</div>
+<!--end步骤-->
+
+
+<div class="cf2 gray_border box_w">
+	<dl class="gray_th">
+		<dd>添加设置</dd>
+	</dl>
+
+	<form autocomplete="off">
+	<input type="hidden" name="iAdID" value="<?php echo $aAd['iAdID']?>">
+	<table class="fill_table">
+		<tr>
+			<th width="120px">
+				<span class="red_arrow">*</span><?php echo $aAd['iMediaType']==Model_Media::TYPE_WEIXIN?'广告位置':'投放形式'?>：
+			</th>
+			<td>
+				<ul class="input_list">
+				    <?php foreach ($aTitle as $k => $v) {?>
+					<li>
+						<label> 
+							<div class="sel_box sel_box_r mediatype">
+								<input type="radio" id="mpos-<?php echo $k?>" value="<?php echo $k?>" name="iAdPos" <?php echo !empty($aSetting)&&$aSetting['iAdPos']==$k||$k==1&&empty($aSetting)?'checked':''?> />
+								<label for="mpos-<?php echo $k?>"></label>
+							</div>
+							<?php echo $v?>
+						</label>
+					</li>
+					<?php }?>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<th>
+				<span class="red_arrow">*</span>投放时间：
+			</th>
+			<td>
+				<input type="text" placeholder="选择日期和时间" name="iPlanTime" class="fill_text date_text hover_input datetimepicker" value="<?php echo empty($aSetting)?'':date('Y-m-d H:i',$aSetting['iPlanTime'])?>" />
+        		<label class="error iPlanTime" style="display: none;"></label>
+			</td>
+		</tr>
+        <?php include 'add3_' . $aAd['iMediaType'] . '.phtml';?>
+		<tfoot>
+			<tr>
+				<td colspan="2">
+					<input type="button" class="red_btn_t step_btn" value="下一步">
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+	</form>
+</div>
+
+<script type="text/javascript">
+global.sUploadUrl = '<?php echo Util_Common::getConf('upload', 'url')?>';
+global.sDfsViewUrl = '<?php echo Util_Common::getConf('dfsview', 'url')?>';
+</script>
+
+<link href="<?php echo $sStaticRoot ?>/webuploader/webuploader.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" charset="utf-8" src="<?php echo $sStaticRoot ?>/webuploader/webuploader.js"></script>
+<script type="text/javascript" charset="utf-8" src="<?php echo $sStaticRoot ?>/js/webuploader.js"></script>
+<script type="text/javascript" src="<?php echo $sStaticRoot ?>/front/js/jquery.datetimepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo $sStaticRoot ?>/front/css/jquery.datetimepicker.css"/ >
+<script>
+;$(function(){
+    // 日期时间选择器
+    $(".datetimepicker").datetimepicker({
+        lang:"ch",
+        i18n:{
+        // 以中文显示月份
+        de:{
+            months:["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月",],
+        // 以中文显示每周（必须按此顺序，否则日期出错）
+            dayOfWeek:["日","一","二","三","四","五","六",]
+            }
+        },
+        // 显示成年月日，时间--
+        format:"Y-m-d H:i",
+        // 限制不能选取今天之前
+        // minDate:0,
+        //取消时间选择
+        timepicker:true,
+        minDate: '<?php echo date('Y-m-d H:i:s', time()+1800)?>'
+    });
+
+    $(".red_btn_t").click(function(){
+		var form = $(this).parents('form').get(0);
+	    $.post(form.action?form.action:location.href, $(form).serialize(), function(ret){
+	        if (ret.status) {
+	            location.href = '/ad/add4/id/'+ret.data+'.html';
+	        } else {
+		        showErrorInfo(form, ret.data); 
+	        }
+	    }, 'json');
+		return false;
+	});
+});
+</script>

@@ -1,0 +1,78 @@
+<div class="pheader clearfix">搜索条件列表</div>
+<div class="pbody clearfix">
+    <div class="btn-toolbar list-toolbar">
+    	<button class="btn btn-primary" id="follower_add">
+    		<i class="icon-plus"></i> 增加搜索条件
+    	</button>
+    </div>
+    <table class="table table-bordered table-hover">
+    	<thead>
+    		<tr>
+    			<th class="col-sm-1 text-center">#</th>
+    			<th class="text-center">搜索条件标题</th>
+    			<th class="text-center">最小粉丝数</th>
+    			<th class="text-center">最大粉丝数</th>
+    			<th class="text-center">更新时间</th>
+    			<th class="text-center">创建时间</th>
+    			<th class="text-center">操作</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+        <?php foreach ($aList['aList'] as $v) {?>
+            <tr>
+    			<td class="col-sm-1 text-center"><?php echo $v['iAutoID']?></td>
+    			<td class="text-center"><?php echo $v['sTitle']?></td>
+    			<td class="text-center"><?php echo $v['iMinPrice']?></td>
+    			<td class="text-center"><?php echo $v['iMaxPrice']?></td>
+    			<td class="text-center"><?php echo ((isset($v['iUpdateTime']) && $v['iUpdateTime'] > 0) ? (date('Y-m-d H:i:s' , $v['iUpdateTime'])) : '');?></td>
+    			<td class="text-center"><?php echo ((isset($v['iCreateTime']) && $v['iCreateTime'] > 0) ? (date('Y-m-d H:i:s' , $v['iCreateTime'])) : '');?></td>
+    			<td class="text-center">
+    			    <a href="/admin/follower/edit?id=<?php echo $v['iAutoID']?>" title="编辑"><i class="icon-pencil icon-large"></i></a>
+    			    <a class="follower_delete" href="/admin/follower/del?id=<?php echo $v['iAutoID']?>" role="button" data-toggle="modal" title="删除"><i class="icon-trash icon-large"></i></a>
+    			</td>
+    		</tr>
+        <?php }?>
+    	</tbody>
+    </table>
+    <?php echo $aList['aPager']?>
+</div>
+<script type="text/javascript" src="<?php echo $sStaticRoot ?>/js/xcConfirm.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo $sStaticRoot ?>/js/xcConfirm.css"/>
+<style type="text/css">
+.sgBtn{width: 135px; height: 35px; line-height: 35px; margin-left: 10px; margin-top: 10px; text-align: center; background-color: #0095D9; color: #FFFFFF; float: left; border-radius: 5px;}
+</style>
+<script>
+$('.follower_delete').click(function() {
+	var url = this.href;
+	if (confirm("您确认要删除该搜索条件吗？")) {
+		var txt=  "请输入密码：";
+		window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.input,{
+			onOk:function(v){
+				if (v.trim() != '') {
+					$.post('/admin/user/seditpwd', {'pwd':v.trim()}, function(ret){
+						if (ret.status) {
+							$.get(url, function(ret){
+								alert(ret.data);
+								if (ret.status) {
+									location.reload();
+								}
+							}, 'json');
+						}
+						else {
+							alert(ret.data);
+						}
+					}, 'json');
+				}
+				else {
+					alert('修改密码不可以为空');
+					//return false;
+				}
+			}
+		});
+	}
+	return false;
+});
+$('#follower_add').click(function(){
+	location.href = '/admin/follower/add';
+});
+</script>

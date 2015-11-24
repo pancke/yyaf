@@ -1,0 +1,115 @@
+	<div class="pheader clearfix"><?php echo isset($aWorkMedia['iAutoID'])?'编辑':'增加'?>资源圈子</div>
+<div class="pbody clearfix">
+    <form id="myform" class="form-horizontal" role="form" method="post" action="">
+        <input name="iAutoID" type="hidden" value="<?php echo isset($aWorkMedia['iAutoID'])?$aWorkMedia['iAutoID']:''?>">
+		<div class="form-group">
+			<label for="iPersonCharge" class="col-sm-2 control-label"> 圈子分类：</label>
+			<div class="col-sm-10">
+				<select name="wtype" class="form-control" style="width:250px;">
+					<option value="0" <?php echo !isset($aWorkMedia['wtype'])||$aWorkMedia['wtype']==0?'selected':''?>>请选择</option>
+    		    <?php foreach ($wtype as $k => $v) {?>
+    		        <option value="<?php echo $k?>" <?php echo isset($aWorkMedia['wtype'])&&$aWorkMedia['wtype']==$k?'selected':''?>><?php echo $v?></option>
+    		    <?php }?>
+    		    </select>
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 标题：</label>
+			<div class="col-sm-10">
+				<input name="title" type="text" validate="!length:1-50" value="<?php echo isset($aWorkMedia['title'])?$aWorkMedia['title']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> ID：</label>
+			<div class="col-sm-10">
+				<input name="iID" type="text" validate="!length:1-50" value="<?php echo isset($aWorkMedia['iID'])?$aWorkMedia['iID']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 链接：</label>
+			<div class="col-sm-10">
+				<input name="link" type="text" validate="!length:1-250" value="<?php echo isset($aWorkMedia['link'])?$aWorkMedia['link']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 顺序：</label>
+			<div class="col-sm-10">
+				<input name="rank" type="text" validate="!length:1-50" value="<?php echo isset($aWorkMedia['rank'])?$aWorkMedia['rank']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sQRCode" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 图片：</label>
+			<div class="col-sm-10">
+				<input type="hidden" id="imgurlImg" name="imgurl" value="<?php echo isset($aWorkMedia['imgurl'])?$aWorkMedia['imgurl']:''?>">
+				<img id="imgurlShow" style="width:120px;height:90px;" src="<?php echo isset($aWorkMedia['imgurl'])?Util_Uri::getDFSViewURL($aWorkMedia['imgurl'], 130, 130):''?>">
+				<input type="button" value="选择" class="plupload" data-target="#imgurlImg" data-img="#imgurlShow">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 订阅：</label>
+			<div class="col-sm-10">
+				<input name="subscribe" type="text" validate="!length:1-50" value="<?php echo isset($aWorkMedia['subscribe'])?$aWorkMedia['subscribe']:''?>" class="form-control input-validate">万
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 阅读数：</label>
+			<div class="col-sm-10">
+				<input name="readnum" type="text" validate="!length:1-50" value="<?php echo isset($aWorkMedia['readnum'])?$aWorkMedia['readnum']:''?>" class="form-control input-validate">万
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 介绍：</label>
+			<div class="col-sm-10">
+				<input name="introduce" type="text" validate="!length:1-50" value="<?php echo isset($aWorkMedia['introduce'])?$aWorkMedia['introduce']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<?php if(isset($aWorkMedia['iAutoID'])){ ?>
+    	<?php if(isset($aWorkMedia['iUpdateTime']) && $aWorkMedia['iUpdateTime'] > 0){ ?>
+    	<div class="form-group">
+    		<label for="iMoney" class="col-sm-2 control-label"> 更新时间：</label>
+    		<div class="col-sm-10">
+    			<?php echo date('Y-m-d H:i:s' , $aWorkMedia['iUpdateTime']); ?>
+    		</div>
+    	</div>
+    	<?php } ?>
+    	<div class="form-group">
+    		<label for="iMoney" class="col-sm-2 control-label"> 创建时间：</label>
+    		<div class="col-sm-10">
+    			<?php echo date('Y-m-d H:i:s' , $aWorkMedia['iCreateTime']); ?>
+    		</div>
+    	</div>
+    	<?php } ?>
+    	<div class="btn-toolbar text-center">
+        	<button id="save" class="btn btn-primary">保存</button>
+        	<button id="cancel"class="btn" onclick="location.href='/admin/workmedia/list/';return false;">取消</button>
+        </div>
+	</form>
+</div>
+<script type="text/javascript">
+$(function() {
+	$("#myform").validate({submitHandler: function(form) {
+	    $.post(form.action, $(form).serialize(), function(ret){
+	        alert(ret.data);
+	        if (ret.status) {
+	            location.href = '/admin/workmedia/list/';
+	        }
+	    }, 'json');
+		return false;
+	}});
+});
+</script>
+<script type="text/javascript">
+	global.sUploadUrl = '<?php echo Util_Common::getConf('upload', 'url')?>';
+	global.sDfsViewUrl = '<?php echo Util_Common::getConf('dfsview', 'url')?>';
+</script>
+<script type="text/javascript" charset="utf-8" src="<?php echo $sStaticRoot ?>/plupload/plupload.full.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="<?php echo $sStaticRoot ?>/js/upload.js"></script>
+<script type="text/javascript" charset="utf-8" src="<?php echo $sStaticRoot ?>/plupload/zh_CN.js"></script>

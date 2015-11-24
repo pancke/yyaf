@@ -1,0 +1,408 @@
+<div class="pheader clearfix"><?php echo isset($aMedia['iMediaID'])?'审核':'增加'?>自媒体</div>
+<div class="pbody clearfix">
+    <form id="myform" class="form-horizontal" role="form" method="post" action="">
+        <input name="iMediaID" type="hidden" value="<?php echo isset($aMedia['iMediaID'])?$aMedia['iMediaID']:''?>">
+        <?php if(isset($aMedia['iMediaID'])){ ?>
+
+		<div class="col-sm-10" style="width: 14em;height: 2em;line-height: 2em;vertical-align: middle;padding: 0;margin: 0;" >
+				用户：<input type="text" disabled value="<?php echo $aUser['sEmail']; ?>" style="width: 10em;height: 2em">
+		</div>
+		<?php } ?>
+		<?php if(isset($aMedia['iMediaID'])){ ?>
+
+		<div class="col-sm-10" style="width: 12em;height: 2em;line-height: 2em;vertical-align: middle; padding: 0;margin: 0;" >
+				账号类型：<input type="text" disabled value="<?php echo $MediaType[$aMedia['iMediaType']]; ?>" style="width: 6em;height: 2em">
+		</div>
+		<?php }else{ ?>
+		<input name="iMediaID" type="hidden" value="<?php echo $iMediaType; ?>">
+		<?php } ?>
+
+		<div class="col-sm-10" style="width: 14em;height: 2em;line-height: 2em;vertical-align: middle; padding: 0;margin: 0;" >
+			<strong style="color:red;">*</strong>账号名称：<input name="sMediaName" validate="!length:2-20" disabled type="text" value="<?php echo isset($aMedia['sMediaName'])?$aMedia['sMediaName']:''?>" style="width: 6em;height: 2em">
+				<span class="validate_checktip"></span>
+			</div>
+
+		<div class="col-sm-10" style="width: 14em;height: 2em;line-height: 2em;vertical-align: middle;padding: 0;margin: 0;" >
+				<strong style="color:red;">*</strong>
+			<?php if($MediaType[$aMedia['iMediaType']]=='微信公众号')
+				{
+					echo '公众号名：'  ;
+				}
+				else
+				{
+					echo '微博链接：'  ;
+				}  ?>
+			<input name="sOpenName" validate="!length:2-50" disabled type="text" value="<?php if(isset($aMedia['sOpenName'])&&$MediaType[$aMedia['iMediaType']]=='微信公众号'){
+					echo    $aMedia['sOpenName'];
+				}
+				else if(isset($aMedia['sOpenName'])&&$MediaType[$aMedia['iMediaType']]=='新浪微博'){
+					echo  $aMedia['sUrl'] ;
+				}?>"style="width: 6em;height: 2em">
+			</div>
+		<div class="form-group">
+			<div class="col-sm-10" style="width: 14em;height: 2em;line-height: 2em;vertical-align: middle;padding: 0;margin: 0;" >
+				<strong style="color:red;">*</strong> 粉丝数量：<input name="iFollowerNum" validate="!digit:true" disabled type="text" value="<?php echo isset($aMedia['iFollowerNum'])?$aMedia['iFollowerNum']:''?>"  style="width: 6em;height: 2em">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="col-sm-10" style="width: 14em;height: 2em;line-height: 2em;vertical-align: middle;padding: 0;margin: 0;" >
+			<strong style="color:red;">*</strong> 阅读量：	    <input name="iReadNum" validate="!digit:true" disabled type="text" value="<?php echo isset($aMedia['iReadNum'])?$aMedia['iReadNum']:''?>"style="width: 6em;height: 2em" >
+
+		</div>
+
+
+		<div class="col-sm-10" style="width: 12em;height: 2em;line-height: 2em;vertical-align: middle;padding: 0;margin: 0;" >
+			推荐级别：	<input name="iRecommendLevel" validate="!digit:true" disabled type="text" value="<?php echo isset($aMedia['iRecommendLevel'])?$aMedia['iRecommendLevel']:''?>"style="width: 5em;height: 2em">
+			<span class="validate_checktip"></span>
+		</div>
+
+		<div class="col-sm-10" style="width: 15em;height: 2em;line-height: 2em;vertical-align: middle;padding: 0;margin: 0;" >
+			负责人：<select name="iPersonCharge" class="form-control" disabled style="width: 7em;height: 2em;position: relative;left: 4em;top: -2em;">
+				<option value="0" <?php echo !isset($aMedia['iPersonCharge'])||$aMedia['iPersonCharge']==0?'selected':''?>>请选择</option>
+				<?php foreach ($adminData as $k => $v) {?>
+					<option value="<?php echo $v['iAdminID']?>" <?php echo isset($aMedia['iPersonCharge'])&&$aMedia['iPersonCharge']==$v['iAdminID']?'selected':''?>><?php echo $v['sAdminName']?></option>
+				<?php }?>
+			</select>
+			<span class="validate_checktip"></span>
+		</div>
+
+
+		<div class="col-sm-10" style="width: 15em;height: 2em;line-height: 2em;vertical-align: middle;padding: 0;margin: 0;" >
+			审核人：	<select name="iAuditperson" class="form-control" disabled style="width: 7em;height: 2em;position: relative;left: 4em;top: -2em;">
+				<option value="0" <?php echo !isset($aMedia['iAuditperson'])||$aMedia['iAuditperson']==0?'selected':''?>>请选择</option>
+				<?php foreach ($adminData as $k => $v) {?>
+					<option value="<?php echo $v['iAdminID']?>" <?php echo isset($aMedia['iAuditperson'])&&$aMedia['iAuditperson']==$v['iAdminID']?'selected':''?>><?php echo $v['sAdminName']?></option>
+				<?php }?>
+			</select>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-10" style="width: 15em;height: 2em;line-height: 2em;vertical-align: middle;padding: 0;margin: 0;position: relative;left: -2em;" >
+				<strong style="color:red;">*</strong> 属性：<select name="iAttribute" class="form-control" disabled style="width: 8em;height: 2em;position: relative;left: 4em;top: -2em;">
+					<?php foreach ($aAttribute as $k => $v) {?>
+						<option value="<?php echo $k?>" <?php echo isset($aMedia['iAttribute'])&&$aMedia['iAttribute']==$k?'selected':''?>><?php echo $v?></option>
+					<?php }?>
+				</select>
+			</div>
+		</div>
+
+
+		<div class="col-sm-10" style="width: 16em;height: 2em;line-height: 2em;vertical-align: middle;padding: 0;margin: 0;">
+				<strong style="color:red;">*</strong> 点击量：	<input name="iClickNumber" validate="!digit:true" disabled type="text" value="<?php echo isset($aMedia['iClickNumber'])?$aMedia['iClickNumber']:''?>"  style="width: 6em;height: 2em">
+
+			</div>
+
+		<div class="col-sm-10" style="width: 17em;height: 2em;line-height: 2em;vertical-align: middle;padding: 0;margin: 0;">
+				<strong style="color:red;">*</strong> 选择执行量：	<input name="iChoiceNumber" validate="!digit:true" disabled type="text" value="<?php echo isset($aMedia['iChoiceNumber'])?$aMedia['iChoiceNumber']:''?>" style="width: 6em;height: 2em">
+
+			</div>
+
+
+			<div class="col-sm-10" style="width: 17em;height: 2em;line-height: 2em;vertical-align: middle;padding: 0;margin: 0;">
+				<strong style="color:red;">*</strong> 文章发布量：		<input name="iArticleNumber" validate="!digit:true" disabled type="text" value="<?php echo isset($aMedia['iArticleNumber'])?$aMedia['iArticleNumber']:''?>"style="width: 6em;height: 2em" >
+		</div>
+		<div class="form-group">
+			<div class="col-sm-10" style="width: 18em;height: 2em;line-height: 2em;vertical-align: middle;padding: 0;margin: 0;">
+				<strong style="color:red;">*</strong> 文章点赞量：		<input name="iZambiaNumber" validate="!digit:true" disabled type="text" value="<?php echo isset($aMedia['iZambiaNumber'])?$aMedia['iZambiaNumber']:''?>" style="width: 6em;height: 2em" >
+			</div>
+		</div>
+
+		<div class="col-sm-10" style="width: 14em;height: 2em;line-height: 2em;vertical-align: middle;padding: 0;margin: 0;" >
+				<strong style="color:red;">*</strong> 单图文报价：<input name="iPrice1" validate="!float:true" disabled type="text" value="<?php echo isset($aMedia['iPrice1'])?$aMedia['iPrice1']:''?>"  style="width: 6em;height: 2em">
+			</div>
+
+
+
+		<div class="col-sm-10" style="width: 17em;height: 2em;line-height: 2em;vertical-align: middle;padding: 0;margin: 0;" >
+				<strong style="color:red;">*</strong>  多图文第1条报价： <input name="iPrice2" validate="!float:true" disabled type="text" value="<?php echo isset($aMedia['iPrice2'])?$aMedia['iPrice2']:''?>" style="width: 6em;height: 2em">
+				<span class="validate_checktip"></span>
+			</div>
+
+
+
+			<div class="col-sm-10" style="width: 18em;height: 2em;line-height: 2em;vertical-align: middle;padding: 0;margin: 0;" >
+				<strong style="color:red;">*</strong>  多图文第2条报价：  <input name="iPrice3" validate="!float:true" disabled type="text" value="<?php echo isset($aMedia['iPrice3'])?$aMedia['iPrice3']:''?>" style="width: 6em;height: 2em">
+
+			</div>
+
+
+			<div class="form-group">
+				<div class="col-sm-10" style="width: 19em;height: 2em;line-height: 2em;vertical-align: middle;padding: 0;margin: 0;" >
+				<strong style="color:red;">*</strong>  多图文第3~N条报价：   <input name="iPrice4" validate="!float:true" disabled type="text" value="<?php echo isset($aMedia['iPrice4'])?$aMedia['iPrice4']:''?>" style="width: 6em;height: 2em">
+
+			</div>
+			</div>
+		<div class="col-sm-10" style="width: 14em;height: 2em;line-height: 2em;vertical-align: middle;padding: 0;margin: 0;" >
+			<strong style="color:red;">*</strong> 单图文折扣价：<input name="iPrice11" validate="!float:true"  type="text" value="<?php echo isset($aMedia['iPrice11'])?$aMedia['iPrice11']:''?>"  style="width: 6em;height: 2em">
+		</div>
+
+
+
+		<div class="col-sm-10" style="width: 17em;height: 2em;line-height: 2em;vertical-align: middle;padding: 0;margin: 0;" >
+			<strong style="color:red;">*</strong>  多图文第1条折扣价： <input name="iPrice12" validate="!float:true"  type="text" value="<?php echo isset($aMedia['iPrice12'])?$aMedia['iPrice12']:''?>" style="width: 6em;height: 2em">
+			<span class="validate_checktip"></span>
+		</div>
+
+
+
+		<div class="col-sm-10" style="width: 18em;height: 2em;line-height: 2em;vertical-align: middle;padding: 0;margin: 0;" >
+			<strong style="color:red;">*</strong>  多图文第2条折扣价：  <input name="iPrice13" validate="!float:true"  type="text" value="<?php echo isset($aMedia['iPrice13'])?$aMedia['iPrice13']:''?>" style="width: 6em;height: 2em">
+
+		</div>
+
+
+		<div class="form-group">
+			<div class="col-sm-10" style="width: 19em;height: 2em;line-height: 2em;vertical-align: middle;padding: 0;margin: 0;" >
+				<strong style="color:red;">*</strong>  多图文第3~N条折扣价：   <input name="iPrice14" validate="!float:true"  type="text" value="<?php echo isset($aMedia['iPrice14'])?$aMedia['iPrice14']:''?>" style="width: 6em;height: 2em">
+
+			</div>
+		</div>
+
+
+		<div class="col-sm-10" style="width: 14em;height: 2em;line-height: 2em;vertical-align: middle;padding: 0;margin: 0;" >
+			<strong style="color:red;">*</strong> 单图文零售价：<input name="iPrice5" validate="!float:true"  type="text" value="<?php echo isset($aMedia['iPrice5'])?$aMedia['iPrice5']:''?>"  style="width: 6em;height: 2em">
+		</div>
+
+
+
+		<div class="col-sm-10" style="width: 17em;height: 2em;line-height: 2em;vertical-align: middle;padding: 0;margin: 0;" >
+			<strong style="color:red;">*</strong>  多图文第1条零售价： <input name="iPrice6" validate="!float:true"  type="text" value="<?php echo isset($aMedia['iPrice6'])?$aMedia['iPrice6']:''?>" style="width: 6em;height: 2em">
+			<span class="validate_checktip"></span>
+		</div>
+
+
+
+		<div class="col-sm-10" style="width: 18em;height: 2em;line-height: 2em;vertical-align: middle;padding: 0;margin: 0;" >
+			<strong style="color:red;">*</strong>  多图文第2条零售价：  <input name="iPrice7" validate="!float:true"  type="text" value="<?php echo isset($aMedia['iPrice7'])?$aMedia['iPrice7']:''?>" style="width: 6em;height: 2em">
+
+		</div>
+
+
+		<div class="form-group">
+			<div class="col-sm-10" style="width: 19em;height: 2em;line-height: 2em;vertical-align: middle;padding: 0;margin: 0;" >
+				<strong style="color:red;">*</strong>  多图文第3~N条零售价：   <input name="iPrice8" validate="!float:true"  type="text" value="<?php echo isset($aMedia['iPrice8'])?$aMedia['iPrice8']:''?>" style="width: 6em;height: 2em">
+
+			</div>
+		</div>
+
+
+
+
+
+
+		<div class="col-sm-10" style="width: 22em;padding: 0;margin: 0;" id="diyi" >
+				<strong style="color:red;">*</strong> 粉丝认证截图：	<img id="sFollowerImgShow" style="width:120px;height:90px;" src="<?php echo isset($aMedia['sFollowerImg'])?Util_Uri::getDFSViewURL($aMedia['sFollowerImg'], 130, 130):''?>">
+			</div>
+
+		<div class="col-sm-10" style="width: 20em;padding: 0;margin: 0;" id="dier" >
+			<strong style="color:red;">*</strong> 头像：		<img id="sAvatarShow" style="width:120px;height:90px;" src="<?php echo isset($aMedia['sAvatar'])?Util_Uri::getDFSViewURL($aMedia['sAvatar'], 130, 130):''?>">
+			</div>
+
+		<div class="form-group">
+			<div class="col-sm-10" style="width: 22em;padding: 0;margin: 0;" id="disan" >
+			<strong style="color:red;">*</strong> 二维码：	<img id="sQRCodeShow" style="width:120px;height:90px;" src="<?php echo isset($aMedia['sQRCode'])?Util_Uri::getDFSViewURL($aMedia['sQRCode'], 130, 130):''?>">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label for="sWxLink" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 微信链接：</label>
+			<div class="col-sm-10">
+			    <input name="sWxLink" validate="url:true" disabled type="text" value="<?php echo isset($aMedia['sWxLink'])?$aMedia['sWxLink']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="iVerifyState" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 认证状态：</label>
+			<div class="col-sm-10">
+			    <select name="iVerifyState" class="form-control" disabled style="width:250px;">
+			    	<?php foreach ($aVerifyState as $k => $v) {?>
+    		        	<option value="<?php echo $k?>" <?php echo isset($aMedia['iVerifyState'])&&$aMedia['iVerifyState']==$k?'selected':''?>><?php echo $v?></option>
+    		    	<?php }?>
+    		    </select>
+			</div>
+		</div>
+    	<div class="form-group">
+    		<label for="sCertifiedText" class="col-sm-2 control-label"> 认证信息介绍：</label>
+    		<div class="col-sm-10">
+    			<textarea name="sCertifiedText" disabled class="form-control input-validate" rows="3" cols="20"><?php echo isset($aMedia['sCertifiedText'])?$aMedia['sCertifiedText']:''?></textarea>
+    		</div>
+    	</div>
+    	<div class="form-group">
+    		<label for="sIntroduction" class="col-sm-2 control-label"> 简介：</label>
+    		<div class="col-sm-10">
+    			<textarea name="sIntroduction" disabled class="form-control input-validate" rows="3" cols="20"><?php echo isset($aMedia['sIntroduction'])?$aMedia['sIntroduction']:''?></textarea>
+    		</div>
+    	</div>
+    	<div class="form-group">
+    		<label for="sTagID" class="col-sm-2 control-label"> 标签：</label>
+    		<div class="col-sm-10">
+    		    <div class="col-sm-8" validate="">
+    		    <?php if(isset($aTag)){ $n = 1; foreach ($aTag as $k => $v) {?>
+    		        <input type="checkbox" class="checkbox-inline" name="sTagID[]" value="<?php echo $k?>" <?php echo isset($aMedia['iTagID'])&&in_array($k,$aMedia['iTagID'])?'checked':''?>> <?php echo $v?>
+    		    <?php if ($n++ % 8 == 0){echo '<br>';}}}?>
+		        </div>
+				<span class="validate_checktip"></span>
+    		</div>
+    	</div>
+    	<div class="form-group">
+    		<label for="sCategoryID" class="col-sm-2 control-label"> 资源所属类目：</label>
+    		<div class="col-sm-10">
+    		    <div class="col-sm-8" validate="">
+    		    <?php if(isset($aTypeInfo)){ $n = 1; foreach ($aTypeInfo as $k => $v) {?>
+    		        <input type="checkbox" class="checkbox-inline" name="sCategoryID[]" value="<?php echo $k?>" <?php echo isset($aMedia['aCategoryID'])&&in_array($k,$aMedia['aCategoryID'])?'checked':''?>> <?php echo $v?>
+    		    <?php if ($n++ % 8 == 0){echo '<br>';}}}?>
+		        </div>
+				<span class="validate_checktip"></span>
+    		</div>
+    	</div>
+    	<div class="form-group">
+    		<label for="sCooperateLevelInfo" class="col-sm-2 control-label"> 合作等级：</label>
+    		<div class="col-sm-10">
+    		    <div class="col-sm-8" validate="">
+    		    <?php if(isset($aCooperateLevel)){ $n = 1; foreach ($aCooperateLevel as $k => $v) {?>
+    		        <input type="checkbox" class="checkbox-inline" name="sCooperateLevelInfo[]" value="<?php echo $k?>" <?php echo isset($aMedia['aCooperateLevelInfo'])&&in_array($k,$aMedia['aCooperateLevelInfo'])?'checked':''?>> <?php echo $v?>
+    		    <?php if ($n++ % 8 == 0){echo '<br>';}}}?>
+		        </div>
+				<span class="validate_checktip"></span>
+    		</div>
+    	</div>
+    	<div class="form-group">
+    		<label for="sCricleID" class="col-sm-2 control-label"> 行业圈子：</label>
+    		<div class="col-sm-10">
+    		    <div class="col-sm-8" validate="">
+    		    <?php if(isset($aIndustryCircle)){ $n = 1; foreach ($aIndustryCircle as $k => $v) {?>
+    		        <input type="checkbox" class="checkbox-inline" name="sCricleID[]" value="<?php echo $k?>" <?php echo isset($aMedia['aCricleID'])&&in_array($k,$aMedia['aCricleID'])?'checked':''?>> <?php echo $v?>
+    		    <?php if ($n++ % 8 == 0){echo '<br>';}}}?>
+		        </div>
+				<span class="validate_checktip"></span>
+    		</div>
+    	</div>
+		<div class="form-group">
+			<label for="sCityID" class="col-sm-2 control-label"> 粉丝覆盖区域：</label>
+			<div class="col-sm-10">
+				<div class="col-sm-8" validate="">
+					<?php if(isset($aCity)){ $n = 1; foreach ($aCity as $k => $v) {?>
+						<input type="checkbox" class="checkbox-inline" name="sCityID[]" value="<?php echo $k?>" <?php echo isset($aMedia['aCityID'])&&in_array($k,$aMedia['aCityID'])?'checked':''?>> <?php echo $v?>
+						<?php if ($n++ % 8 == 0){echo '<br>';}}}?>
+				</div>
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+
+    	<div class="form-group">
+    		<label for="iStatus" class="col-sm-2 control-label"> 推荐置顶：</label>
+    		<div class="col-sm-10">
+    			<select name="iRecommend" class="form-control" disabled style="width:250px;">
+    				<option value="<?php echo isset($aMedia['iRecommend']) && $aMedia['iRecommend'] > 0 ? $aMedia['iRecommend'] : '2'; ?>" <?php echo isset($aMedia['iRecommend'])&&$aMedia['iRecommend'] > 0?'selected':''?>>是</option>
+    		        <option value="1" <?php echo isset($aMedia['iRecommend'])&&$aMedia['iRecommend']=='0'?'selected':''?>>否</option>
+    		    </select>
+    		</div>
+    	</div>
+		<div class="form-group">
+			<label for="iStatus" class="col-sm-2 control-label"> 利率百分之：</label>
+			<div class="col-sm-10">
+				<input name="iRate" validate="!float:true"  type="text" value="<?php echo isset($aMedia['iRate'])?$aMedia['iRate']:''?>"class="form-control input-validate" >
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="iStatus" class="col-sm-2 control-label"> 上下架状态：</label>
+			<div class="col-sm-10">
+				<select name="iPut" class="form-control" style="width:250px;">
+					<option value="2" <?php echo isset($aMedia['iPut'])&&$aMedia['iPut']=='2'?'selected':''?>>下架</option>
+					<option value="1" <?php echo isset($aMedia['iPut'])&&$aMedia['iPut']=='1'?'selected':''?>>上架</option>
+				</select>
+			</div>
+		</div>
+    	<div class="form-group">
+    		<label for="iStatus" class="col-sm-2 control-label"> 状态：</label>
+    		<div class="col-sm-10">
+    			<select name="iStatus" id="status" class="form-control" style="width:250px;">
+    				<option value="1" <?php echo isset($aMedia['iStatus'])&&$aMedia['iStatus']=='1'?'selected':''?>>已审核</option>
+    		        <option value="2" <?php echo isset($aMedia['iStatus'])&&$aMedia['iStatus']=='2'?'selected':''?>>待审核</option>
+    		        <option value="3" <?php echo isset($aMedia['iStatus'])&&$aMedia['iStatus']=='3'?'selected':''?>>审核不通过</option>
+    		    </select>
+    		</div>
+    	</div>
+		<div class="form-group">
+			<label for="iStatus" class="col-sm-2 control-label"> 审核不通过原因：</label>
+			<div class="col-sm-10">
+				<textarea name="iExplain" id="explain" disabled class="form-control input-validate" rows="3" cols="20"><?php echo isset($aMedia['iExplain'])?$aMedia['iExplain']:''?></textarea>
+			</div>
+		</div>
+    	<?php if(isset($aMedia['iMediaID'])){ ?>
+    	<?php if(isset($aMedia['iUpdateTime']) && $aMedia['iUpdateTime'] > 0){ ?>
+    	<div class="form-group">
+    		<label for="iMoney" class="col-sm-2 control-label"> 更新时间：</label>
+    		<div class="col-sm-10">
+    			<?php echo date('Y-m-d H:i:s' , $aMedia['iUpdateTime']); ?>
+    		</div>
+    	</div>
+    	<?php } ?>
+    	<div class="form-group">
+    		<label for="iMoney" class="col-sm-2 control-label"> 创建时间：</label>
+    		<div class="col-sm-10">
+    			<?php echo date('Y-m-d H:i:s' , $aMedia['iCreateTime']); ?>
+    		</div>
+    	</div>
+    	<?php } ?>
+    	<div class="btn-toolbar text-center">
+        	<button id="save" class="btn btn-primary">保存</button>
+        	<button id="cancel"class="btn" onclick="location.href='/admin/mediash/list/';return false;">取消</button>
+        </div>
+	</form>
+</div>
+<div id="jietu" style="width: 300px;height: 300px;display:none;position: fixed;top:100px;left: 400px;">
+	<img id="xiaomie1" src="/front/images/common/wrong_icon.png" alt=""style="position: relative;left: 280px">
+	<img id="sFollowerImgShow" style="height: 280px;width: 280px;" src="<?php echo isset($aMedia['sFollowerImg'])?Util_Uri::getDFSViewURL($aMedia['sFollowerImg'], 280, 280):''?>">
+</div>
+<div id="touxiang" style="width: 300px;height: 300px;display:none;position: fixed;top:100px;left: 400px;">
+	<img id="xiaomie2" src="/front/images/common/wrong_icon.png" alt=""style="position: relative;left: 280px">
+	<img id="sFollowerImgShow" style="height: 280px;width: 280px;" src="<?php echo isset($aMedia['sAvatar'])?Util_Uri::getDFSViewURL($aMedia['sAvatar'], 280, 280):''?>">
+</div>
+<div id="erweima" style="width: 300px;height: 300px;display:none;position: fixed;top:100px;left: 400px;">
+	<img id="xiaomie3" src="/front/images/common/wrong_icon.png" alt=""style="position: relative;left: 280px">
+	<img id="sFollowerImgShow" style="height: 280px;width: 280px;" src="<?php echo isset($aMedia['sQRCode'])?Util_Uri::getDFSViewURL($aMedia['sQRCode'], 280, 280):''?>">
+</div>
+<script type="text/javascript">
+$(function() {
+	$("#myform").validate({submitHandler: function(form) {
+	    $.post(form.action, $(form).serialize(), function(ret){
+	        alert(ret.data);
+	        if (ret.status) {
+	            history.back();
+	        }
+	    }, 'json');
+		return false;
+	}});
+	$('#status').change(function () {
+		                if($('#status').val()=='3'){
+							$('#explain').attr('disabled',false);
+						}
+	})
+	$('#diyi').click(function () {
+		$('#jietu').css('display','block');
+	});
+	$('#dier').click(function () {
+		$('#touxiang').css('display','block');
+	});
+	$('#disan').click(function () {
+		$('#erweima').css('display','block');
+	});
+	$('#xiaomie1').click(function () {
+		$('#jietu').css('display','none');
+	});
+	$('#xiaomie2').click(function () {
+		$('#touxiang').css('display','none');
+	});
+	$('#xiaomie3').click(function () {
+		$('#erweima').css('display','none');
+	});
+
+});
+</script>
+<script type="text/javascript">
+global.sUploadUrl = '<?php echo Util_Common::getConf('upload', 'url')?>';
+global.sDfsViewUrl = '<?php echo Util_Common::getConf('dfsview', 'url')?>';
+</script>
+<script type="text/javascript" charset="utf-8" src="<?php echo $sStaticRoot ?>/plupload/plupload.full.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="<?php echo $sStaticRoot ?>/js/upload.js"></script>
+<script type="text/javascript" charset="utf-8" src="<?php echo $sStaticRoot ?>/plupload/zh_CN.js"></script>

@@ -1,0 +1,44 @@
+		<tr>
+			<th>
+				<span class="red_arrow mneed_field">*</span>投放链接：
+			</th>
+			<td>
+				<input type="text" class="fill_text hover_input" id="sForwardUrl" name="sForwardUrl" value="<?php echo empty($aSetting)?'':$aSetting['sForwardUrl']?>">
+				<label class="error sForwardUrl" style="display: none;"></label>
+			</td>
+		</tr>
+		<tr>
+			<th>
+				<span class="red_arrow">*</span>投放文字：
+			</th>
+			<td>
+				<textarea class="fill_textarea hover_input" id="sForwardText" name="sForwardText"><?php echo empty($aSetting)?'':$aSetting['sForwardText']?></textarea>
+				<label class="error sForwardText" style="display: none;"></label>
+			</td>
+		</tr>
+		<tr>
+			<th>
+				<span class="red_arrow">*</span>投放配图：
+			</th>
+			<td>
+			    <?php for ($i = 0; $i < 9; $i++) {?>
+				<img class="imageplus plupload" style="margin-right:20px;margin-top:5px;" id="sForwardImgShow<?php echo $i?>" src="<?php echo empty($aSetting)||empty($aSetting['aForwardImg'][$i])?'/front/images/tool/imageplus.png':Util_Uri::getDFSViewURL($aSetting['aForwardImg'][$i])?>" data-target="#sForwardImg<?php echo $i?>" data-img="#sForwardImgShow<?php echo $i?>">
+				<input type="hidden" name="aForwardImg[]" id="sForwardImg<?php echo $i?>" value="<?php echo empty($aSetting)||empty($aSetting['aForwardImg'][$i])?'':$aSetting['aForwardImg'][$i]?>" />
+				<?php }?>
+				<br>
+			    <div class="imagetips">
+			        仅支持jpg、jpeg、gif图片且图片不能大于2M，建议尺寸：200像素 * 200像素<br>
+				<label class="error sForwardImg" style="display: none"></label>
+			    </div>
+			</td>
+		</tr>
+<script>
+$('.mediatype').click(function(){
+	var mtype = $(this).find('input').val();
+	if (mtype == 1) {
+		$('.mneed_field').show();
+	} else {
+		$('.mneed_field').hide();
+	}
+});
+</script>

@@ -1,0 +1,62 @@
+<div class="pheader clearfix">首页经理列表</div>
+<div class="pbody clearfix">
+	<form class="form-inline search-form" role="form" method="post" id="myform" action="/admin/homemanager/list.html">
+        <div class="row sousuo_now">
+            <div class="form-group">
+                <label>经理名称：</label>
+    		    <input type="text" value="<?php echo isset($aParam['sName']) ? $aParam['sName'] : '' ?>" class="form-control" name="sName" style="width: 200px">
+        	</div>
+            <div class="form-group">
+                <input type="submit" id="formbtn" class="btn btn-default btn-sm" value="搜索">
+            </div>
+        </div>
+    </form>
+    <hr>
+    <div class="btn-toolbar list-toolbar">
+    	<button class="btn btn-primary" id="homemanager_add">
+    		<i class="icon-plus"></i> 增加首页经理
+    	</button>
+    </div>
+    <table class="table table-bordered table-hover">
+    	<thead>
+    		<tr>
+    			<th class="col-sm-1 text-center">#</th>
+    			<th class="text-center">经理头像</th>
+    			<th class="text-center">经理名称</th>
+    			<th class="text-center">链接</th>
+    			<th class="text-center">操作</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+        <?php foreach ($aList['aList'] as $v) {?>
+            <tr>
+    			<td class="col-sm-1 text-center"><?php echo $v['iAutoID']?></td>
+    			<td class="text-center"><img src="<?php echo Util_Uri::getDFSViewURL($v['sImage'], 130, 130)?>"></td>
+    			<td class="text-center"><?php echo $v['sName']?></td>
+    			<td class="text-center"><?php echo ((isset($v['sUrl']) && $v['sUrl'] != '') ? ('<a href="'.$v['sUrl'].'">'.$v['sUrl'].'</a>') : '');?></td>
+    			<td class="text-center">
+    			    <a href="/admin/homemanager/edit?id=<?php echo $v['iAutoID']?>" title="编辑"><i class="icon-pencil icon-large"></i></a>
+    			    <a class="homemanager_delete" href="/admin/homemanager/del?id=<?php echo $v['iAutoID']?>" role="button" data-toggle="modal" title="删除"><i class="icon-trash icon-large"></i></a>
+    			</td>
+    		</tr>
+        <?php }?>
+    	</tbody>
+    </table>
+    <?php echo $aList['aPager']?>
+</div>
+<script>
+$('.homemanager_delete').click(function() {
+	if (confirm("您确认要删除该首页经理吗？")) {
+		$.get(this.href, function(ret){
+			alert(ret.data);
+		    if (ret.status) {
+			    location.reload();
+		    }
+		}, 'json');
+	}
+	return false;
+});
+$('#homemanager_add').click(function(){
+	location.href = '/admin/homemanager/add';
+});
+</script>

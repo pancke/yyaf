@@ -1,0 +1,119 @@
+<div class="pheader clearfix">资源订单列表</div>
+<div class="pbody clearfix">
+	<form class="form-inline search-form" role="form" method="post" id="myform" action="">
+		<input name="iUserID" type="hidden" value="<?php echo isset($aParam['iUserID'])?$aParam['iUserID']:''?>">
+		<input name="iAdID" type="hidden" value="<?php echo isset($aParam['iAdID'])?$aParam['iAdID']:''?>">
+        <div class="row sousuo_now">
+            <div class="form-group">
+                <label>用户名称：</label>
+    		    <input type="text" value="<?php echo isset($aParam['sUserRealName']) ? $aParam['sUserRealName'] : '' ?>" class="form-control" name="sUserRealName" style="width: 200px">
+        	</div>
+        	<div class="form-group">
+                <label>广告名称：</label>
+    		    <input type="text" value="<?php echo isset($aParam['sAdName']) ? $aParam['sAdName'] : '' ?>" class="form-control" name="sAdName" style="width: 200px">
+        	</div>
+           <div class="form-group">
+                <label>支付状态：</label>
+    		    <select name="iPayStatus" class="form-control">
+    		        <option value="">全部</option>
+    		        <option value="0" <?php echo isset($aParam['iPayStatus'])&&$aParam['iPayStatus']=='0'?'selected':''?>>未支付</option>
+    		        <option value="1" <?php echo isset($aParam['iPayStatus'])&&$aParam['iPayStatus']=='1'?'selected':''?>>已支付</option>
+    		    </select>
+        	</div>
+           <div class="form-group">
+                <label>状态：</label>
+    		    <select name="iStatus" class="form-control">
+    		        <option value="">全部</option>
+    		        <option value="1" <?php echo isset($aParam['iStatus'])&&$aParam['iStatus']=='1'?'selected':''?>>等待接单</option>
+    		        <option value="2" <?php echo isset($aParam['iStatus'])&&$aParam['iStatus']=='2'?'selected':''?>>等待执行</option>
+    		        <option value="3" <?php echo isset($aParam['iStatus'])&&$aParam['iStatus']=='3'?'selected':''?>>执行中</option>
+    		        <option value="4" <?php echo isset($aParam['iStatus'])&&$aParam['iStatus']=='4'?'selected':''?>>已完成</option>
+    		        <option value="5" <?php echo isset($aParam['iStatus'])&&$aParam['iStatus']=='5'?'selected':''?>>拒绝接单</option>
+    		    </select>
+        	</div>
+            <div class="form-group">
+                <!-- <input type="submit" id="formbtn" class="btn btn-default btn-sm" value="搜索"> -->
+                <button class="btn btn-default btn-sm" id="formquerybtn">搜索</button>
+                <button class="btn btn-default btn-sm" id="formexplodebtn">导出</button>
+            </div>
+        </div>
+    </form>
+    <hr>
+    <div class="btn-toolbar list-toolbar">
+    	<!-- <button class="btn btn-primary" id="mediaorder_add">
+    		<i class="icon-plus"></i> 增加资源订单
+    	</button> -->
+    </div>
+    <table class="table table-bordered table-hover">
+    	<thead>
+    		<tr>
+    			<th class="col-sm-1 text-center">#</th>
+    			<th class="text-center">用户名称</th>
+    			<th class="text-center">广告名称</th>
+    			<th class="text-center">资源名称</th>
+    			<th class="text-center">广告位</th>
+    			<th class="text-center">价格</th>
+    			<th class="text-center">执行时间</th>
+    			<th class="text-center">支付状态</th>
+    			<th class="text-center">状态</th>
+    			<th class="text-center">创建时间</th>
+    			<th class="text-center">操作</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+        <?php
+        foreach ($aList['aList'] as $v) {
+			$sRealName = isset($aData[$v['iUserID']]['sRealName']) ? $aData[$v['iUserID']]['sRealName'] : '';
+			$sMediaName = isset($AdData[$v['iAdID']]['sAdName']) ? $AdData[$v['iAdID']]['sAdName'] : '';
+        ?>
+            <tr>
+    			<td class="col-sm-1 text-center"><?php echo $v['iAutoID']?></td>
+    			<td class="text-center"><?php echo $sRealName?></td>
+    			<td class="text-center"><?php echo $sMediaName;?></td>
+    			<td class="text-center"><?php echo $v['iMediaID'];?></td>
+    			<td class="text-center"><?php echo $v['iPos']?></td>
+    			<td class="text-center"><?php echo $v['iMoney'];?></td>
+    			<td class="text-center"><?php echo ((isset($v['iPlanTime']) && $v['iPlanTime'] > 0) ? (date('Y-m-d' , $v['iPlanTime'])) : '');?></td>
+    			<td class="text-center"><?php echo $v['iPayStatus']?></td>
+    			<td class="text-center"><?php echo $v['iStatus']?></td>
+    			<td class="text-center"><?php echo ((isset($v['iCreateTime']) && $v['iCreateTime'] > 0) ? (date('Y-m-d H:i:s' , $v['iCreateTime'])) : '');?></td>
+    			<td class="text-center">
+    			    <a href="/admin/mediaorder/edit?id=<?php echo $v['iAutoID']?>" title="编辑"><i class="icon-pencil icon-large"></i></a>
+    			    <!-- <a class="mediaorder_delete" href="/admin/mediaorder/del?id=<?php echo $v['iAutoID']?>" role="button" data-toggle="modal" title="删除"><i class="icon-trash icon-large"></i></a> -->
+    			</td>
+    		</tr>
+        <?php }?>
+    	</tbody>
+    </table>
+    <?php echo $aList['aPager']?>
+</div>
+<script>
+$("#formquerybtn").bind("click", function() {  
+    var url = "/admin/mediaorder/list.html";  
+    //更改form的action  
+    $("#myform").attr("action", url);  
+    //触发submit事件，提交表单   
+    $("#myform").submit();  
+});
+$("#formexplodebtn").bind("click", function() {  
+    var url = "/admin/mediaorder/explode.html";  
+    //更改form的action  
+    $("#myform").attr("action", url);  
+    //触发submit事件，提交表单   
+    $("#myform").submit();  
+});
+$('.mediaorder_delete').click(function() {
+	if (confirm("您确认要删除该资源订单吗？")) {
+		$.get(this.href, function(ret){
+			alert(ret.data);
+		    if (ret.status) {
+			    location.reload();
+		    }
+		}, 'json');
+	}
+	return false;
+});
+$('#mediaorder_add').click(function(){
+	location.href = '/admin/mediaorder/add';
+});
+</script>

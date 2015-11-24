@@ -1,0 +1,179 @@
+<div class="pheader clearfix"><?php echo isset($aWeiXin['iWeixinID'])?'编辑':'增加'?>微信</div>
+<div class="pbody clearfix">
+    <form id="myform" class="form-horizontal" role="form" method="post" action="">
+        <input name="iWeixinID" type="hidden" value="<?php echo isset($aWeiXin['iWeixinID'])?$aWeiXin['iWeixinID']:''?>">
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 帐号：</label>
+			<div class="col-sm-10">
+				<input name="sAccount" type="text" value="<?php echo isset($aWeiXin['sAccount'])?$aWeiXin['sAccount']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 公众号：</label>
+			<div class="col-sm-10">
+				<input name="sName" type="text" value="<?php echo isset($aWeiXin['sName'])?$aWeiXin['sName']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> GSData 公众号IDE：</label>
+			<div class="col-sm-10">
+				<input name="iAccountID" type="text" value="<?php echo isset($aWeiXin['iAccountID'])?$aWeiXin['iAccountID']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 阅读数：</label>
+			<div class="col-sm-10">
+				<input name="iReadTotal" type="text" value="<?php echo isset($aWeiXin['iReadTotal'])?$aWeiXin['iReadTotal']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 发布次数：</label>
+			<div class="col-sm-10">
+				<input name="iPublishTimes" type="text" value="<?php echo isset($aWeiXin['iPublishTimes'])?$aWeiXin['iPublishTimes']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 发布篇数：</label>
+			<div class="col-sm-10">
+				<input name="iPublishTotal" type="text" value="<?php echo isset($aWeiXin['iPublishTotal'])?$aWeiXin['iPublishTotal']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 最高阅读数：</label>
+			<div class="col-sm-10">
+				<input name="iReadMax" type="text" value="<?php echo isset($aWeiXin['iReadMax'])?$aWeiXin['iReadMax']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 平均阅读数：</label>
+			<div class="col-sm-10">
+				<input name="iReadAvg" type="text" value="<?php echo isset($aWeiXin['iReadAvg'])?$aWeiXin['iReadAvg']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 总点赞数：</label>
+			<div class="col-sm-10">
+				<input name="iPraiseTotal" type="text" value="<?php echo isset($aWeiXin['iPraiseTotal'])?$aWeiXin['iPraiseTotal']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> WCI：</label>
+			<div class="col-sm-10">
+				<input name="iWCI" type="text" value="<?php echo isset($aWeiXin['iWCI'])?$aWeiXin['iWCI']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 功能介绍：</label>
+			<div class="col-sm-10">
+				<textarea name="sFunInfo" class="form-control input-validate" rows="3" cols="20"><?php echo isset($aWeiXin['sFunInfo'])?$aWeiXin['sFunInfo']:''?></textarea>
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 认证信息：</label>
+			<div class="col-sm-10">
+				<textarea name="sAutoInfo" class="form-control input-validate" rows="3" cols="20"><?php echo isset($aWeiXin['sAutoInfo'])?$aWeiXin['sAutoInfo']:''?></textarea>
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 标签：</label>
+			<div class="col-sm-10">
+				<input name="sTag" type="text" value="<?php echo isset($aWeiXin['sTag'])?$aWeiXin['sTag']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 总排名：</label>
+			<div class="col-sm-10">
+				<input name="iTotalRank" type="text" value="<?php echo isset($aWeiXin['iTotalRank'])?$aWeiXin['iTotalRank']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 分类排名：</label>
+			<div class="col-sm-10">
+				<input name="iCatRank" type="text" value="<?php echo isset($aWeiXin['iCatRank'])?$aWeiXin['iCatRank']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 头条累计阅读数：</label>
+			<div class="col-sm-10">
+				<input name="iHeadReadTotal" type="text" value="<?php echo isset($aWeiXin['iHeadReadTotal'])?$aWeiXin['iHeadReadTotal']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 头条平均阅读数：</label>
+			<div class="col-sm-10">
+				<input name="iHeadReadAvg" type="text" value="<?php echo isset($aWeiXin['iHeadReadAvg'])?$aWeiXin['iHeadReadAvg']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 点赞平均数：</label>
+			<div class="col-sm-10">
+				<input name="iPraiseAvg" type="text" value="<?php echo isset($aWeiXin['iPraiseAvg'])?$aWeiXin['iPraiseAvg']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 10W+发布数：</label>
+			<div class="col-sm-10">
+				<input name="iPublish10w" type="text" value="<?php echo isset($aWeiXin['iPublish10w'])?$aWeiXin['iPublish10w']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 排名日期：</label>
+			<div class="col-sm-10">
+				<input name="sRankdate" type="text" value="<?php echo isset($aWeiXin['sRankdate'])?$aWeiXin['sRankdate']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<?php if(isset($aWeiXin['iWeixinID'])){ ?>
+    	<?php if(isset($aWeiXin['iUpdateTime']) && $aWeiXin['iUpdateTime'] > 0){ ?>
+    	<div class="form-group">
+    		<label for="iMoney" class="col-sm-2 control-label"> 更新时间：</label>
+    		<div class="col-sm-10">
+    			<?php echo date('Y-m-d H:i:s' , $aWeiXin['iUpdateTime']); ?>
+    		</div>
+    	</div>
+    	<?php } ?>
+    	<div class="form-group">
+    		<label for="iMoney" class="col-sm-2 control-label"> 创建时间：</label>
+    		<div class="col-sm-10">
+    			<?php echo date('Y-m-d H:i:s' , $aWeiXin['iCreateTime']); ?>
+    		</div>
+    	</div>
+    	<?php } ?>
+    	<div class="btn-toolbar text-center">
+        	<button id="save" class="btn btn-primary">保存</button>
+        	<button id="cancel"class="btn" onclick="location.href='/admin/crawlweixin/list/';return false;">取消</button>
+        </div>
+	</form>
+</div>
+<script type="text/javascript">
+$(function() {
+	$("#myform").validate({submitHandler: function(form) {
+	    $.post(form.action, $(form).serialize(), function(ret){
+	        alert(ret.data);
+	        if (ret.status) {
+	            location.href = '/admin/crawlweixin/list/';
+	        }
+	    }, 'json');
+		return false;
+	}});
+});
+</script>

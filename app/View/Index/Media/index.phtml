@@ -1,0 +1,540 @@
+<?php if (!empty($aData['aAd'])) {?>
+<div class="cf2 step_o">
+	<div class="cf2 step_o_w">
+		<ul class="step_o cf2 step_2">
+			<li>
+				<span class="eng"></span>
+				<p>添加推广</p>
+			</li>
+			<li>
+				<span class="eng"></span>
+				<p>选择媒介</p>
+			</li>
+			<li>
+				<span class="eng">3</span>
+				<p>设置广告</p>
+			</li>
+			<li>
+				<span class="eng">4</span>
+				<p>支持款项</p>
+			</li>
+		</ul>
+	</div>
+	<!--end宽度-->
+</div>
+<?php }?>
+
+<div style="margin-top:1px;"></div>
+<div class="cf2 gray_border box_w box_w-1200">
+	<dl class="gray_th">
+		<dd>
+		<?php if (!empty($aData['aAd'])) {?>
+		           选择媒介
+		<?php } else {?>
+    		<a class="<?php echo $aParam['type']==1?'wixitag active':'wixitag'?>" href="/media/index/type/1.html">微信公众号</a>
+    		<a class="<?php echo $aParam['type']==3?'wixitag active':'wixitag'?> wixitaglst"  href="/media/index/type/3.html">新浪微博</a>
+    	<?php }?>
+    	</dd>
+		<dt>
+			<div class="th_search">
+				<input type="text" class="th_input_text" placeholder="查看媒体或微信名" value="<?php echo isset($aParam['name'])?$aParam['name']:''?>" id="medianame">
+				<input type="button" class="th_input_btn" value="查询" onclick="location.href='<?php echo Util_Uri::makeSearchUrl($aParam, 'name', null)?>?name='+$('#medianame').val()">
+			</div>
+		</dt>
+	</dl>
+	<dl class="screen_o cf2">
+		<dt class="cf2">
+         <div class="winth-w">
+			<div class="l" style="width:75px;">所属分类<a href="javascript:;" class="help_a"><img class="minitip" title="账号所属分类"
+					src="/front/images/tool/icon_what.png" alt="" width="10"
+					height="10"></a></div>
+			<em class="r"> 
+			    <span class="l">
+			        <a style="width:50px;margin-right:0px" href="<?php echo Util_Uri::makeSearchUrl($aParam, 'catid', null)?>" <?php echo empty($aParam['catid'])?'class="light"':''?>><b>不限</b></a>
+			        <?php foreach ($aData['aType'] as $k => $v) {?>
+			        <a href="<?php echo Util_Uri::makeSearchUrl($aParam, 'catid', $k, 0)?>" <?php echo $k==$aParam['catid']?'class="light"':''?>><ins class="radio"><?php echo $v?></ins></a>
+			        <?php }?>
+			    </span>
+			    <samp class="more_btn">更多</samp>
+			</em>
+            </div>
+             <div class="winth-w">
+			<div class="l" style="width:63px;">阅读量<a href="javascript:;" class="help_a"><img class="minitip" title="输入自媒体阅读量"
+					src="/front/images/tool/icon_what.png" alt="" width="10"
+					height="10"></a></div>
+			<em class="r"> 
+			    <span>
+			         <input type="text" inputlimit="uint" class="fill_text fill_text_s hover_input hover_input_p" id="readnum0" value="<?php echo isset($aParam['readnum0'])?$aParam['readnum0']:''?>" placeholder="输入数量">
+			         ~
+			         <input type="text" inputlimit="uint" class="fill_text fill_text_s hover_input" id="readnum1" value="<?php echo isset($aParam['readnum1'])?$aParam['readnum1']:''?>" placeholder="输入数量"> 
+			    <input type="button" class="gray_btn gray_btn_s" value="确定" onclick="location.href='<?php echo Util_Uri::makeSearchUrl($aParam, array('readnum0','readnum1'), array(null,null))?>?readnum0='+$('#readnum0').val()+'&readnum1='+$('#readnum1').val()"></span>
+			</em>
+            </div>
+            <?php include 'index_' . $aParam['type'] . '.phtml';?>
+		</dt>
+		<dt class="cf2">
+        <div class="winth-w">
+        <div class="l" style="width:75px;">推广价格<a href="javascript:;" class="help_a"><img class="minitip" title="单次发布价格，默认多图第一条"
+					src="/front/images/tool/icon_what.png" alt="" width="10"
+					height="10"></a></div>
+			<em class="r">
+			    <a style="width:50px;margin-right:0px" href="<?php echo Util_Uri::makeSearchUrl($aParam, 'price', null)?>" <?php echo empty($aParam['price'])?'class="light"':''?>><b>不限</b></a>
+			    <?php foreach ($aData['aPrice'] as $k => $v) {?>
+		        <a href="<?php echo Util_Uri::makeSearchUrl($aParam, 'price', $k, 0)?>" <?php echo $k == $aParam['price']?'class="light"':''?>><b><?php echo $v?></b></a>
+		        <?php }?>
+			</em>
+            </div>
+            <div class="winth-w">
+            <div class="l" style="width:75px;">粉丝数量<a href="javascript:;" class="help_a"><img class="minitip" title="账号所拥有粉丝数量"
+					src="/front/images/tool/icon_what.png" alt="" width="10"
+					height="10"></a></div>
+			<em class="r"> 
+			    <a style="width:50px;margin-right:0px" href="<?php echo Util_Uri::makeSearchUrl($aParam, 'follower', null)?>" <?php echo empty($aParam['follower'])?'class="light"':''?>><b>不限</b></a>
+			    <?php foreach ($aData['aFollower'] as $k => $v) {?>
+		        <a href="<?php echo Util_Uri::makeSearchUrl($aParam, 'follower', $k, 0)?>" <?php echo $k == $aParam['follower']?'class="light"':''?>><b><?php echo $v?></b></a>
+		        <?php }?>
+			</em>
+            </div>
+		</dt>
+		<dt class="cf2">
+			<div class="l" style="width:75px;">资源标签<a href="javascript:;" class="help_a"><img class="minitip" title="账号粉丝所属类型 "
+					src="/front/images/tool/icon_what.png" alt="" width="10"
+					height="10"></a></div>
+			<em class="r" style="width:92.6%;"> 
+            <div style="width:50px; float:left;">
+			    <a style="width:95px;margin-right:0px" href="<?php echo Util_Uri::makeSearchUrl($aParam, 'tag', null)?>" <?php echo empty($aParam['tag'])?'class="light"':''?>><b>不限</b></a>
+             </div>
+             <div style="width:95%; float:left;">
+			    <?php foreach ($aData['aTag'] as $k => $v) {?>
+		        <a style="width:95px;margin-right:0px" href="<?php echo Util_Uri::makeSearchUrl($aParam, 'tag', $k, 1)?>" <?php echo !empty($aParam['tag']) && in_array($k,$aParam['tag'])?'class="light"':''?>><ins><?php echo $v?></ins></a>
+		        <?php }?>
+                </div> 
+			</em>
+		</dt>
+		
+		<dt class="cf2">
+			<div class="l" style="width:75px;">所在城市<a href="javascript:;" class="help_a"><img class="minitip" title="该账号粉丝比较集中的地域"
+					src="/front/images/tool/icon_what.png" alt="" width="10"
+					height="10"></a></div>
+			<em class="r" style="width:92.6%;"> 
+			    <span class="l" style="width:94%;" >
+                <div style="width:50px; float:left;">
+                    <a style="width:80px;margin-right:0px" href="<?php echo Util_Uri::makeSearchUrl($aParam, 'city', null)?>" <?php echo empty($aParam['city'])?'class="light"':''?>><b>不限</b></a>
+                    </div>
+                    <div style="width:95%; float:left;">
+    			    <?php foreach ($aData['aCity'] as $k => $v) {?>
+    		        <a style="width:80px;margin-right:0px" href="<?php echo Util_Uri::makeSearchUrl($aParam, 'city', $k, 1)?>" <?php echo !empty($aParam['city']) && in_array($k,$aParam['city'])?'class="light"':''?>><ins><?php echo $v?></ins></a>
+    		        <?php }?>
+                    </div>
+			    </span>
+			    <samp class="more_btn">更多</samp>
+			</em>
+		</dt>
+	</dl>
+
+</div>
+<!--end媒介筛选-->
+
+<?php if ($aParam['type'] == Model_Media::TYPE_WEIXIN) {?>
+<table class="list_table list_table_s" style="margin-bottom:20px; width:1200px;">
+	<thead>
+    <tr style="display:none">
+    <td colspan="11">
+    <div style="float:left;">
+    <input type="button" value="全部账号" style="width:100px; height:35px; margin-left:10px;"/>
+    <input type="button" value="自主投放" style="width:100px; height:35px; margin-left:10px;"/>
+    <input type="button" value="预约" style="width:100px; height:35px; margin-left:10px;"/>
+    <?php if (! empty($_aCurrUser)) {?>
+ <input type="button" value="我的媒体库" style="width:100px; height:35px; margin-left:10px;"/>
+			    <?php } ?>
+   
+    </div>
+      </td>
+    </tr>
+		<tr>
+			<th>选择</th>
+			<th width="200px;">帐号</th>
+			<th class="minitip" width="95px;" title="自媒体所拥有的粉丝数量
+">粉丝量<img style="margin-top:5px;" src="/front/images/tool/icon_what.png" alt="" width="10" height="10"></th>
+			<th class="minitip" width="85px;" title="自媒体属性
+">分类<img style="margin-top:5px;" src="/front/images/tool/icon_what.png" alt="" width="10" height="10"></th>
+            <th class="minitip" width="85px;" title="是否认证
+">认证<img style="margin-top:5px;" src="/front/images/tool/icon_what.png" alt="" width="10" height="10"></th>
+         <th class="minitip" width="95px;" title="近30天每天阅读数最高的平均阅读量
+">阅读量<img style="margin-top:5px;" src="/front/images/tool/icon_what.png" alt="" width="10" height="10"></th>
+	     	<th class="minitip" width="95px;" title="指对应账号以单图文形式将广告内容推送给自己粉丝一次的价格
+">单图文<img style="margin-top:5px;" src="/front/images/tool/icon_what.png" alt="" width="10" height="10"></th>
+			<th class="minitip" width="120px;" title="指对应账号以多图文第1条文形式将广告内容推送给自己粉丝一次的价格
+">多图文第一条<img style="margin-top:5px;" src="/front/images/tool/icon_what.png" alt="" width="10" height="10"></th>
+			<th class="minitip" width="120px;" title="指对应账号以多图文第2条文形式将广告内容推送给自己粉丝一次的价格
+">多图文第二条<img style="margin-top:5px;" src="/front/images/tool/icon_what.png" alt="" width="10" height="10"></th>
+			<th class="minitip" width="120px;" title="指对应账号以多图文第3条及第3条以后的位置将广告内容推送给自己粉丝一次的价格
+">多图文其它位置<img style="margin-top:5px;" src="/front/images/tool/icon_what.png" alt="" width="10" height="10"></th>
+            <th class="minitip" width="85px;" title="添加到原有的自媒体文档中，还有新建文档库">操作<img style="margin-top:5px;" src="/front/images/tool/icon_what.png" alt="" width="10" height="10"></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php foreach ($aData['aList'] as $v) {?>
+		<tr>
+			<td>
+				<input class="sel_box" type="checkbox" id="mchoosebox-<?php echo $v['iMediaID']?>" name="aChoose[]" value="<?php echo $v['iMediaID']?>" <?php echo in_array($v['iMediaID'], $aData['aChooseID'])?'checked':''?>
+				    data-id="<?php echo $v['iMediaID']?>" 
+				    data-name="<?php echo $v['sMediaName']?>" 
+				    data-price1="<?php echo $v['iPrice5']?>"
+				    data-price2="<?php echo $v['iPrice6']?>"
+				    data-price3="<?php echo $v['iPrice7']?>"
+				    data-price4="<?php echo $v['iPrice8']?>"
+				    data-followernum="<?php echo $v['iFollowerNum']?>"/>
+			</td>
+			<td>
+				<dl class="wei_o">
+					<dt>
+						<a href="/media/detail/id/<?php echo $v['iMediaID']?>.html">
+						    <img src="<?php echo Util_Uri::getDFSViewURL($v['sAvatar'], 60, 60, 'c')?>" alt="" width="60" height="60">
+						</a>
+					</dt>
+					<dd>
+						<h4><?php echo $v['sMediaName']?></h4>
+						<p><?php echo $v['sOpenName']?></p>
+						<p>
+							<img src="/front/images/tool/wei.png" class="minitip" title="<img src='<?php echo Util_Uri::getDFSViewURL($v['sQRCode'], 120, 120)?>'>"> 
+						</p>
+					</dd>
+				</dl>
+			</td>
+			<td>
+				<span class="blue_text eng"><?php echo $v['iFollowerNum']?></span>
+			</td>
+			<td></td>
+			<td><?php echo $v['iVerifyState']==125?'已认证':'未认证'?></td>
+          	<td><?php echo $v['iReadNum']   ?></td>
+			<td>
+				<span class="eng"><?php echo $v['iPrice5']?>元</span>
+			</td>
+			<td>
+				<span class="eng"><?php echo $v['iPrice6']?>元</span>
+			</td>
+			<td>
+				<span class="eng"><?php echo $v['iPrice7']?>元</span>
+			</td>
+			<td>
+				<span class="eng"><?php echo $v['iPrice8']?>元</span>
+			</td>
+            <td></td>
+		</tr>
+		<?php }?>
+	</tbody>
+</table>
+<?php } else {?>
+<table class="list_table list_table_s" style="margin-bottom:20px; width:1200px;">
+	<thead>
+    <tr style="display:none">
+    <td colspan="10">
+    <div style="float:left;">
+    <input type="button" value="全部账号" style="width:100px; height:35px; margin-left:10px;"/>
+    <?php if (! empty($_aCurrUser)) {?>
+ <input type="button" value="我的媒体库" style="width:100px; height:35px; margin-left:10px;"/>
+			    <?php } ?>
+   
+    </div>
+      </td>
+    </tr>
+		<tr>
+			<th>选择</th>
+			<th width="200px;" >帐号</th>
+			<th class="minitip" width="110px;"  title="自媒体所拥有的粉丝数量
+">粉丝量<img style="margin-top:5px;" src="/front/images/tool/icon_what.png" alt="" width="10" height="10"></th>
+			<th class="minitip"  width="105px;" title="自媒体属性
+">分类<img style="margin-top:5px;" src="/front/images/tool/icon_what.png" alt="" width="10" height="10"></th>
+            <th class="minitip" width="105px;"  title="是否认证
+">认证<img style="margin-top:5px;" src="/front/images/tool/icon_what.png" alt="" width="10" height="10"></th>
+           <th class="minitip" width="115px;"  title="链接地址
+">链接<img style="margin-top:5px;" src="/front/images/tool/icon_what.png" alt="" width="10" height="10"></th>
+          <th class="minitip" width="120px;"  title="转发用户上报的价格
+">转发报价<img style="margin-top:5px;" src="/front/images/tool/icon_what.png" alt="" width="10" height="10"></th>
+			<th class="minitip" width="120px;"  title="广告主上报的价格
+">直发报价<img style="margin-top:5px;" src="/front/images/tool/icon_what.png" alt="" width="10" height="10"></th>
+			<th  width="120px;" >账号简介<img style="margin-top:5px;" src="/front/images/tool/icon_what.png" alt="" width="10" height="10"></th>
+            <th class="minitip" width="105px;"  title="添加到原有的自媒体文档中，还有新建文档库">操作<img style="margin-top:5px;" src="/front/images/tool/icon_what.png" alt="" width="10" height="10"></th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php foreach ($aData['aList'] as $v) {?>
+		<tr>
+			<td>
+				<input class="sel_box" type="checkbox" id="mchoosebox-<?php echo $v['iMediaID']?>" name="aChoose[]" value="<?php echo $v['iMediaID']?>" <?php echo in_array($v['iMediaID'], $aData['aChooseID'])?'checked':''?>
+				    data-id="<?php echo $v['iMediaID']?>" 
+				    data-name="<?php echo $v['sMediaName']?>" 
+				    data-price1="<?php echo $v['iPrice5']?>"
+				    data-price2="<?php echo $v['iPrice6']?>"
+				    data-price3="<?php echo $v['iPrice7']?>"
+				    data-price4="<?php echo $v['iPrice8']?>"/>
+			</td>
+			<td>
+				<dl class="wei_o">
+					<dt>
+						<img src="<?php echo Util_Uri::getDFSViewURL($v['sAvatar'], 60, 60, 'c')?>" alt="" width="60" height="60">
+					</dt>
+					<dd>
+						<h4><?php echo $v['sMediaName']?></h4>
+						<?php if ($v['iVerifyState']) {?>
+						<p>
+							<img src="/front/images/tool/wei.png"> 认证
+						</p>w
+						<?php }?>
+					</dd>
+				</dl>
+			</td>
+			<td>
+				<span class="blue_text eng"><?php echo $v['iFollowerNum']?></span>
+			</td>
+            <td></td>
+			<td>
+				<?php
+				if($v['iVerifyState']==130){
+					   echo "草根";
+				}elseif($v['iVerifyState']==129){
+					echo "达人";
+				}elseif($v['iVerifyState']==128){
+					echo "黄V";
+				}elseif($v['iVerifyState']==127){
+					echo "蓝V";
+				}
+				?>
+			</td>
+			<td>
+				<span class="eng">
+		<?php if(isset($v['sUrl'])&&!empty($v['sUrl'])) {
+			     echo "" ?>
+			<a href="<?php echo "{$v['sUrl']}" ?>"><?php echo substr($v['sUrl'],0,15).'...'  ?></a>
+		<?php	}?></span>
+			</td>
+			<td>
+				<span class="eng"><?php echo $v['iPrice5']?>元</span>
+			</td>
+			<td>
+				<span class="eng"><?php echo $v['iPrice6']?>元</span>
+			</td>
+			<td>
+				<span class="eng"><?php echo $v['sIntroduction']?></span>
+			</td>
+		</tr>
+		<?php }?>
+	</tbody>
+</table>
+<?php }?>
+	
+<div class="pager">
+    <div class="l">
+        <a href="javascript:;" class="all_sel graw_btn">全部选中</a>
+        <a href="/media/export/type/<?php echo $aParam['type']?>.html" class="graw_btn">导出</a>
+        <a href="javascript:;" class="all_sel graw_btn">添加到我的自媒体</a>
+    </div>
+    <div class="r">
+        <?php echo $aData['aPager']?>
+    </div>
+</div>
+
+<div class="f_d">
+	<span class="show_btn">展开</span>
+	<div class="cf2 show_box">
+		<dl class="show_th">
+			<dt>
+				<a href="<?php echo empty($aData['aAd'])?'/ad/add/type/' . $aParam['type'] . '.html':'/ad/add3/id/' . $aData['aAd']['iAdID'] . '.html'?>" class="red_btn_t adaddbtn">立即推广</a>
+			</dt>
+			<dd>
+				<span>收起</span>已选<b class="blue_text eng cf2num"><?php echo count($aData['aChoose'])?></b>个帐号
+			</dd>
+		</dl>
+		<dl class="cf2 show_box">
+			<dt>
+			<?php foreach ($aData['aChoose'] as $v) {?>
+				<p class="cf2" id="cf2-<?php echo $v['iMediaID']?>">
+					<a href="javascript:;" class="r" data-id="<?php echo $v['iMediaID']?>">删除</a> 
+					<em> 
+					    <a href="javascript:;"><?php echo $v['sMediaName']?></a> 
+					<?php if ($aParam['type'] == Model_Media::TYPE_WEIXIN) {?>
+					    <span>单图文(<?php echo $v['iPrice5']?>)</span>
+						多图文(<b class="eng red_text"><?php echo $v['iPrice6']?></b>|<b class="eng red_text"><?php echo $v['iPrice7']?></b>|<b class="eng red_text"><?php echo $v['iPrice8']?></b>)
+					<?php } else {?>
+					    <span>直发(<?php echo $v['iPrice6']?>)</span>
+						转发(<b class="eng red_text"><?php echo $v['iPrice6']?></b>)
+					<?php }?>
+					</em>
+				</p>
+			<?php }?>
+			</dt>
+			<dd>
+				<a href="javascript:;" class="graw_btn">一键清空</a>
+			</dd>
+		</dl>
+	</div>
+	<!--end隐藏的层-->
+</div>
+<!--end浮动层-->
+<script type="text/javascript" src="<?php echo $sStaticRoot?>/js/jquery.cookie.js"></script>
+<script type="text/javascript">
+$(function(){
+	var media_type = '<?php echo $aParam['type']?>';
+	var cookie_key = 'media_choose_' + media_type;
+	set_choose_cookie([<?php echo join(',', $aData['aChooseID'])?>]);
+	//$.cookie(cookie_key, '<?php echo join(',', $aData['aChooseID'])?>', {expires: 30, path: '/'});
+	//选择
+	$('.list_table .sel_box').click(function(){
+		var cbox = $(this);
+		var checked = cbox.prop('checked');
+		if (checked == true) { //选中
+			add_one(cbox);
+		} else {    //删除
+			remove_one(cbox);
+		}
+	});
+	
+    //全选等功能
+    $(".all_sel").click(function(){
+        var checked = !$(".list_table .sel_box:checkbox:first").prop('checked');
+        $(".list_table .sel_box:checkbox").each(function(){
+        	var cbox = $(this);
+        	cbox.prop('checked', checked);
+        	if (checked) {
+        	    add_one(cbox);
+        	} else {
+        		remove_one(cbox);
+        	}
+        });
+    });
+    
+    //条件筛选的显示或隐藏
+    $('.screen_o span.l').each(function(){
+    	$(this).find('a:gt(11)').hide();
+    	if ($(this).find('a').length <= 12) {
+        	$(this).next().hide();
+    	}
+    });
+    $('.more_btn').click(function(){
+    	var top_son_one = $(this).siblings();
+    	if(top_son_one.find('a:last').is(":visible")){
+    		top_son_one.find('a:gt(11)').hide();
+    		$(this).text("更多").removeClass('more_btn_light');
+    	}else{
+    		top_son_one.find('a').show();
+    		$(this).text("收起").addClass('more_btn_light');
+    	}
+    });
+
+    // 立即推广
+    $('.adaddbtn').click(function(){
+        if (! $.cookie(cookie_key)) {
+            alert('请至少选择一个自媒体');
+            return false;
+        }
+    });
+    //展开帐号
+    $('span.show_btn').click(function(){
+        $(this).parent().children('div.show_box').fadeIn();
+        $(this).hide();
+    });
+    
+    if (get_choose_cookie().length > 0) {
+        $('span.show_btn').click();
+    }
+    
+    //收起帐号
+    $('dl.show_th dd span').click(function(){
+        $(this).parent().parent().parent('div.show_box').hide();
+        $(this).parent().parent().parent('div.show_box').siblings('.show_btn').fadeIn();
+    });
+    //一键清空
+    $('dl.show_box a.graw_btn').click(function(){
+        $(this).parent().siblings('dt').empty();	
+        $('.show_box .cf2num').html('0');
+
+        $('.sel_box:checkbox').prop('checked', false);
+        set_choose_cookie([]);
+    });
+    
+    //删除
+	$('dl.show_box p a.r').click(function(){remove_one(this);});
+    function remove_one(ele){
+        var mid = $(ele).data('id') + '';
+        $('#cf2-' + mid).fadeOut(function(){
+            $(this).remove();
+    		$('.show_box .cf2num').html($('dl.show_box > dt > p').length + '');
+        });
+        
+        $('#mchoosebox-' + mid).prop('checked', false);
+
+        // 保存cookie
+		var cids = get_choose_cookie(); 
+		if (cids.indexOf(mid) != -1) {
+		    cids.splice(cids.indexOf(mid),1);
+		}
+		//console.log(mid);
+		//console.log(cids);
+		set_choose_cookie(cids);
+    }
+
+    function array_unique(cids)
+    {
+    	var arr = []; //一个新的临时数组
+        for (var i = 0; i < cids.length; i++) {
+            if (cids[i] == '') {
+                continue;
+            }
+            if (arr.indexOf(cids[i]) == -1) {
+                arr.push(cids[i]);
+	        }
+        }
+
+        return arr;
+    }
+    
+    function get_choose_cookie()
+    {
+    	var cids = $.cookie(cookie_key);
+    	if (cids) {
+        	return cids.split(',');
+    	}
+
+    	return [];
+    }
+    
+    function set_choose_cookie(cids)
+    {
+	    $.cookie(cookie_key, array_unique(cids).join(','), {expires: 30, path: '/'});
+    }
+
+    function add_one(cbox) {
+        var mid = cbox.val();
+        if ($('#cf2-' + mid).length > 0) {
+            return false;
+        }
+        
+    	var html  = '<p class="cf2" id="cf2-'+mid+'">';
+	    html += '    <a href="javascript:;" class="r" data-id='+mid+'>删除</a>';
+		html += '    <em>';
+		html += '        <a href="javascript:;">'+cbox.data('name')+'</a>';
+		if (media_type == 1) {
+            html += '        <span>单图文('+cbox.data('price1')+')</span>'
+    		html += '        多图文(<b class="eng red_text">'+cbox.data('price2')+'</b>|';
+    		html += '<b class="eng red_text">'+cbox.data('price3')+'</b>|';
+    		html += '<b class="eng red_text">'+cbox.data('price4')+'</b>)';
+		} else {
+	        html += '        <span>直发('+cbox.data('price1')+')</span>'
+			html += '        转发(<b class="eng red_text">'+cbox.data('price2')+'</b>)';
+		}
+		html += '    </em>'
+		html += '</p>'
+    	$('dl.show_box > dt').append(html);
+		$('.show_box .cf2num').html($('dl.show_box > dt > p').length + '');
+		$('dl.show_box p a.r').click(function(){remove_one(this);});
+
+		// 展开
+		$('span.show_btn').click();
+
+		var cids = get_choose_cookie();
+		cids.push(mid);
+		set_choose_cookie(cids);
+    }
+});
+</script>

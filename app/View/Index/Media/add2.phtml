@@ -1,0 +1,99 @@
+<div class="cf2 step_o">
+	<div class="cf2 step_o_w">
+		<ul class="step_o cf2 step_m step2_2">
+			<li>
+				<span class="eng"></span>
+				<p>添加媒体</p>
+
+			</li>
+			<li class="light">
+				<span class="eng"></span>
+				<p>填写报价</p>
+			</li>
+			<li>
+				<span class="eng">3</span>
+				<p>等待接单</p>
+			</li>
+		</ul>
+	</div>
+	<!--end宽度-->
+</div>
+<!--end步骤-->
+
+<div class="cf2 box_w gray_border">
+	<dl class="gray_th">
+		<dd>推广报价</dd>
+	</dl>
+	<form autocomplete="off">
+		<input type="hidden" name="iMediaID"
+			value="<?php echo empty($aMedia)?'':$aMedia['iMediaID']?>">
+		<table class="fill_table">
+		    <?php foreach ($aTitle[$aMedia['iMediaType']] as $k => $v) {?>
+			<tr>
+				<th>
+					<span class="red_arrow">*</span><?php echo $v?>：
+				</th>
+				<td>
+					<?php
+					if($v=='单图文报价'){ ?>
+						<div class="l"><a href="javascript:;" class="help_a"><img class="minitip" title="指对应账号以单图文形式将广告内容推送给自己粉丝一次的价格"
+					src="/front/images/tool/icon_what.png" alt="" width="10"
+					height="10"></a></div>
+				<?php
+					}
+					?>
+					<?php
+					if($v=='多图文第一条报价'){ ?>
+						<div class="l"><a href="javascript:;" class="help_a"><img class="minitip" title="指对应账号以多图文第1条文形式将广告内容推送给自己粉丝一次的价格"
+																					  src="/front/images/tool/icon_what.png" alt="" width="10" height="10"></a></div>
+						<?php
+					}
+					?>
+					<?php
+					if($v=='多图文第二条报价'){ ?>
+						<div class="l"><a href="javascript:;" class="help_a"><img class="minitip" title="指对应账号以多图文第2条文形式将广告内容推送给自己粉丝一次的价格"
+																					  src="/front/images/tool/icon_what.png" alt="" width="10"
+																					  height="10"></a></div>
+						<?php
+					}
+					?>
+					<?php
+					if($v=='多图文第三条到N条报价'){ ?>
+						<div class="l"><a href="javascript:;" class="help_a"><img class="minitip" title="指对应账号以多图文第3条及第3条以后的位置将广告内容推送给自己粉丝一次的价格"
+																					  src="/front/images/tool/icon_what.png" alt="" width="10"
+																					  height="10"></a></div>
+						<?php
+					}
+					?>
+					<input type="text" class="fill_text hover_input" name="<?php echo $k?>" value="<?php echo (int)$aMedia[$k]?>">元
+					<label class="error <?php echo $k?>" style="display: none"></label>
+
+				</td>
+			</tr>
+			<?php }?>
+			<tfoot>
+				<tr>
+					<td colspan="2">
+						<input type="button" class="red_btn_t step_btn" value="下一步">
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</form>
+</div>
+
+<script type="text/javascript">
+$(function() {
+	$(".red_btn_t").click(function(){
+		var form = $(this).parents('form').get(0);
+	    $.post(form.action?form.action:location.href, $(form).serialize(), function(ret){
+	        if (ret.status) {
+	            location.href = '/media/addok/id/'+ret.data+'.html';
+	        } else {
+		        showErrorInfo(form, ret.data);
+	        }
+	    }, 'json');
+		return false;
+	});
+});
+</script>

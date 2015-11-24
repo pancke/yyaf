@@ -1,0 +1,71 @@
+<div class="pheader clearfix">微信文章列表</div>
+<div class="pbody clearfix">
+	<form class="form-inline search-form" role="form" method="post" id="myform" action="/admin/crawlwxarticle/list.html">
+		<input name="iWeixinID" type="hidden" value="<?php echo isset($aWeiXin['iWeixinID'])?$aWeiXin['iWeixinID']:''?>">
+        <div class="row sousuo_now">
+            <div class="form-group">
+                <label>微信帐号：</label>
+    		    <input type="text" value="<?php echo isset($aParam['sAccount']) ? $aParam['sAccount'] : '' ?>" class="form-control" name="sAccount" style="width: 200px">
+        	</div>
+        	<div class="form-group">
+                <label>文章标题：</label>
+    		    <input type="text" value="<?php echo isset($aParam['sTitle']) ? $aParam['sTitle'] : '' ?>" class="form-control" name="sTitle" style="width: 200px">
+        	</div>
+            <div class="form-group">
+                <input type="submit" id="formbtn" class="btn btn-default btn-sm" value="搜索">
+            </div>
+        </div>
+    </form>
+    <hr>
+    <div class="btn-toolbar list-toolbar">
+    	<!-- <button class="btn btn-primary" id="crawlwxarticle_add">
+    		<i class="icon-plus"></i> 增加微信
+    	</button> -->
+    </div>
+    <table class="table table-bordered table-hover">
+    	<thead>
+    		<tr>
+    			<th class="col-sm-1 text-center">#</th>
+    			<th class="text-center">微信帐号</th>
+    			<th class="text-center">标题</th>
+    			<th class="text-center">阅读数</th>
+    			<th class="text-center">点赞数</th>
+    			<th class="text-center">发布时间</th>
+    			<th class="text-center">操作</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+        <?php foreach ($aList['aList'] as $v) {?>
+            <tr>
+    			<td class="col-sm-1 text-center"><?php echo $v['iAutoID']?></td>
+    			<td class="text-center"><?php echo $v['sAccount']?></td>
+    			<td class="text-center"><a href="<?php echo $v['sUrl']?>" target="_blank"><?php echo $v['sTitle']?></a></td>
+    			<td class="text-center"><?php echo $v['iReadNum']?></td>
+    			<td class="text-center"><?php echo $v['iPraiseNum']?></td>
+    			<td class="text-center"><?php echo $v['iPublishTime']?></td>
+    			<td class="text-center">
+    			    <a href="/admin/crawlwxarticle/edit?id=<?php echo $v['iAutoID']?>" title="编辑"><i class="icon-pencil icon-large"></i></a>
+    			    <!-- <a class="crawlwxarticle_delete" href="/admin/crawlwxarticle/del?id=<?php echo $v['iAutoID']?>" role="button" data-toggle="modal" title="删除"><i class="icon-trash icon-large"></i></a> -->
+    			</td>
+    		</tr>
+        <?php }?>
+    	</tbody>
+    </table>
+    <?php echo $aList['aPager']?>
+</div>
+<script>
+$('.crawlwxarticle_delete').click(function() {
+	if (confirm("您确认要删除该微信文章吗？")) {
+		$.get(this.href, function(ret){
+			alert(ret.data);
+		    if (ret.status) {
+			    location.reload();
+		    }
+		}, 'json');
+	}
+	return false;
+});
+$('#crawlwxarticle_add').click(function(){
+	location.href = '/admin/crawlwxarticle/add';
+});
+</script>

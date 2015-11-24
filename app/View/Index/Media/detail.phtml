@@ -1,0 +1,121 @@
+<div class="cf2 gray_border box_w">
+	<dl class="gray_th">
+		<dd>账号详情</dd>
+	</dl>
+	<div class="cf2 video_t">
+		<dl class="video_t">
+			<dt>
+				<?php if ($aMedia['iVerifyState']==1){?><div class="red png">认证</div><?php }?>
+				<a href="javascript:;"><img src="<?php echo Util_Uri::getDFSViewURL($aMedia['sAvatar'], 120, 120, 'c')?>" alt="" width="120" height="120"></a>
+			</dt>
+			<dd>
+				<h1>
+					<?php echo $aMedia['sMediaName']?><span class="red_text"><b class="eng"><?php echo $aMedia['iScore']?></b>分</span>
+				</h1>
+				<span class="l">
+					<ul>
+						<li>
+							<font class="l">粉丝数：</font>
+							<ins><?php echo $aMedia['iFollower']?></ins>
+						</li>
+						<li>
+							<font class="l">微信号：</font>
+							<ins><?php echo $aMedia['sOpenName']?></ins>
+						</li>
+						<li>
+							<font class="l">标签：</font>
+							<ins><?php echo $aMedia['sTags']?></ins>
+						</li>
+					</ul>
+				</span> <em class="r"> <font class="l">简介：</font>
+				<ins><?php echo $aMedia['sIntroduction']?></ins>
+				</em>
+			</dd>
+		</dl>
+		<div class="video_wei">
+			二维码：<img src="<?php echo Util_Uri::getDFSViewURL($aMedia['sQRCode'], 130, 130)?>" alt="" width="130" height="130">
+		</div>
+		<!--end二维码-->
+	</div>
+	<!--end一行-->
+
+	<dl class="cf2 video_fen">
+		<dt>
+			<div>
+				<span class="eng"><?php echo $aWeixin['iPublishTimes']?></span>
+				<p>总发布次数</p>
+			</div>
+
+			<div>
+				<span class="eng"><?php echo $aWeixin['iPublishTotal']?></span>
+				<p>总发布篇数</p>
+			</div>
+
+			<div>
+				<span class="eng"><?php echo $aWeixin['iPublish10w']?></span>
+				<p>10W阅读数</p>
+			</div>
+
+		</dt>
+		<dd>
+			<div>
+				<span class="eng"><?php echo $aWeixin['iReadTotal']?></span>
+				<p>总阅读数</p>
+			</div>
+
+			<div>
+				<span class="eng"><?php echo $aWeixin['iPraiseTotal']?></span>
+				<p>总点赞数</p>
+			</div>
+        </dd>
+		<dd>
+			<div>
+				<span class="eng blue_text blue_link"><?php echo $aWeixin['iPublishTotal']?></span>
+				<p>均阅读数</p>
+			</div>
+
+
+			<div>
+				<span class="eng blue_text blue_link"><?php echo $aWeixin['iPublishTotal']?></span>
+				<p>均点赞数</p>
+			</div>
+
+		</dd>
+	</dl>
+
+</div>
+<!--end边框-->
+
+
+<div class="cf2 gray_border box_w dl_last">
+	<dl class="gray_th">
+		<dd style="margin-right:20px;"><a class="<?php echo !$bTop10?'wixitag active':'wixitag'?>" href="/media/detail/id/<?php echo $aMedia['iMediaID']?>.html">全部文章</a></dd>
+		<dd><a class="<?php echo $bTop10?'wixitag active':'wixitag'?> wixitaglst"  href="/media/detail/id/<?php echo $aMedia['iMediaID']?>/top10/1.html">TOP 10</a></dd>
+	</dl>
+    <?php if (!empty($aData['aList'])){foreach ($aData['aList'] as $v) {?>
+	<dl class="cf2 news_o">
+		<dt>
+			<a target="_blank" href="<?php echo $v['sUrl']?>"><img src="<?php echo $v['sImage']?>" alt="" width="120" height="120"></a>
+		</dt>
+		<dd>
+			<h4 class="hide">
+				<a target="_blank" href="<?php echo $v['sUrl']?>"><?php echo $v['sTitle']?></a>
+			</h4>
+			<p><?php echo $v['sContent']?></p>
+			<div>
+				<span class="date"><?php echo date('Y-m-d H:i', $v['iPublishTime'])?></span>
+				<span class="l">
+				         阅读：<a href="javascript:;" class="eng"><?php echo $v['iReadNum']?></a>
+				    <em>点赞：<a href="javascript:;" class="eng"><?php echo $v['iPraiseNum']?></a></em>
+				</span>
+			</div>
+		</dd>
+	</dl>
+	<?php }} else {?>
+	
+	<?php }?>
+</div>
+
+<div class="pager">
+<?php echo $aData['aPager']?>
+</div>

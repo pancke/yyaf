@@ -1,0 +1,234 @@
+<div class="pheader clearfix"><?php echo isset($aHomeCase['iAutoID'])?'编辑':'增加'?>首页实例</div>
+<div class="pbody clearfix">
+    <form id="myform" class="form-horizontal" role="form" method="post" action="">
+        <input name="iAutoID" type="hidden" value="<?php echo isset($aHomeCase['iAutoID'])?$aHomeCase['iAutoID']:''?>">
+		<div class="form-group">
+			<label for="iPersonCharge" class="col-sm-2 control-label"> 类型：</label>
+			<div class="col-sm-10">
+				<select name="iType" class="form-control" style="width:250px;">
+					<option value="0" <?php echo !isset($aHomeCase['iType'])||$aHomeCase['iType']==0?'selected':''?>>请选择</option>
+    		    <?php foreach ($wtype as $k => $v) {?>
+    		        <option value="<?php echo $k?>" <?php echo isset($aHomeCase['iType'])&&$aHomeCase['iType']==$k?'selected':''?>><?php echo $v?></option>
+    		    <?php }?>
+    		    </select>
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 标题：</label>
+			<div class="col-sm-10">
+				<input name="sTitle" type="text" validate="!length:1-50" value="<?php echo isset($aHomeCase['sTitle'])?$aHomeCase['sTitle']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sQRCode" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 图片：</label>
+			<div class="col-sm-10">
+				<input type="hidden" id="sImageImg" name="sImage" value="<?php echo isset($aHomeCase['sImage'])?$aHomeCase['sImage']:''?>">
+				<img id="sImageShow" style="width:120px;height:90px;" src="<?php echo isset($aHomeCase['sImage'])?Util_Uri::getDFSViewURL($aHomeCase['sImage'], 130, 130):''?>">
+				<input type="button" value="选择" class="plupload" data-target="#sImageImg" data-img="#sImageShow">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sUrl" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 链接：</label>
+			<div class="col-sm-10">
+				<input name="sUrl" type="text" validate="!length:1-50" value="<?php echo isset($aHomeCase['sUrl'])?$aHomeCase['sUrl']:''?>" class="form-control input-validate" style="width: 300px">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sUrl" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 覆盖量：</label>
+			<div class="col-sm-10">
+				<input name="iUserNum" type="text" validate="!length:1-50" value="<?php echo isset($aHomeCase['iUserNum'])?$aHomeCase['iUserNum']:''?>" class="form-control input-validate" style="width: 300px">万
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sUrl" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 阅读量：</label>
+			<div class="col-sm-10">
+				<input name="iReadNum" type="text" validate="!length:1-50" value="<?php echo isset($aHomeCase['iReadNum'])?$aHomeCase['iReadNum']:''?>" class="form-control input-validate" style="width: 300px">万
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sUrl" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 点赞数：</label>
+			<div class="col-sm-10">
+				<input name="iZanNum" type="text" validate="!length:1-50" value="<?php echo isset($aHomeCase['iZanNum'])?$aHomeCase['iZanNum']:''?>" class="form-control input-validate" style="width: 300px">万
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sUrl" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 千次阅读成本：</label>
+			<div class="col-sm-10">
+				<input name="iAvgZan" type="text" validate="!length:1-50" value="<?php echo isset($aHomeCase['iAvgZan'])?$aHomeCase['iAvgZan']:''?>" class="form-control input-validate" style="width: 300px">万
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sUrl" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 粉丝数：</label>
+			<div class="col-sm-10">
+				<input name="sFollowerNum1" type="text" validate="!length:1-50" value="<?php echo isset($aHomeCase['sFollowerNum1'])?$aHomeCase['sFollowerNum1']:''?>" style="width: 300px" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sUrl" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 媒体名称1：</label>
+			<div class="col-sm-10">
+				<input name="sMediaName1" type="text" validate="!length:1-50" value="<?php echo isset($aHomeCase['sMediaName1'])?$aHomeCase['sMediaName1']:''?>" style="width: 300px" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sUrl" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 媒体1账号：</label>
+			<div class="col-sm-10">
+				<input name="sOpenName1" type="text" validate="!length:1-50" value="<?php echo isset($aHomeCase['sOpenName1'])?$aHomeCase['sOpenName1']:''?>" style="width: 300px" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sUrl" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 媒体关注数1：</label>
+			<div class="col-sm-10">
+				<input name="sFollowerNum1" type="text" validate="!length:1-50" value="<?php echo isset($aHomeCase['sFollowerNum1'])?$aHomeCase['sFollowerNum1']:''?>" style="width: 300px" class="form-control input-validate">万
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sUrl" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 媒体查看报价1地址：</label>
+			<div class="col-sm-10">
+				<input name="sMediaUrl1" type="text" validate="!length:1-50" value="<?php echo isset($aHomeCase['sMediaUrl1'])?$aHomeCase['sMediaUrl1']:''?>" style="width: 300px" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sQRCode" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 媒体图片1：</label>
+			<div class="col-sm-10">
+				<input type="hidden" id="sImageImg1" name="sMediaImage1" value="<?php echo isset($aHomeCase['sMediaImage1'])?$aHomeCase['sMediaImage1']:''?>">
+				<img id="sImageShow1" style="width:120px;height:90px;" src="<?php echo isset($aHomeCase['sMediaImage1'])?Util_Uri::getDFSViewURL($aHomeCase['sMediaImage1'], 130, 130):''?>">
+				<input type="button" value="选择" class="plupload" data-target="#sImageImg1" data-img="#sImageShow1">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sUrl" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 媒体名称2：</label>
+			<div class="col-sm-10">
+				<input name="sMediaName2" type="text" validate="!length:1-50" value="<?php echo isset($aHomeCase['sMediaName2'])?$aHomeCase['sMediaName2']:''?>" style="width: 300px" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sUrl" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 媒体2账号：</label>
+			<div class="col-sm-10">
+				<input name="sOpenName2" type="text" validate="!length:1-50" value="<?php echo isset($aHomeCase['sOpenName2'])?$aHomeCase['sOpenName2']:''?>" style="width: 300px" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sUrl" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 媒体关注数2：</label>
+			<div class="col-sm-10">
+				<input name="sFollowerNum2" type="text" validate="!length:1-50" value="<?php echo isset($aHomeCase['sFollowerNum2'])?$aHomeCase['sFollowerNum2']:''?>" style="width: 300px" class="form-control input-validate">万
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sUrl" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 媒体查看报价2地址：</label>
+			<div class="col-sm-10">
+				<input name="sMediaUrl2" type="text" validate="!length:1-50" value="<?php echo isset($aHomeCase['sMediaUrl2'])?$aHomeCase['sMediaUrl2']:''?>" style="width: 300px" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sQRCode" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 媒体图片2：</label>
+			<div class="col-sm-10">
+				<input type="hidden" id="sImageImg2" name="sMediaImage2" value="<?php echo isset($aHomeCase['sMediaImage2'])?$aHomeCase['sMediaImage2']:''?>">
+				<img id="sImageShow2" style="width:120px;height:90px;" src="<?php echo isset($aHomeCase['sMediaImage2'])?Util_Uri::getDFSViewURL($aHomeCase['sMediaImage2'], 130, 130):''?>">
+				<input type="button" value="选择" class="plupload" data-target="#sImageImg2" data-img="#sImageShow2">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sUr1" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 媒体名称3：</label>
+			<div class="col-sm-10">
+				<input name="sMediaName3" type="text" validate="!length:1-50" value="<?php echo isset($aHomeCase['sMediaName3'])?$aHomeCase['sMediaName3']:''?>" style="width: 300px" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sUr1" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 媒体3账号：</label>
+			<div class="col-sm-10">
+				<input name="sOpenName3" type="text" validate="!length:1-50" value="<?php echo isset($aHomeCase['sOpenName3'])?$aHomeCase['sOpenName3']:''?>" style="width: 300px" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sUr1" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 媒体3关注数：</label>
+			<div class="col-sm-10">
+				<input name="sFollowerNum3" type="text" validate="!length:1-50" value="<?php echo isset($aHomeCase['sFollowerNum3'])?$aHomeCase['sFollowerNum3']:''?>" style="width: 300px" class="form-control input-validate">万
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sUrl" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 媒体3查看报价地址：</label>
+			<div class="col-sm-10">
+				<input name="sMediaUrl3" type="text" validate="!length:1-50" value="<?php echo isset($aHomeCase['sMediaUrl3'])?$aHomeCase['sMediaUrl3']:''?>" style="width: 300px" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sQRCode" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 媒体3图片：</label>
+			<div class="col-sm-10">
+				<input type="hidden" id="sImageImg3" name="sMediaImage3" value="<?php echo isset($aHomeCase['sMediaImage3'])?$aHomeCase['sMediaImage3']:''?>">
+				<img id="sImageShow3" style="width:120px;height:90px;" src="<?php echo isset($aHomeCase['sMediaImage3'])?Util_Uri::getDFSViewURL($aHomeCase['sMediaImage3'], 130, 130):''?>">
+				<input type="button" value="选择" class="plupload" data-target="#sImageImg3" data-img="#sImageShow3">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sContent" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 内容：</label>
+			<div class="col-sm-10">
+				<!-- <textarea name="sContent" class="form-control input-validate" rows="3" cols="20"><?php echo isset($aHomeCase['sDesc'])?$aHomeCase['sDesc']:''?></textarea> -->
+				<script type="text/plain" id="editor" name="sDesc" height="400px"><?php echo isset($aHomeCase['sDesc'])?$aHomeCase['sDesc']:''?></script>
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<?php if(isset($aHomeCase['iAutoID'])){ ?>
+    	<?php if(isset($aHomeCase['iUpdateTime']) && $aHomeCase['iUpdateTime'] > 0){ ?>
+    	<div class="form-group">
+    		<label for="iMoney" class="col-sm-2 control-label"> 更新时间：</label>
+    		<div class="col-sm-10">
+    			<?php echo date('Y-m-d H:i:s' , $aHomeCase['iUpdateTime']); ?>
+    		</div>
+    	</div>
+    	<?php } ?>
+    	<div class="form-group">
+    		<label for="iMoney" class="col-sm-2 control-label"> 创建时间：</label>
+    		<div class="col-sm-10">
+    			<?php echo date('Y-m-d H:i:s' , $aHomeCase['iCreateTime']); ?>
+    		</div>
+    	</div>
+    	<?php } ?>
+    	<div class="btn-toolbar text-center">
+        	<button id="save" class="btn btn-primary">保存</button>
+        	<button id="cancel"class="btn" onclick="location.href='/admin/homecase/list/';return false;">取消</button>
+        </div>
+	</form>
+</div>
+<script type="text/javascript" src="<?php echo $sStaticRoot ?>/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="<?php echo $sStaticRoot ?>/ueditor/ueditor.all.js"></script>
+<script type="text/javascript">
+var ue = UE.getEditor('editor');
+$(function() {
+	$("#myform").validate({submitHandler: function(form) {
+	    $.post(form.action, $(form).serialize(), function(ret){
+	        alert(ret.data);
+	        if (ret.status) {
+	            location.href = '/admin/homecase/list/';
+	        }
+	    }, 'json');
+		return false;
+	}});
+});
+</script>
+<script type="text/javascript">
+global.sUploadUrl = '<?php echo Util_Common::getConf('upload', 'url')?>';
+global.sDfsViewUrl = '<?php echo Util_Common::getConf('dfsview', 'url')?>';
+</script>
+<script type="text/javascript" charset="utf-8" src="<?php echo $sStaticRoot ?>/plupload/plupload.full.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="<?php echo $sStaticRoot ?>/js/upload.js"></script>
+<script type="text/javascript" charset="utf-8" src="<?php echo $sStaticRoot ?>/plupload/zh_CN.js"></script>

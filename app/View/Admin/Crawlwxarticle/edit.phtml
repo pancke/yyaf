@@ -1,0 +1,110 @@
+<div class="pheader clearfix"><?php echo isset($aWeiXin['iAutoID'])?'编辑':'增加'?>微信文章</div>
+<div class="pbody clearfix">
+    <form id="myform" class="form-horizontal" role="form" method="post" action="">
+        <input name="iAutoID" type="hidden" value="<?php echo isset($aWeiXin['iAutoID'])?$aWeiXin['iAutoID']:''?>">
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 微信帐号：</label>
+			<div class="col-sm-10">
+				<?php echo isset($aWeiXin['sAccount'])?$aWeiXin['sAccount']:''?>
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 标题：</label>
+			<div class="col-sm-10">
+				<input name="sTitle" type="text" value="<?php echo isset($aWeiXin['sTitle'])?$aWeiXin['sTitle']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sFollowerImg" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 图片：</label>
+			<div class="col-sm-10">
+				<input type="hidden" id="sImage" name="sImage" value="<?php echo isset($aMedia['sImage'])?$aMedia['sImage']:''?>">
+				<img id="sImageShow" style="width:120px;height:90px;" src="<?php echo isset($aMedia['sImage'])?$aMedia['sImage']:''?>">
+				<input type="button" value="选择" class="plupload" data-target="#sImage" data-img="#sImageShow">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 内容：</label>
+			<div class="col-sm-10">
+				<textarea name="sContent" class="form-control input-validate" rows="3" cols="20"><?php echo isset($aWeiXin['sContent'])?$aWeiXin['sContent']:''?></textarea>
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 阅读数：</label>
+			<div class="col-sm-10">
+				<input name="iReadNum" type="text" value="<?php echo isset($aWeiXin['iReadNum'])?$aWeiXin['iReadNum']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 点赞数：</label>
+			<div class="col-sm-10">
+				<input name="iPraiseNum" type="text" value="<?php echo isset($aWeiXin['iPraiseNum'])?$aWeiXin['iPraiseNum']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 发布时间：</label>
+			<div class="col-sm-10">
+				<input name="iPublishTime" type="text" value="<?php echo isset($aWeiXin['iPublishTime'])?$aWeiXin['iPublishTime']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 发布时间字符串：</label>
+			<div class="col-sm-10">
+				<input name="sPublishTime" type="text" value="<?php echo isset($aWeiXin['sPublishTime'])?$aWeiXin['sPublishTime']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 原链接：</label>
+			<div class="col-sm-10">
+				<input name="sUrl" type="text" value="<?php echo isset($aWeiXin['sUrl'])?$aWeiXin['sUrl']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 原链接Sha1值：</label>
+			<div class="col-sm-10">
+				<input name="sUrlHash" type="text" value="<?php echo isset($aWeiXin['sUrlHash'])?$aWeiXin['sUrlHash']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<?php if(isset($aWeiXin['iAutoID'])){ ?>
+    	<?php if(isset($aWeiXin['iUpdateTime']) && $aWeiXin['iUpdateTime'] > 0){ ?>
+    	<div class="form-group">
+    		<label for="iMoney" class="col-sm-2 control-label"> 更新时间：</label>
+    		<div class="col-sm-10">
+    			<?php echo date('Y-m-d H:i:s' , $aWeiXin['iUpdateTime']); ?>
+    		</div>
+    	</div>
+    	<?php } ?>
+    	<div class="form-group">
+    		<label for="iMoney" class="col-sm-2 control-label"> 创建时间：</label>
+    		<div class="col-sm-10">
+    			<?php echo date('Y-m-d H:i:s' , $aWeiXin['iCreateTime']); ?>
+    		</div>
+    	</div>
+    	<?php } ?>
+    	<div class="btn-toolbar text-center">
+        	<button id="save" class="btn btn-primary">保存</button>
+        	<button id="cancel"class="btn" onclick="location.href='/admin/crawlwxarticle/list/';return false;">取消</button>
+        </div>
+	</form>
+</div>
+<script type="text/javascript">
+$(function() {
+	$("#myform").validate({submitHandler: function(form) {
+	    $.post(form.action, $(form).serialize(), function(ret){
+	        alert(ret.data);
+	        if (ret.status) {
+	            location.href = '/admin/crawlwxarticle/list/';
+	        }
+	    }, 'json');
+		return false;
+	}});
+});
+</script>

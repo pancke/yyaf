@@ -1,0 +1,141 @@
+<?php $iTopNav=3; include 'topnav.phtml';?>
+
+<div class="cf2 box_w gray_border">
+	<dl class="gray_th">
+		<dd>申请提现</dd>
+	</dl>
+	<form id="myform" method="post">
+	<table class="fill_table">
+	    <tr>
+			<th colspan="2" style="text-align: left;padding-left:50px;">
+				 可提现金额：<font color="red"><?php echo $aUser['iMoney']?></font>
+			</th>
+		</tr>
+		<tr>
+			<th width="120px;">
+				<span class="red_arrow">*</span>
+				<label>申请人：</label>
+			</th>
+			<td>
+				<input type="text" class="fill_text hover_input" name="sRealName">
+				<label class="error sRealName" style="display: none"></label>
+			</td>
+		</tr>
+		<tr>
+			<th>
+				<span class="red_arrow">*</span>
+				<label>提现金额：</label>
+			</th>
+			<td>
+				<input type="text" class="fill_text hover_input" name="iPayMoney">
+				<label class="error iPayMoney" style="display: none"></label>
+			</td>
+		</tr>
+		<tr>
+			<th>
+				<span class="red_arrow">*</span>账号类型：
+			</th>
+			<td>
+				<label><input type="radio" name="iPayType" value="1" checked>&nbsp;支付宝</label>
+				<label style="margin-left: 20px"><input type="radio" name="iPayType" value="3">&nbsp;银行卡</label>
+			</td>
+		</tr>
+		<tr class="paytype1">
+			<th>
+				<span class="red_arrow">*</span>
+				<label>支付宝账号：</label>
+			</th>
+			<td>
+				<input type="text" class="fill_text hover_input" name="sPayAccount">
+				<label class="error sPayAccount" style="display: none"></label>
+			</td>
+		</tr>
+		<tr class="paytype1">
+			<th>
+				<span class="red_arrow">*</span>
+				<label for="a_4">支付宝姓名：</label>
+			</th>
+			<td>
+				<input type="text" class="fill_text hover_input" name="sOpenName1">
+				<label class="error sOpenName" style="display: none"></label>
+			</td>
+		</tr>
+		<tr class="paytype3" style="display: none">
+			<th>
+				<span class="red_arrow">*</span>
+				<label>开户姓名：</label>
+			</th>
+			<td>
+				<input type="text" class="fill_text hover_input" name="sOpenName">
+				<label class="error sOpenName" style="display: none"></label>
+			</td>
+		</tr>
+		<tr class="paytype3" style="display: none">
+			<th>
+				<span class="red_arrow">*</span>
+				<label>开户银行：</label>
+			</th>
+			<td>
+				<input type="text" class="fill_text hover_input" name="sBankName">
+				<label class="error sBankName" style="display: none"></label>
+			</td>
+		</tr>
+		<tr class="paytype3" style="display: none">
+			<th>
+				<span class="red_arrow">*</span>
+				<label>银行账号：</label>
+			</th>
+			<td>
+				<input type="text" class="fill_text hover_input" name="sBankAccount">
+				<label class="error sBankAccount" style="display: none"></label>
+			</td>
+		</tr>
+        <tr>
+			<th>
+				<span class="red_arrow">*</span>
+				<label>支付密码：</label>
+			</th>
+			<td>
+				<input type="password" class="fill_text hover_input sPayPassword">
+				<label class="error sPayPass" style="display: none"></label>
+			</td>
+		</tr>
+		
+		<tfoot>
+			<tr>
+				<td colspan="2">
+					<input type="button" class="red_btn_t step_btn" value="申请提现">
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+	</form>
+</div>
+
+<script type="text/javascript">
+$(function() {
+	$('input[name=iPayType]').click(function(){
+		if (this.value == 1) {
+			$('.paytype1').show();
+			$('.paytype3').hide();
+		} else {
+			$('.paytype1').hide();
+			$('.paytype3').show();
+		}
+	});
+	
+	$(".red_btn_t").click(function(){
+		var form = $(this).parents('form').get(0);
+		var data = $(form).serialize() + '&sPayPassword=' + $('input.sPayPassword').val();
+	    $.post(form.action?form.action:location.href, data, function(ret){
+	    	if (ret.status) {
+	        	alert(ret.data);
+	        	location.href = '/mcenter/cashok.html';
+			} else {
+				showErrorInfo(form, ret.data);
+			}
+	    }, 'json');
+		return false;
+	});
+});
+</script>

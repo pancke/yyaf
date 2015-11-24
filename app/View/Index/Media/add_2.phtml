@@ -1,0 +1,53 @@
+<tr>
+	<th>
+		<span class="red_arrow">*</span>
+		<label for="sMediaName">账号名称：</label>
+	</th>
+	<td>
+	    <?php if (!empty($aMedia)) {
+			    echo $aMedia['sMediaName'];
+	    ?>
+	        <input type="hidden" class="fill_text hover_input" id="sMediaName" name="sMediaName" value="<?php echo empty($aMedia)?'':$aMedia['sMediaName']?>">
+	        <?php 
+			} else {?>
+		<input type="text" placeholder="请输入账号名称" class="fill_text hover_input" id="sMediaName" name="sMediaName" value="<?php echo empty($aMedia)?'':$aMedia['sMediaName']?>">
+		<label class="error sMediaName" style="display: none"></label>
+		<?php }?>
+	</td>
+</tr>
+<tr>
+	<th>
+		<span class="red_arrow">*</span>
+		<label for="n_3">好友数量：</label>
+	</th>
+	<td>
+		<input type="text" placeholder="请输入好友数量" class="fill_text hover_input" id="n_3" name="iFollowerNum" value="<?php echo empty($aMedia)?'':$aMedia['iFollowerNum']?>">
+		<label class="error iFollowerNum" style="display: none"></label>
+	</td>
+</tr>
+<tr>
+	<th>
+		<span class="red_arrow">*</span>好友截图：
+	</th>
+	<td>
+	    <img class="imageplus plupload" id="sFollowerImgShow" src="<?php echo empty($aMedia)?'/front/images/tool/imageplus.png':Util_Uri::getDFSViewURL($aMedia['sFollowerImg'])?>" data-target="#sFollowerImg" data-img="#sFollowerImgShow">
+	    <div class="imagetips">
+	        仅支持jpg、jpeg、gif图片且图片不能大于2M<br>建议尺寸：200像素 * 200像素<br>
+		<label class="error sFollowerImg" style="display: none"></label>
+	    </div>
+		<input type="hidden" name="sFollowerImg" id="sFollowerImg" value="<?php echo empty($aMedia)?'':$aMedia['sFollowerImg']?>" />
+	</td>
+</tr>
+<tr>
+	<th>
+		<span class="red_arrow">*</span>微信头像：
+	</th>
+	<td>
+		<img class="imageplus plupload" id="sAvatarImgShow" src="<?php echo empty($aMedia)?'/front/images/tool/imageplus.png':Util_Uri::getDFSViewURL($aMedia['sAvatar'])?>" data-target="#sAvatarImg" data-img="#sAvatarImgShow">
+	    <div class="imagetips">
+	        仅支持jpg、jpeg、gif图片且图片不能大于2M<br>建议尺寸：200像素 * 200像素<br>
+		<label class="error sAvatar" style="display: none"></label>
+	    </div>
+		<input type="hidden" name="sAvatar" id="sAvatarImg" value="<?php echo empty($aMedia)?'':$aMedia['sAvatar']?>" />
+	</td>
+</tr>

@@ -1,0 +1,127 @@
+<?php $iTopNav=4; include 'topnav.phtml';?>
+
+<dl class="tab_nav_text">
+	<dd>
+		<a href="/acenter/coinfo.html" <?php echo $iTabID==1?'class="tab_light"':''?>>企业资料</a><em class="china">|</em>
+		<a href="/acenter/userinfo.html" <?php echo $iTabID==2?'class="tab_light"':''?>>个人信息</a><em class="china">|</em>
+		<a href="/acenter/chgpwd.html" <?php echo $iTabID==3?'class="tab_light"':''?>>修改密码</a><em class="china">|</em>
+		<a href="/acenter/chgpaypwd.html" <?php echo $iTabID==4?'class="tab_light"':''?>>安全密码</a>
+	</dd>
+</dl>
+
+<div class="cf2 box_w gray_border">
+	<dl class="gray_th">
+		<dd>企业资料</dd>
+	</dl>
+	<form autocomplete="off">
+	<table class="fill_table">
+		<tr>
+			<th width="120px;">
+				<span class="red_arrow">*</span>
+				<label for="a_1">公司名字：</label>
+			</th>
+			<td>
+				<input type="text" class="fill_text hover_input hover_input_w" name="sCoName" value="<?php echo $aUser['sCoName']?>">
+				<label class="error sCoName" style="display: none"></label>
+			</td>
+		</tr>
+
+		<tr>
+			<th>
+				<span class="red_arrow">*</span>所属行业：
+			</th>
+			<td>
+				<ul id="mcity" class="input_list" style="width: 800px;">
+				<?php foreach ($aIndustry as $k => $v){?>
+					<li>
+						<label>
+							<div class="sel_box">
+								<input type="checkbox" id="type-<?php echo $k?>" value="<?php echo $k?>" name="aCoIndustry[]" <?php echo in_array($k, $aUser['aCoIndustry']) ? 'checked' : ''?> />
+								<label for="type-<?php echo $k?>"></label>
+							</div>
+							<?php echo $v?>
+						</label>
+					</li>
+			    <?php }?>
+				</ul> 
+				<label class="error sCoIndustry" style="display: none"></label>
+			</td>
+		</tr>
+
+		<tr>
+			<th>
+				<span class="red_arrow">*</span>
+				<label for="a_2">地址：</label>
+			</th>
+			<td>
+				<input type="text" class="fill_text hover_input hover_input_w" name="sCoAddress" value="<?php echo $aUser['sCoAddress']?>">
+				<label class="error sCoAddress" style="display: none"></label>
+			</td>
+		</tr>
+
+		<tr>
+			<th>
+				<span class="red_arrow">*</span>
+				<label for="a_3">网址：</label>
+			</th>
+			<td>
+				<input type="text" class="fill_text hover_input hover_input_w" name="sCoWebsite" value="<?php echo $aUser['sCoWebsite']?>">
+				<label class="error sCoWebsite" style="display: none"></label>
+			</td>
+		</tr>
+
+		<tr>
+			<th>
+				<span class="red_arrow">*</span>
+				<label for="a_4">公司简介：</label>
+			</th>
+			<td>
+				<textarea class="fill_textarea hover_input hover_input_w" name="sCoDesc"><?php echo $aUser['sCoDesc']?></textarea>
+				<label class="error sCoDesc" style="display: none"></label>
+			</td>
+		</tr>
+		<tfoot>
+			<tr>
+				<td colspan="2">
+					<input type="button" class="red_btn_t step_btn" value="保存修改">
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+	</form>
+</div>
+
+<script type="text/javascript">
+$(function() {
+	$(".red_btn_t").click(function(){
+		var form = $(this).parents('form').get(0);
+	    $.post(form.action?form.action:location.href, $(form).serialize(), function(ret){
+	        if (ret.status) {
+	        	alert(ret.data);
+	        	location.reload();
+	        } else {
+	        	showErrorInfo(form, ret.data);
+	        }
+	    }, 'json');
+		return false;
+	});
+	
+	$('#sendverifycode').click(function(){
+		var sMobile = $('#sMobile').val().trim();
+		if (/^1[0-9]{10}$/.test(sMobile)) {
+			alert('请输入正确的手机号码！');
+		}
+		//$.get('/user/')
+	});
+
+	$('#mcity :checkbox').click(function(){
+		if ($('#mcity :checkbox:checked').length > 3) {
+			alert('所属行业最多只能选择3个');
+			$('label.sCoIndustry').html('所属行业最多只能选择6个').show();
+			return false;
+		} else {
+			$('label.sCoIndustry').hide();
+		}
+	});
+});
+</script>

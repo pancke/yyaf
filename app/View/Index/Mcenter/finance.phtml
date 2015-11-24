@@ -1,0 +1,59 @@
+<?php $iTopNav=3; include 'topnav.phtml';?>
+
+<dl class="tab_nav_text">
+	<dd>
+		<a href="/mcenter/finance.html" <?php echo $iType==0?'class="tab_light"':''?>>所有记录</a><em class="china">|</em>
+		<a href="/mcenter/finance/type/1.html" <?php echo $iType==1?'class="tab_light"':''?>>收入记录</a><em class="china">|</em>
+		<a href="/mcenter/finance/type/2.html" <?php echo $iType==2?'class="tab_light"':''?>>提现记录</a>
+	</dd>
+</dl>
+
+<div class="tab_box tab_box_o">
+	<div>
+		<table class="list_table">
+			<thead>
+				<tr>
+					<th>流水号</th>
+					<th>时间</th>
+					<th>分类</th>
+					<th>金额</th>
+					<th>当前余额</th>
+					<th>账单明细</th>
+					<th>备注</th>
+				</tr>
+			</thead>
+			<tbody>
+			<?php 
+			    if(empty($aData['aList'])){
+			?>
+			    <tr><td colspan="7">无财务明细</td></tr>
+			<?php 
+			    } else {
+			    foreach ($aData['aList'] as $k => $v) {
+			?>
+				<tr>
+					<td><span class="eng"><?php echo $v['iAutoID']?></span></td>
+					<td><span class="eng"><?php echo date('Y-m-d H:i:s', $v['iCreateTime'])?></span></td>
+					<td><span class="blue_link"><?php echo $aPayment[$v['iPayment']]?></span></td>
+					<td><span class="red_text eng">&yen;<?php echo $v['iPayMoney']?></span></td>
+					<td><span class="eng">&yen;<?php echo $v['iUserMoney']?></span></td>
+					<td><?php echo $aSource[$v['iSource']]?></td>
+					<td><?php echo $v['sRemark']?></td>
+				</tr>
+		    <?php }}?>
+			</tbody>
+		</table>
+		<div class="pager">
+		<?php echo $aData['aPager']?>
+		</div>
+	</div>
+</div>
+
+<dl class="cf2 w_1000 d_money">
+	<dt>
+		可提现余额为：<b class="eng red_text">&yen;<?php echo $aUser['iMoney']?></b>
+	</dt>
+	<dd>
+		<a href="/mcenter/cashout.html" class="red_btn_t">提现</a>
+	</dd>
+</dl>

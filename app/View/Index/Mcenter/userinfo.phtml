@@ -1,0 +1,105 @@
+<?php $iTopNav=4; include 'topnav.phtml';?>
+
+<dl class="tab_nav_text">
+	<dd>
+		<a href="/mcenter/coinfo.html" <?php echo $iTabID==1?'class="tab_light"':''?>>企业资料</a><em class="china">|</em>
+		<a href="/mcenter/userinfo.html" <?php echo $iTabID==2?'class="tab_light"':''?>>个人信息</a><em class="china">|</em>
+		<a href="/mcenter/chgpwd.html" <?php echo $iTabID==3?'class="tab_light"':''?>>修改密码</a><em class="china">|</em>
+		<a href="/mcenter/chgpaypwd.html" <?php echo $iTabID==4?'class="tab_light"':''?>>安全密码</a>
+	</dd>
+</dl>
+
+<div class="cf2 box_w gray_border">
+	<dl class="gray_th">
+		<dd>个人资料</dd>
+	</dl>
+	<form>
+	<table class="fill_table">
+		<tr>
+			<th>
+				<span class="red_arrow">*</span>
+				<label for="b_2">邮箱：</label>
+			</th>
+			<td>
+				<?php echo $aUser['sEmail']?>
+			</td>
+		</tr>
+
+		<tr>
+			<th>
+				<span class="red_arrow">*</span>
+				<label for="b_3">手机：</label>
+			</th>
+			<td>
+				<input type="text" class="fill_text hover_input"  name="sMobile" value="<?php echo $aUser['sMobile']?>">
+				<label class="error sMobile" style="display: none"></label>
+			</td>
+		</tr>
+		
+		<tr>
+			<th width="120px;">
+				<span class="red_arrow">*</span>
+				<label for="b_1">姓名：</label>
+			</th>
+			<td>
+				<input type="text" class="fill_text hover_input" name="sRealName" value="<?php echo $aUser['sRealName']?>">
+				<label class="error sRealName" style="display: none"></label>
+			</td>
+		</tr>
+
+		<tr>
+			<th>
+				<span class="red_arrow">*</span>
+				<label for="b_4">微信：</label>
+			</th>
+			<td>
+				<input type="text" class="fill_text hover_input" name="sWeixin" value="<?php echo $aUser['sWeixin']?>">
+				<label class="error sWeixin" style="display: none"></label>
+			</td>
+		</tr>
+
+		<tr>
+			<th>
+				<span class="red_arrow">*</span>
+				<label for="b_5" class="eng">QQ：</label>
+			</th>
+			<td>
+				<input type="text" class="fill_text hover_input" name="sQQ" value="<?php echo $aUser['sQQ']?>">
+				<label class="error sQQ" style="display: none"></label>
+			</td>
+		</tr>
+		<tfoot>
+			<tr>
+				<td colspan="2">
+					<input type="button" class="red_btn_t step_btn" value="保存修改">
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+	</form>
+</div>
+
+<script type="text/javascript">
+$(function() {
+	$(".red_btn_t").click(function(){
+		var form = $(this).parents('form').get(0);
+	    $.post(form.action?form.action:location.href, $(form).serialize(), function(ret){
+	        if (ret.status) {
+	        	alert(ret.data);
+	        	location.reload();
+	        } else {
+		        showErrorInfo(form, ret.data);
+	        }
+	    }, 'json');
+		return false;
+	});
+	
+	$('#sendverifycode').click(function(){
+		var sMobile = $('#sMobile').val().trim();
+		if (/^1[0-9]{10}$/.test(sMobile)) {
+			alert('请输入正确的手机号码！');
+		}
+		//$.get('/user/')
+	});
+});
+</script>

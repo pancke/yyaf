@@ -1,0 +1,59 @@
+<?php $iTopNav=1; include 'topnav.phtml';?>
+
+<div class="cf2 gray_border box_w">
+	<dl class="gray_th">
+		<dd>提交效果图</dd>
+	</dl>
+
+	<form autocomplete="off">
+	<input type="hidden" name="id" value="<?php echo $aAdMedia['iAutoID']?>">
+	<table class="fill_table">
+		<tr>
+			<th valign="middle" style="vertical-align: middle;">
+				<span class="red_arrow">*</span>效果图：
+			</th>
+			<td>
+				<img class="imageplus plupload" width="120px" height="120px" id="sEffectImgShow" src="<?php echo empty($aMedia)?'/front/images/tool/imageplus.png':Util_Uri::getDFSViewURL($aMedia['sEffectImg'])?>" data-target="#sEffectImg" data-img="#sEffectImgShow">
+			    <div class="imagetips">
+			        仅支持jpg、jpeg、gif图片且图片不能大于2M<br>建议尺寸：200像素 * 200像素<br>
+				<label class="error sEffectImg" style="display: none"></label>
+			    </div>
+				<input type="hidden" name="sEffectImg" id="sEffectImg" value="<?php echo empty($aMedia)?'':$aMedia['sEffectImg']?>" />
+			</td>
+		</tr>
+		<tfoot>
+			<tr>
+				<td colspan="2">
+					<input type="button" class="red_btn_t step_btn" value="提交">
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+	</form>
+</div>
+
+<script type="text/javascript">
+global.sUploadUrl = '<?php echo Util_Common::getConf('upload', 'url')?>';
+global.sDfsViewUrl = '<?php echo Util_Common::getConf('dfsview', 'url')?>';
+</script>
+
+<link href="<?php echo $sStaticRoot ?>/webuploader/webuploader.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" charset="utf-8" src="<?php echo $sStaticRoot ?>/webuploader/webuploader.js"></script>
+<script type="text/javascript" charset="utf-8" src="<?php echo $sStaticRoot ?>/js/webuploader.js"></script>
+
+<script>
+;$(function(){
+    $(".red_btn_t").click(function(){
+		var form = $(this).parents('form').get(0);
+	    $.post(form.action?form.action:location.href, $(form).serialize(), function(ret){
+	        if (ret.status) {
+		        alert(ret.data);
+	            location.href = '/mcenter/index/type/6.html';
+	        } else {
+		        showErrorInfo(form, ret.data);
+	        }
+	    }, 'json');
+		return false;
+	});
+});
+</script>

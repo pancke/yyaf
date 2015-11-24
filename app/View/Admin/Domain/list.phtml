@@ -1,0 +1,98 @@
+<div class="pheader clearfix">基础配置列表</div>
+<div class="pbody clearfix">
+	<form class="form-inline search-form" role="form" method="post" id="myform" action="/admin/domain/list.html">
+        <div class="row sousuo_now">
+            <div class="form-group">
+                <label>类型：</label>
+    		    <select name="iType" class="form-control">
+    		        <option value="">选择类型</option>
+    		    <?php foreach ($iType as $k => $v) {?>
+    		        <option value="<?php echo $k?>" <?php echo isset($aParam['iType'])&&$aParam['iType']==$k?'selected':''?>><?php echo $v?></option>
+    		    <?php }?>
+    		    </select>
+        	</div>
+            <div class="form-group">
+                <label>名称：</label>
+                <input type="text" value="<?php echo isset($aParam['sName']) ? $aParam['sName'] : '' ?>" class="form-control" name="sName" style="width: 100px">
+            </div>
+            <div class="form-group">
+                <input type="submit" id="formbtn" class="btn btn-default btn-sm" value="搜索">
+            </div>
+        </div>
+    </form>
+    <hr />
+    <div class="btn-toolbar list-toolbar">
+    	<button class="btn btn-primary" id="domain_add">
+    		<i class="icon-plus"></i> 增加基础配置
+    	</button>
+    </div>
+    <table class="table table-bordered table-hover">
+    	<thead>
+    		<tr>
+    			<th class="col-sm-1 text-center">#</th>
+    			<th class="text-center">类型</th>
+    			<th class="text-center">基础配置名称</th>
+    			<th class="text-center">顺序</th>
+    			<th class="text-center">修改时间</th>
+    			<th class="text-center">创建时间</th>
+    			<th class="text-center">操作</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+        <?php foreach ($aList['aList'] as $v) {?>
+            <tr>
+    			<td class="col-sm-1 text-center"><?php echo $v['iAutoID']?></td>
+    			<td class="text-center"><?php echo isset($v['iType']) ? $iType[$v['iType']] : '';?></td>
+    			<td class="text-center"><?php echo $v['sName']?></td>
+    			<td class="text-center"><?php echo $v['iOrder']?></td>
+    			<td class="text-center"><?php echo date('Y-m-d' , $v['iUpdateTim'])?></td>
+    			<td class="text-center"><?php echo date('Y-m-d' , $v['iCreateTime'])?></td>
+    			<td class="text-center">
+    			    <a href="/admin/domain/edit?id=<?php echo $v['iAutoID']?>" title="编辑"><i class="icon-pencil icon-large"></i></a>
+    			    <a class="domain_delete" href="/admin/domain/del?id=<?php echo $v['iAutoID']?>" role="button" data-toggle="modal" title="删除"><i class="icon-trash icon-large"></i></a>
+    			</td>
+    		</tr>
+        <?php }?>
+    	</tbody>
+    </table>
+    <?php echo $aList['aPager']?>
+</div><script type="text/javascript" src="<?php echo $sStaticRoot ?>/js/xcConfirm.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo $sStaticRoot ?>/js/xcConfirm.css"/>
+<style type="text/css">
+.sgBtn{width: 135px; height: 35px; line-height: 35px; margin-left: 10px; margin-top: 10px; text-align: center; background-color: #0095D9; color: #FFFFFF; float: left; border-radius: 5px;}
+</style>
+<script>
+$('.domain_delete').click(function() {
+	var url = this.href;
+	if (confirm("您确认要删除该基础配置吗？")) {
+		var txt=  "请输入密码：";
+		window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.input,{
+			onOk:function(v){
+				if (v.trim() != '') {
+					$.post('/admin/user/seditpwd', {'pwd':v.trim()}, function(ret){
+						if (ret.status) {
+							$.get(url, function(ret){
+								alert(ret.data);
+								if (ret.status) {
+									location.reload();
+								}
+							}, 'json');
+						}
+						else {
+							alert(ret.data);
+						}
+					}, 'json');
+				}
+				else {
+					alert('修改密码不可以为空');
+					//return false;
+				}
+			}
+		});
+	}
+	return false;
+});
+$('#domain_add').click(function(){
+	location.href = '/admin/domain/add';
+});
+</script>

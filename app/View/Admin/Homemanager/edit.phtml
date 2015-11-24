@@ -1,0 +1,79 @@
+<div class="pheader clearfix"><?php echo isset($aHomeManager['iAutoID'])?'编辑':'增加'?>首页经理</div>
+<div class="pbody clearfix">
+    <form id="myform" class="form-horizontal" role="form" method="post" action="">
+        <input name="iAutoID" type="hidden" value="<?php echo isset($aHomeManager['iAutoID'])?$aHomeManager['iAutoID']:''?>">
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 经理名称：</label>
+			<div class="col-sm-10">
+				<input name="sName" type="text" validate="!length:1-50" value="<?php echo isset($aHomeManager['sName'])?$aHomeManager['sName']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sQRCode" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 头像：</label>
+			<div class="col-sm-10">
+				<input type="hidden" id="sImageImg" name="sImage" value="<?php echo isset($aHomeManager['sImage'])?$aHomeManager['sImage']:''?>">
+				<img id="sImageShow" style="width:120px;height:90px;" src="<?php echo isset($aHomeManager['sImage'])?Util_Uri::getDFSViewURL($aHomeManager['sImage'], 130, 130):''?>">
+				<input type="button" value="选择" class="plupload" data-target="#sImageImg" data-img="#sImageShow">
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sUrl" class="col-sm-2 control-label"> 链接：</label>
+			<div class="col-sm-10">
+				<input name="sUrl" type="text" value="<?php echo isset($aHomeManager['sUrl'])?$aHomeManager['sUrl']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sDesc" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 内容：</label>
+			<div class="col-sm-10">
+				<!-- <textarea name="sDesc" class="form-control input-validate" rows="3" cols="20"><?php echo isset($aHomeManager['sDesc'])?$aHomeManager['sDesc']:''?></textarea> -->
+				<script type="text/plain" id="editor" name="sDesc" height="400px"><?php echo isset($aHomeManager['sDesc'])?$aHomeManager['sDesc']:''?></script>
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<?php if(isset($aHomeManager['iAutoID'])){ ?>
+    	<?php if(isset($aHomeManager['iUpdateTime']) && $aHomeManager['iUpdateTime'] > 0){ ?>
+    	<div class="form-group">
+    		<label for="iMoney" class="col-sm-2 control-label"> 更新时间：</label>
+    		<div class="col-sm-10">
+    			<?php echo date('Y-m-d H:i:s' , $aHomeManager['iUpdateTime']); ?>
+    		</div>
+    	</div>
+    	<?php } ?>
+    	<div class="form-group">
+    		<label for="iMoney" class="col-sm-2 control-label"> 创建时间：</label>
+    		<div class="col-sm-10">
+    			<?php echo date('Y-m-d H:i:s' , $aHomeManager['iCreateTime']); ?>
+    		</div>
+    	</div>
+    	<?php } ?>
+    	<div class="btn-toolbar text-center">
+        	<button id="save" class="btn btn-primary">保存</button>
+        	<button id="cancel"class="btn" onclick="location.href='/admin/homecase/list/';return false;">取消</button>
+        </div>
+	</form>
+</div>
+<script type="text/javascript" src="<?php echo $sStaticRoot ?>/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="<?php echo $sStaticRoot ?>/ueditor/ueditor.all.js"></script>
+<script type="text/javascript">
+var ue = UE.getEditor('editor');
+$(function() {
+	$("#myform").validate({submitHandler: function(form) {
+	    $.post(form.action, $(form).serialize(), function(ret){
+	        alert(ret.data);
+	        if (ret.status) {
+	            location.href = '/admin/homecase/list/';
+	        }
+	    }, 'json');
+		return false;
+	}});
+});
+</script>
+<script type="text/javascript">
+global.sUploadUrl = '<?php echo Util_Common::getConf('upload', 'url')?>';
+global.sDfsViewUrl = '<?php echo Util_Common::getConf('dfsview', 'url')?>';
+</script>
+<script type="text/javascript" charset="utf-8" src="<?php echo $sStaticRoot ?>/plupload/plupload.full.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="<?php echo $sStaticRoot ?>/js/upload.js"></script>
+<script type="text/javascript" charset="utf-8" src="<?php echo $sStaticRoot ?>/plupload/zh_CN.js"></script>

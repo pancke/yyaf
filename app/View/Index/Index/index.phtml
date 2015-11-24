@@ -1,0 +1,452 @@
+	<div class="flexslider h_flash">
+		<ul class="slides">
+		<?php foreach ($aBanner as $v) {?>
+			<li style="background: url(<?php echo Util_Uri::getDFSViewURL($v['imgurl'])?>) no-repeat center center;">
+				<a target="_blank" href="<?php echo $v['link']?>"><?php echo $v['title']?></a>
+			</li>
+	    <?php }?>
+		</ul>
+	</div>
+	<!--end动画-->
+
+	<div class="login_1">
+		<div class="h_login_box cf2">
+
+			<dl class="tab_nav login_tab_nav">
+				<dd>
+					<a href="javascript:;" <?php echo !empty($aAUser)||empty($aMUser)?'class="tab_light"':''?>>广告主</a>
+					<a href="javascript:;" <?php echo !empty($aMUser)?'class="tab_light"':''?>>自媒体</a>
+				</dd>
+			</dl> 
+
+			<div class="tab_box login_tab_box">
+				<div class="i_tab">
+					<dl id="h_login_box10" class="h_login_box" <?php echo empty($aAUser)?'style="display:none"':''?>>
+						<dt style="height:144px;">
+							<div style="text-align:center">
+    							<div style="padding:20px;">
+    							    <img src="/front/images/avatar.png">
+    							    <a href="/user/logout/type/1.html" data-type="1" class="loginAdvUserOut"></a>
+    							</div>
+    							<span style="clear: both;font-size:16px">欢迎你，<a id="username1"><?php echo empty($aAUser)?'':$aAUser['sEmail']?></a></span>
+							</div>
+						</dt>
+						<dd style="height:65px;">
+							<input type="button" onclick="location.href='/acenter/index.html'" class="login_btn round_s" value="进入广告主平台">
+						</dd>
+					</dl>
+					<dl id="h_login_box11" class="h_login_box" <?php echo !empty($aAUser)?'style="display:none"':''?>>
+						<dt>
+							<input type="text" name="email" class="login_1" placeholder="输入登录邮箱">
+							<p>
+								<input type="password" name="pass" class="login_1 login_2" placeholder="输入登录密码">
+							</p>
+							<p>
+								<a href="javascript:;" class="r" tabIndex="-1"><img class="verifyimage" src="/verify/image/type/1.html" width="120" height="40"></a>
+								<input type="text" name="code" class="login_1 login_3" placeholder="验证码">
+							</p>
+						</dt>
+						<dd>
+							<input type="button" data-type="1" class="login_btn round_s" value="确认登录">
+							<p>
+								<span class="r"><a href="/user/forget/type/1.html">忘记密码</a></span><span
+									class="l red_link">还没有账号？<a href="/user/register/type/1.html" style="font-size:14px">立即注册</a></span>
+							</p>
+						</dd>
+					</dl>
+				</div>
+				<!--end广告主-->
+				<div>
+				    <dl id="h_login_box20" class="h_login_box" <?php echo empty($aMUser)?'style="display:none"':''?>>
+						<dt style="height:144px;">
+							<div style="text-align:center">
+    							<div style="padding:20px;">
+    							    <img src="/front/images/avatar.png">
+    							    <a href="/user/logout/type/2.html" data-type="2" class="loginAdvUserOut"></a>
+    							</div>
+    							<span style="clear: both;font-size:16px">欢迎你，<a id="username2"><?php echo empty($aMUser)?'':$aMUser['sEmail']?></a></span>
+							</div>
+						</dt>
+						<dd style="height:65px;">
+							<input type="button" onclick="location.href='/mcenter/index.html'" class="login_btn round_s" value="进入自媒体平台">
+						</dd>
+					</dl>
+					<dl id="h_login_box21" class="h_login_box" <?php echo !empty($aMUser)?'style="display:none"':''?>>
+						<dt>
+							<input type="text" name="email" class="login_1" placeholder="输入登录邮箱">
+							<p>
+								<input type="password" name="pass" class="login_1 login_2" placeholder="输入登录密码">
+							</p>
+							<p>
+								<a href="javascript:;" class="r" tabIndex="-1"><img class="verifyimage" src="/verify/image/type/2.html" width="120" height="40"></a>
+								<input type="text" name="code" class="login_1 login_3" placeholder="验证码">
+							</p>
+						</dt>
+						<dd>
+							<input type="button" data-type="2" class="login_btn round_s" value="确认登录">
+							<p>
+								<span class="r"><a href="/user/forget/type/2.html">忘记密码</a></span><span
+									class="l red_link">还没有账号？<a href="/user/register/type/2.html" style="font-size:14px">立即注册</a></span>
+							</p>
+						</dd>
+					</dl>
+				</div>
+				<!--end自媒体-->
+			</div>
+			<!--end标签导航-->
+
+		</div>
+		<!--end登录背景-->
+	</div>
+	<!--end登录框-->
+
+	<h4 class="th_line">我们的优势</h4>
+
+	<ul class="adv_o cf2"> 
+		<li>
+			<a href="javascript:;"><img
+				src="<?php echo $sStaticRoot?>/front/images/adv/1-01.png" alt=""
+				width="340" height="165" style="margin-left:-10%;"></a>
+		</li>
+		<li>
+			<a href="javascript:;"><img
+				src="<?php echo $sStaticRoot?>/front/images/adv/1-02.png" alt=""
+				width="340" height="165"  style="margin-left:-10%;"></a>
+		</li>
+		<li>
+			<a href="javascript:;"><img
+				src="<?php echo $sStaticRoot?>/front/images/adv/1-03.png" alt=""
+				width="340" height="165"  style="margin-left:-10%;"></a>
+		</li>
+		<li>
+			<a href="javascript:;"><img
+				src="<?php echo $sStaticRoot?>/front/images/adv/1-04.png" alt=""
+				width="340" height="165"  style="margin-left:-10%;"></a>
+		</li>
+	</ul>
+
+	<h4 class="th_line">合作媒体</h4>
+	<div class="tab_wrap">
+		<dl class="word_nav tab_nav_line">
+			<dd class="tab_hd">
+		<?php $i = 0; foreach ($aCricle as $k => $v) {if (empty($v)) {continue;} $i++;?>    
+				<a href="javascript:;" <?php echo $i == 1 ? 'class="tab_light"' : ''?>><?php echo $k?></a>
+		<?php }?>
+			</dd>
+		</dl>
+		<div class="word_box h_tab_box">
+		<?php foreach ($aCricle as $k => $v) {if (empty($v)) {continue;}?>
+			<div class="tab_i">
+				<ul class="word_box cf2">
+				<?php foreach ($v as $k1 => $v1) {?>
+					<li>
+						<dl>
+							<dt>
+								<a href="javascript:;"><img
+									src="<?php echo Util_Uri::getDFSViewURL($v1['imgurl'])?>" alt=""
+									width="120" height="160"></a>
+							</dt>
+							<dd>
+								<h4><?php echo $v1['title']?></h4>
+								<div>
+									<p>ID：<?php echo $v1['iID']?></p>
+									<p>订阅：<?php echo $v1['subscribe']?>万</p>
+									<p>平均阅读：<?php echo $v1['readnum']?>万</p>
+
+								</div>
+								<em><a href="<?php echo $v1['link']?>" class="red_btn">查看报价</a></em>
+							</dd>
+						</dl>
+					</li>
+				<?php }?>
+				</ul>
+			</div>
+			<?php }?>
+		</div>
+	</div>
+
+	<h4 class="th_line">成功案例</h4>
+	<div class="tab_wrap">
+		<dl class="case_nav tab_nav_line">
+			<dd class="tab_hd">
+			<?php $i = 0;  foreach ($aCase as $k => $v) {if (empty($v)) {continue;} $i++;?>
+				<a href="javascript:;" <?php echo $i == 1?'class="tab_light"':''?>><?php echo $k?></a>
+			<?php }?>	
+			</dd>
+		</dl>
+		<div class="h_tab_box case_box cf2">
+		<?php foreach ($aCase as $v) {if (empty($v)) {continue;}?>
+			<a href="javascript:;" class="prev_btn tab_prev png"></a> <a href="javascript:;"
+				class="next_btn tab_next png"></a>
+			<div class="tab_i">
+				<dl class="case_box">
+					<dt>
+						<a href="<?php echo $v['sUrl']?>"><img
+							src="<?php echo Util_Uri::getDFSViewURL($v['sImage'])?>" alt=""
+							width="240" height="335" style="margin-top:25%;"></a>
+					</dt>
+					<dd>
+						<h4>
+							<a href="javascript:;"><?php echo $v['sTitle']?></a>
+						</h4>
+						<p><?php echo $v['sDesc']?></p> 
+						<h5>传播效果</h5>
+						<table>
+							<tbody><tr>
+								<th>覆盖用户</th>
+								<th>总阅读</th>
+								<th>点赞数</th>
+								<th>千次阅读成本</th>
+							</tr>
+							<tr class="eng">
+								<td><?php echo $v['iUserNum']?>万</td>
+								<td><?php echo $v['iReadNum']?>万</td>
+								<td><?php echo $v['iZanNum']?>万</td>
+								<td><?php echo $v['iAvgZan']?>元</td>
+							</tr>
+						</tbody></table>
+						<h5>合作媒体</h5>
+						<span>
+							<div>
+								<a href="javascript:;" class="l"><img src="<?php echo Util_Uri::getDFSViewURL($v['sMediaImage1'])?>" alt="" width="100" height="78"></a> 
+							    <em class="r"><h6><?php echo $v['sMediaName1']?></h6>
+                                <p><?php echo $v['sOpenName1']?></p>
+								<p>关注数：<?php echo $v['sFollowerNum1']?>万</p>
+								<p class="red_link_line">
+									<a href="<?php echo $v['sMediaUrl1']?>">查看报价</a>
+								</p></em>
+							</div>
+							<div>
+								<a href="javascript:;" class="l"><img src="<?php echo Util_Uri::getDFSViewURL($v['sMediaImage2'])?>" alt="" width="100" height="78"></a> 
+							    <em class="r"><h6><?php echo $v['sMediaName2']?></h6>
+                                <p><?php echo $v['sOpenName2']?></p>
+								<p>关注数：<?php echo $v['sFollowerNum2']?>万</p>
+								<p class="red_link_line">
+									<a href="<?php echo $v['sMediaUrl2']?>">查看报价</a>
+								</p></em>
+							</div>
+                            <div>
+								<a href="javascript:;" class="l"><img src="<?php echo Util_Uri::getDFSViewURL($v['sMediaImage3'])?>" alt="" width="100" height="78"></a> 
+							    <em class="r"><h6><?php echo $v['sMediaName3']?></h6>
+                                <p><?php echo $v['sOpenName3']?></p>
+								<p>关注数：<?php echo $v['sFollowerNum3']?>万</p>
+								<p class="red_link_line">
+									<a href="<?php echo $v['sMediaUrl3']?>">查看报价</a>
+								</p></em>
+							</div>
+						</span>					
+					</dd>
+				</dl>
+			</div>
+		<?php }?>
+		</div>
+	</div>
+
+	<h4 class="th_line">我们的服务</h4>
+
+	<ul class="cf2 h_adv">
+		<li>
+			<dl>
+				<dt>
+					<span class="a_1"></span>
+					<h4>资源采买平台</h4>
+				</dt>
+				<dd>
+					<h5>丰富的自媒体资源、批量式采购</h5>
+					<p>51wom强大的在线投放系统，提供自媒体资源的批量采买，完成一站式自助投放
+					</p>
+				</dd>
+			</dl>
+		</li>
+
+		<li>
+			<dl>
+				<dt>
+					<span class="a_2"></span>
+					<h4>媒体约稿服务</h4>
+				</dt>
+				<dd>
+					<h5>邀约自媒体，创造有影响力的传播</h5>
+					<p>依据品牌传播需求、创作深度定制的内容，邀请自媒体进行有影响力的传播
+					</p>
+				</dd>
+			</dl>
+		</li>
+
+		<li>
+			<dl>
+				<dt>
+					<span class="a_3"></span>
+					<h4>自媒体策略服务</h4>
+				</dt>
+				<dd>
+					<h5>专业的策划团队，为品牌定制传播方案</h5>
+					<p>提供社交媒体传播策略，帮助品牌定制自媒体解决策略，购买执行，全程监控效果
+					</p>
+				</dd>
+			</dl>
+		</li>
+
+		<li>
+			<dl>
+				<dt>
+					<span class="a_4"></span>
+					<h4>社媒整合营销</h4>
+				</dt>
+				<dd>
+					<h5>提供一站式社媒创意整合营销服务</h5>
+					<p>社交媒体洞察、策略、创意、自媒体应用、技术开发一站式社交媒体创意整合营销服务
+					</p>
+				</dd>
+			</dl>
+		</li>
+	</ul>
+
+	<div class="cf2 gray_box">
+		<div class="cf2 gray_box_w">
+			<div class="flexslider h_case">
+				<ul class="slides">
+				<?php foreach ($aManager as $v) {?>
+					<li>
+						<dl><a href="<?php echo $v['sUrl']?>">
+							<dt>
+								<img
+									src="<?php echo Util_Uri::getDFSViewURL($v['sImage'],120,60)?>" alt=""
+									width="120" height="60">
+								<p><?php echo $v['sName']?></p>
+							</dt>
+							<dd><?php echo $v['sDesc']?></dd></a>
+						</dl>
+					</li>
+				<?php }?>
+				</ul>
+			</div>
+			<!--end动画-->
+		</div>
+		<!--end宽度-->
+	</div>
+	<!--end灰色背景-->
+<script type="text/javascript" src="<?php echo $sStaticRoot?>/front/js/jquery.flexslider-min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.flexslider').flexslider({
+		directionNav: true,
+		pauseOnAction: false
+	});
+});
+</script>
+
+<script type="text/javascript">
+;$(function(){
+// tab切换
+(function(){
+	$(".tab_wrap").each(function(){
+		$(this).find(".tab_i").eq($(this).find(".tab_hd").children(".tab_light").index()).fadeIn().siblings(".tab_i").hide();
+	});
+	// 点击
+	$(".tab_hd a").click(function(){
+		$(this).addClass("tab_light").siblings().removeClass("tab_light");
+		$(this).parentsUntil(".tab_wrap").parent().find(".tab_i").eq($(this).index()).fadeIn().siblings(".tab_i").hide();
+	});
+	// 后退
+	$(".tab_prev").click(function(){
+		var tab = $(this).parentsUntil(".tab_wrap").parent(),
+			tabHd = tab.find(".tab_hd").children("a"),
+			tabNum = tabHd.length,
+			tabIndex = tab.find(".tab_hd").children(".tab_light").index();
+			if (tabIndex > 0) {
+				tabHd.eq(tabIndex-1).click();
+			}else{
+				tabHd.eq(tabNum-1).click();
+			}
+			tab = null; tabHd = null; tabNum = null; tabIndex = null;
+	});
+	// 前进
+	$(".tab_next").click(function(){
+		var tab = $(this).parentsUntil(".tab_wrap").parent(),
+			tabHd = tab.find(".tab_hd").children("a"),
+			tabNum = tabHd.length,
+			tabIndex = tab.find(".tab_hd").children(".tab_light").index();
+			if (tabIndex == tabNum-1) {
+				tabHd.eq(0).click();
+			}else{
+				tabHd.eq(tabIndex+1).click();
+			}
+			tab = null; tabHd = null; tabNum = null; tabIndex = null;
+	});
+
+	$(".loginAdvUserOut").click(function(){
+		var type = $(this).data('type');
+	    $.post(this.href, {}, function(){
+	    	if (type == 1) {
+			    $('#h_login_box10').hide();
+			    $('#h_login_box11').show();
+		    } else {
+			    $('#h_login_box20').hide();
+			    $('#h_login_box21').show();
+		    }
+		});	
+
+		return false;
+	});
+	
+	$(".login_btn").click(function(){
+		var form = $(this).parents('dl.h_login_box');
+		var type = $(this).data('type');
+		var data = {
+				'type' : $(this).data('type'),
+				'user' : form.find('input[name=email]').val().trim(),
+				'pass' : form.find('input[name=pass]').val().trim(),
+				'code' : form.find('input[name=code]').val().trim()
+		};
+	    if (data.user.length < 5) {
+		    alert('请输入正确的登录邮箱');
+		    form.find('input[name=email]').focus();
+		    return false;
+	    }
+	    if (data.pass.length == 0) {
+		    alert('请输入正确的登录密码');
+		    form.find('input[name=pass]').focus();
+		    return false;
+	    }	
+	    if (data.code.length != 4) {
+		    alert('请输入正确的验证码');
+		    form.find('input[name=code]').focus();
+		    return false;
+	    }
+
+	    $.post('/user/login', data, function(ret){
+		    if (ret.status) {
+			    if (type == 1) {
+				    $('#h_login_box10').show();
+				    $('#h_login_box11').hide();
+				    $('#username1').html(ret.data.sEmail);
+			    } else {
+				    $('#h_login_box20').show();
+				    $('#h_login_box21').hide();
+				    $('#username2').html(ret.data.sEmail);
+			    }
+
+			    location.reload();
+		    } else {
+			    for (var i in ret.data) {
+				    alert(ret.data[i]);
+				    break;
+			    }
+			    // console.log(form.find('.verifyimage').get(0));
+			    resetVerifyImage(form.find('.verifyimage').get(0));
+		    }
+		});
+	});
+
+    function resetVerifyImage(img){
+		var src = img.src.substring(0, img.src.indexOf('?')) + '';
+		src = src.length == 0 ? img.src : src;
+		img.src = src + '?r=' + Math.random();
+	}
+	$('.verifyimage').click(function(){
+		resetVerifyImage(this);
+	});
+})();
+});
+</script>

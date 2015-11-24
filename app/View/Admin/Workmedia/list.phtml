@@ -1,0 +1,85 @@
+<div class="pheader clearfix">资源圈子列表</div>
+<div class="pbody clearfix">
+	<form class="form-inline search-form" role="form" method="post" id="myform" action="/admin/workmedia/list.html">
+        <div class="row sousuo_now">
+           <div class="form-group">
+                <label>圈子：</label>
+                <select name="wtype" class="form-control" style="width:250px;">
+					<option value="" <?php echo !isset($aParam['wtype'])||$aParam['wtype']==0?'selected':''?>>全部</option>
+    		    <?php foreach ($wtype as $k => $v) {?>
+    		        <option value="<?php echo $k?>" <?php echo isset($aParam['wtype'])&&$aParam['wtype']==$v?'selected':''?>><?php echo $v?></option>
+    		    <?php }?>
+    		    </select>
+        	</div>
+            <div class="form-group">
+                <label>名称：</label>
+    		    <input type="text" value="<?php echo isset($aParam['title']) ? $aParam['title'] : '' ?>" class="form-control" name="title" style="width: 200px">
+        	</div>
+            <div class="form-group">
+                <input type="submit" id="formbtn" class="btn btn-default btn-sm" value="搜索">
+            </div>
+        </div>
+    </form>
+    <hr>
+    <div class="btn-toolbar list-toolbar">
+    	<button class="btn btn-primary" id="workmedia_add">
+    		<i class="icon-plus"></i> 增加资源圈子
+    	</button>
+    </div>
+    <table class="table table-bordered table-hover">
+    	<thead>
+    		<tr>
+    			<th class="col-sm-1 text-center">#</th>
+    			<th class="text-center">类型</th>
+    			<th class="text-center">名称</th>
+    			<th class="text-center">图片</th>
+    			<th class="text-center">链接</th>
+    			<th class="text-center">顺序</th>
+    			<th class="text-center">订阅</th>
+    			<th class="text-center">阅读量</th>
+    			<th class="text-center">介绍</th>
+    			<th class="text-center">更新时间</th>
+    			<th class="text-center">创建时间</th>
+    			<th class="text-center">操作</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+        <?php foreach ($aList['aList'] as $v) { $v['wtype'] = $wtype[$v['wtype']]; ?>
+            <tr>
+    			<td class="col-sm-1 text-center"><?php echo $v['iAutoID']?></td>
+    			<td class="text-center"><?php echo $v['wtype']?></td>
+    			<td class="text-center"><?php echo $v['title']?></td>
+    			<td class="text-center"><img src="<?php echo Util_Uri::getDFSViewURL($v['imgurl'], 130, 130)?>"></td>
+    			<td class="text-center"><?php echo substr($v['link'],0,10).'...'?></td>
+    			<td class="text-center"><?php echo $v['rank']?></td>
+    			<td class="text-center"><?php echo $v['subscribe']?></td>
+    			<td class="text-center"><?php echo $v['readnum']?></td>
+    			<td class="text-center"><?php echo $v['introduce']?></td>
+    			<td class="text-center"><?php echo ((isset($v['iUpdateTime']) && $v['iUpdateTime'] > 0) ? (date('Y-m-d H:i:s' , $v['iUpdateTime'])) : '');?></td>
+    			<td class="text-center"><?php echo ((isset($v['iCreateTime']) && $v['iCreateTime'] > 0) ? (date('Y-m-d H:i:s' , $v['iCreateTime'])) : '');?></td>
+    			<td class="text-center">
+    			    <a href="/admin/workmedia/edit?id=<?php echo $v['iAutoID']?>" title="编辑"><i class="icon-pencil icon-large"></i></a>
+    			    <a class="workmedia_delete" href="/admin/workmedia/del?id=<?php echo $v['iAutoID']?>" role="button" data-toggle="modal" title="删除"><i class="icon-trash icon-large"></i></a>
+    			</td>
+    		</tr>
+        <?php }?>
+    	</tbody>
+    </table>
+    <?php echo $aList['aPager']?>
+</div>
+<script>
+$('.workmedia_delete').click(function() {
+	if (confirm("您确认要删除该资源圈子吗？")) {
+		$.get(this.href, function(ret){
+			alert(ret.data);
+		    if (ret.status) {
+			    location.reload();
+		    }
+		}, 'json');
+	}
+	return false;
+});
+$('#workmedia_add').click(function(){
+	location.href = '/admin/workmedia/add';
+});
+</script>

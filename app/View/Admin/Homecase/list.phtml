@@ -1,0 +1,64 @@
+<div class="pheader clearfix">首页实例列表</div>
+<div class="pbody clearfix">
+	<form class="form-inline search-form" role="form" method="post" id="myform" action="/admin/homecase/list.html">
+        <div class="row sousuo_now">
+            <div class="form-group">
+                <label>标题：</label>
+    		    <input type="text" value="<?php echo isset($aParam['sTitle']) ? $aParam['sTitle'] : '' ?>" class="form-control" name="sTitle" style="width: 200px">
+        	</div>
+            <div class="form-group">
+                <input type="submit" id="formbtn" class="btn btn-default btn-sm" value="搜索">
+            </div>
+        </div>
+    </form>
+    <hr>
+    <div class="btn-toolbar list-toolbar">
+    	<button class="btn btn-primary" id="homecase_add">
+    		<i class="icon-plus"></i> 增加首页实例
+    	</button>
+    </div>
+    <table class="table table-bordered table-hover">
+    	<thead>
+    		<tr>
+    			<th class="col-sm-1 text-center">#</th>
+    			<th class="text-center">类型</th>
+    			<th class="text-center">标题</th>
+    			<th class="text-center">图片</th>
+    			<th class="text-center">链接</th>
+    			<th class="text-center">操作</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+        <?php foreach ($aList['aList'] as $v) {?>
+            <tr>
+    			<td class="col-sm-1 text-center"><?php echo $v['iAutoID']?></td>
+    			<td class="text-center"><?php echo $v['iTypeTitle']?></td>
+    			<td class="text-center"><?php echo $v['sTitle']?></td>
+    			<td class="text-center"><img src="<?php echo Util_Uri::getDFSViewURL($v['sImage'], 130, 130);?>"></td>
+    			<td class="text-center"><?php echo ((isset($v['sUrl']) && $v['sUrl'] != '') ? ('<a href="'.$v['sUrl'].'">'.$v['sUrl'].'</a>') : '');?></td>
+    			<td class="text-center">
+    			    <a href="/admin/homecase/edit?id=<?php echo $v['iAutoID']?>" title="编辑"><i class="icon-pencil icon-large"></i></a>
+    			    <a class="homecase_delete" href="/admin/homecase/del?id=<?php echo $v['iAutoID']?>" role="button" data-toggle="modal" title="删除"><i class="icon-trash icon-large"></i></a>
+    			</td>
+    		</tr>
+        <?php }?>
+    	</tbody>
+    </table>
+    <?php echo $aList['aPager']?>
+</div>
+<script>
+$('.homecase_delete').click(function() {
+	if (confirm("您确认要删除该首页实例吗？")) {
+		$.get(this.href, function(ret){
+			alert(ret.data);
+		    if (ret.status) {
+			    location.reload();
+		    }
+		}, 'json');
+	}
+	return false;
+});
+$('#homecase_add').click(function(){
+	location.href = '/admin/homecase/add';
+});
+</script>

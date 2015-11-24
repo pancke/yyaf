@@ -1,0 +1,18 @@
+<div class="activate_w cf2">
+	<dl class="activate_w">
+		<dt>
+			<img src="/front/images/tool/icon_succeed.png" class="png" alt="ok">
+		</dt>
+		<dd>
+			<h4>恭喜，付款成功！</h4>
+			<p>
+				您已经成功支付<font color="red"><?php echo abs($aData['iPayMoney'])?>.00</font>元，订单编号：<?php echo $aData['iAutoID']?><br>
+				媒体收到通知后，会尽快为您安排投放，请注意查看您的个人中心 <a href="/acenter/index.html" class="olda">订单状态</a>
+			</p>
+			<div>
+				<a href="/ad/add.html" class="red_btn_t">添加推广</a>
+				<a href="/acenter/index.html" class="gray_btn">查看订单</a>
+			</div>
+		</dd>
+	</dl>
+</div>

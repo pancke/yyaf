@@ -1,0 +1,82 @@
+<?php $iTopNav=4; include 'topnav.phtml';?>
+
+<dl class="tab_nav_text">
+	<dd>
+		<a href="/mcenter/coinfo.html" <?php echo $iTabID==1?'class="tab_light"':''?>>企业资料</a><em class="china">|</em>
+		<a href="/mcenter/userinfo.html" <?php echo $iTabID==2?'class="tab_light"':''?>>个人信息</a><em class="china">|</em>
+		<a href="/mcenter/chgpwd.html" <?php echo $iTabID==3?'class="tab_light"':''?>>修改密码</a><em class="china">|</em>
+		<a href="/mcenter/chgpaypwd.html" <?php echo $iTabID==4?'class="tab_light"':''?>>安全密码</a>
+	</dd>
+</dl>
+
+<div class="cf2 box_w gray_border">
+	<dl class="gray_th">
+		<dd>设置安全密码</dd>
+	</dl>
+	<form autocomplete="off">
+	<table class="fill_table">
+
+		<tr>
+			<th>
+				<span class="red_arrow">*</span>
+				<label for="c_2">新设支付密码：</label>
+			</th>
+			<td>
+				<input type="password" autocomplete="off" name="sNewPassword" class="fill_text hover_input" id="c_2" name="c_2">
+				<label class="error sNewPassword" style="display: none"></label>
+			</td>
+		</tr>
+
+		<tr>
+			<th>
+				<span class="red_arrow">*</span>
+				<label for="c_3">确认密码：</label>
+			</th>
+			<td>
+				<input type="password" autocomplete="off" name="sRePassword" class="fill_text hover_input" id="c_3" name="c_3">
+				<label class="error sRePassword" style="display: none"></label>
+			</td>
+		</tr>
+		
+		<tr>
+			<th width="120px;">
+				<span class="red_arrow">*</span>
+				<label for="c_1">登录密码：</label>
+			</th>
+			<td>
+				<input type="password" autocomplete="off" name="sOldPassword" class="fill_text hover_input" id="c_1" name="c_1">
+				<label class="error sOldPassword" style="display: none"></label>
+			</td>
+		</tr>
+
+		<tfoot>
+			<tr>
+				<td colspan="2">
+					<input type="button" class="red_btn_t step_btn" value="保存修改">
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+	</form>
+</div>
+<script type="text/javascript">
+var returl = '<?php echo $ret?>';
+$(function() {
+	$(".red_btn_t").click(function(){
+		var form = $(this).parents('form').get(0);
+	    $.post(form.action?form.action:location.href, $(form).serialize(), function(ret){
+	        if (ret.status) {
+	        	alert(ret.data);
+	        	if (returl == '') {
+	        	    location.reload();
+	        	} else {
+		        	location.href = returl;
+	        	}
+	        } else {
+		        showErrorInfo(form, ret.data);
+	        }
+	    }, 'json');
+		return false;
+	});
+});
+</script>

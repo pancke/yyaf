@@ -1,0 +1,71 @@
+<div class="pheader clearfix"><?php echo isset($aDomain['iAutoID'])?'编辑':'增加'?>基础配置</div>
+<div class="pbody clearfix">
+    <form id="myform" class="form-horizontal" role="form" method="post" action="">
+        <input name="iAutoID" type="hidden" value="<?php echo isset($aDomain['iAutoID'])?$aDomain['iAutoID']:''?>">
+        <div class="form-group">
+    		<label for="sRealName" class="col-sm-2 control-label"><span style="color:red;">*</span> 默认类型：</label>
+    		<div class="col-sm-10">
+    		    <select validate="!required:请选择默认类型" name="iType" class="form-control input-validate">
+    		    <?php foreach ($iType as $k => $v) {?>
+    		        <option value="<?php echo $k?>" <?php echo isset($aDomain['iType'])&&$aDomain['iType']==$k?'selected':''?>><?php echo $v?></option>
+    		    <?php }?>
+    		    </select>
+				<span class="validate_checktip"></span>
+    		</div>
+    	</div>
+		<div class="form-group">
+			<label for="sName" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 基础配置名称：</label>
+			<div class="col-sm-10">
+				<input name="sName" validate="!length:2-20" type="text" value="<?php echo isset($aDomain['sName'])?$aDomain['sName']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sPassword" class="col-sm-2 control-label"> 排序：</label>
+			<div class="col-sm-10">
+			    <input name="iOrder" validate="!digit:true" type="text" value="<?php echo isset($aDomain['iOrder'])?$aDomain['iOrder']:'0'?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<?php if(isset($aDomain)){ ?>
+		<div class="form-group">
+			<label for="sPassword" class="col-sm-2 control-label"> 创建时间：</label>
+			<div class="col-sm-10">
+			    <?php echo date('Y-m-d H:i:s' , $aDomain['iCreateTime']); ?>
+			</div>
+		</div>
+		<?php if(isset($aDomain['iUpdateTim']) && $aDomain['iUpdateTim'] != ''){ ?>
+		<div class="form-group">
+			<label for="sPassword" class="col-sm-2 control-label"> 更新时间：</label>
+			<div class="col-sm-10">
+			    <?php echo date('Y-m-d H:i:s' , $aDomain['iUpdateTim']); ?>
+			</div>
+		</div>
+		<?php } ?>
+		<?php } ?>
+		<div class="form-group">
+			<label for="sPassword" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 修改密码：</label>
+			<div class="col-sm-10">
+			    <input name="pwd" validate="!length:2-50" type="password" value="" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+    	<div class="btn-toolbar text-center">
+        	<button id="save" class="btn btn-primary">保存</button>
+        	<button id="cancel"class="btn" onclick="location.href='/admin/domain/list/';return false;">取消</button>
+        </div>
+	</form>
+</div>
+<script type="text/javascript">
+$(function() {
+	$("#myform").validate({submitHandler: function(form) {
+	    $.post(form.action, $(form).serialize(), function(ret){
+	        alert(ret.data);
+	        if (ret.status) {
+	            location.href = '/admin/domain/list/';
+	        }
+	    }, 'json');
+		return false;
+	}});
+});
+</script>

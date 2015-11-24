@@ -1,0 +1,108 @@
+<?php $iTopNav=6; include 'topnav.phtml';?>
+
+<dl class="tab_nav_text">
+	<dd style="float:left">
+		<a href="/acenter/finance.html">账单明细</a><em class="china">|</em>
+		<a href="/acenter/cashin.html" class="tab_light">立即充值</a><em class="china">|</em>
+        <a href="/acenter/cashout.html">立即提现</a>
+	</dd>
+	<dt style="float:right">
+	    可提现余额为：<b class="eng red_text">&yen;<?php echo $aUser['iMoney']?></b>
+	</dt>
+</dl>
+
+
+<div class="cf2 gray_border box_w">
+    <dl class="gray_th">
+        <dd>
+            请选择下方的支付方式进行结算
+        </dd>
+    </dl>
+
+    <dl class="cf2 pay_brank">
+        <dt>
+                充值金额：<input type="text" class="fill_text hover_input" id="usmoney" name="usmoney" value="1000" inputlimit="uint" />
+        </dt>
+        <dd>
+            <ul class="pay_brank">
+                <li class="che">
+                    <label>
+                        <input type="radio" checked class="checlass" name="paytype" value="alipay">
+                        <img src="/front/images/brank/zhifubao.jpg" alt="" width="120" height="40">
+                    </label>
+                </li>
+
+                <li class="che">
+                    <label>
+                        <input type="radio" class="checlass" name="paytype" value="weixin" style="position: relative; top: -23px">
+                        <img src="/front/images/brank/wx51.png" alt="" width="180" height="90" style="position: relative; top: -23px">
+                    </label>
+                </li>
+            </ul>
+        </dd>
+    </dl>
+
+</div>
+
+<div class="cf2 gray_border box_w" style="padding-bottom: 1px;">
+    <dl class="gray_th">
+        <dd>收款方信息</dd>
+    </dl>
+    <dl class="cf2 company_about">
+        <dd>
+            <p>
+                收款单位：<span class="eng">上海谦玛网络科技有限公司</span>
+            </p>
+            <p>联系人：郑女士</p>
+            <p>
+                联系电话：<span class="eng">4008789551</span>
+            </p>
+            <p>
+                联系QQ：<a href="javascript;" class="eng">2544745674</a>
+            </p>
+        </dd>
+
+    </dl>
+</div>
+<!--end公司信息-->
+
+
+<!--end一行-->
+
+<dl class="cf2 w_1000 d_money">
+    <dd>
+		<input type="button" class="red_btn_t step_btn" value="立即支付">
+    </dd>
+</dl>
+
+<input type="hidden" name="orderid" id="orderid" value="<?php echo $aAd['iAdID']?>" />
+<script type="text/javascript">
+$(function(){
+    $('.red_btn_t').click(function(){
+        var paytype = $('input:radio[name="paytype"]:checked').val();
+        var usmoney = parseInt($('#usmoney').val(), 10);
+        if (usmoney < 1) {
+            alert('请输入充值金额!');
+            $('#usmoney').focus();
+            return false;
+        }
+        
+        if(typeof(paytype) == "undefined"){
+            alert('请选择支付类型');
+            return false;
+        }
+        
+        $.post('/payment/pay/self.html', {usmoney:usmoney,paytype:paytype}, function(ret){
+            if (ret.status == 3) {    //微信
+                location.href = ret.data;
+            } else if (ret.status == 2) { //支付宝
+                location.href = ret.data;
+            } else if (ret.status == 1) { //余额支付
+                //location.href = ret.data;
+            } else {
+                alert(ret.data);
+            }
+        });
+    });
+});
+</script>

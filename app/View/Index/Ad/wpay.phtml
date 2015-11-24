@@ -1,0 +1,127 @@
+<div class="cf2 step_o">
+    <div class="cf2 step_o_w">
+        <ul class="step_o cf2 step_4">
+            <li>
+                <span class="eng"></span>
+                <p>添加推广</p>
+            </li>
+            <li>
+                <span class="eng"></span>
+                <p>选择媒介</p>
+            </li>
+            <li>
+                <span class="eng"></span>
+                <p>设置广告</p> 
+            </li>
+            <li class="light">
+                <span class="eng"></span>
+                <p>支付款项</p>
+            </li>
+        </ul>
+    </div>
+    <!--end宽度-->
+</div>
+<!--end步骤-->
+
+<h4 class="th_text">付款确认</h4>
+<div class="cf2 gray_border box_w" style="padding-bottom: 1px;">
+    <dl class="gray_th">
+        <dd>收款方信息</dd>
+    </dl>
+    <dl class="cf2 company_about">
+        <dd>
+            <p>
+                收款方：<span class="eng">上海谦玛网络科技有限公司</span>
+            </p>
+            <p>联系人：郑女士</p>
+            <p>
+                联系电话：<span class="eng">4008789551</span>
+            </p>
+            <p>
+                联系QQ：<a href="javascript;" class="eng">2544745674</a>
+            </p>
+        </dd>
+    </dl>
+</div>
+<!--end公司信息-->
+
+<form autocomplete="off">
+<div class="cf2 gray_border box_w">
+    <dl class="gray_th">
+        <dd>
+            您总共需要支付<b class="red_text eng">&yen;<?php echo $aAd['iTotalMoney']?></b>，请选择下方的支付方式进行结算 <span style="position: relative;left: 80px"><span style="color: darkgrey;font-size: 20px">提示!：</span><span>如果没有支付密码，<a href="/acenter/chgpaypwd.html"><span style="color: red">请点击</span></a>去个人中心设置</span></span>
+        </dd>
+    </dl>
+
+    <dl class="cf2 pay_brank">
+        <dt>
+            <div class="sel_box">
+                <input type="checkbox" id="usmoney" name="usmoney" value="1" checked />
+                <label for="usmoney"></label>
+            </div>
+             抵扣帐户余额：<span class="eng">&yen;<?php echo $aUser['iMoney']?></span>&nbsp;&nbsp;
+             支付密码：<input autocomplete="off" class="paypass" type="password" handerplace="输入支付密码">
+        </dt>
+        <dd>
+            <ul class="pay_brank">
+                <li class="che">
+                    <label>
+                        <input type="radio" class="checlass" name="paytype" value="alipay">
+                        <img src="/front/images/brank/zhifubao.jpg" alt="" width="120" height="40">
+                    </label>
+                </li>
+
+                <li class="che">
+                    <label>
+                        <input type="radio" class="checlass" name="paytype" value="weixin" style="position: relative;top: -24px;" >
+                        <img src="/front/images/brank/wx51.png" alt="" width="180" height="90" style="position: relative;top: -22px;">
+                    </label>
+                </li>
+            </ul>
+        </dd>
+    </dl>
+</div>
+</form>
+<!--end一行-->
+
+<dl class="cf2 w_1000 d_money">
+    <dd>
+		<input type="button" class="red_btn_t step_btn" value="立即支付">
+    </dd>
+</dl>
+
+<input type="hidden" name="orderid" id="orderid" value="<?php echo $aAd['iAdID']?>" />
+<script type="text/javascript">
+$(function(){
+	var totalMoney = <?php echo $aAd['iTotalMoney']?>;
+	var userMoney = <?php echo $aUser['iMoney']?>;
+    $('.red_btn_t').click(function(){
+        var paytype = $('input:radio[name="paytype"]:checked').val();
+        var usmoney = $('#usmoney').prop('checked') ? 1 : 0;
+        var orderid = $('#orderid').val();
+        var paypass = $('input.paypass').val();
+
+        if (usmoney == 1 && paypass == '') {
+            alert('请输入支付密码');
+            $('#paypass').focus();
+            return false;
+        }
+        if (userMoney < totalMoney && typeof(paytype) == "undefined"){
+            alert('请选择支付类型');
+            return false;
+        }
+        
+        $.post('/payment/pay/ad.html', {id:orderid,usmoney:usmoney,paytype:paytype,paypass:paypass}, function(ret){
+            if (ret.status == 3) {    //微信
+                location.href = ret.data;
+            } else if (ret.status == 2) { //支付宝
+                location.href = ret.data;
+            } else if (ret.status == 1) { //余额支付
+                location.href = ret.data;
+            } else {
+                alert(ret.data);
+            }
+        });
+    });
+});
+</script>

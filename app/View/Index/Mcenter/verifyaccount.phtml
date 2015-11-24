@@ -1,0 +1,220 @@
+<link href="<?php echo $sStaticRoot ?>/front/css/glwx.css" rel="stylesheet" type="text/css">
+<?php $iTopNav=2; include 'topnav.phtml';?>
+<dl class="tab_nav_text">
+	<dd>
+		<a href="/mcenter/account/type/1.html" <?php echo $iType==1?'class="tab_light"':''?>>微信公众号</a><em class="china">|</em>
+		<a href="/mcenter/account/type/2.html" <?php echo $iType==2?'class="tab_light"':''?>>微信朋友圈</a><em class="china">|</em>
+		<a href="/mcenter/account/type/3.html" <?php echo $iType==3?'class="tab_light"':''?>>新浪微博</a><em class="china">|</em>
+		<a href="/mcenter/verifyaccount/type/4.html" <?php echo $iType==4?'class="tab_light"':''?>>公众号认证</a>
+	</dd>
+</dl>
+<?php if ($iType == 1) {?>
+<table class="list_table">
+	<thead>
+		<tr>
+			<th>公众号名</th>
+			<th>微信号</th>
+			<th>粉丝数</th>
+			<th>单图文</th>
+			<th>多图第一条</th>
+			<th>多图第二条</th>
+			<th>多图其它位置</th>
+			<th>审核状态</th>
+			<th>认证状态</th>
+			<th>处理</th>
+		</tr>
+	</thead>
+	<tbody>
+	    <?php 
+	    if(empty($aData['aList'])){
+        ?>
+        <tr><td colspan="10" align="center">无</td></tr>
+        <?php 
+	    } else {
+	        foreach ($aData['aList'] as $k => $v) {
+        ?>
+		<tr>
+			<td>
+				<span class="blue_link"><a href="/media/detail/id/<?php echo $v['iMediaID']?>.html"><?php echo $v['sOpenName']?></a></span>
+			</td>
+			<td><?php echo $v['sMediaName']?></td>
+			<td>
+				<span class="eng red_text"><?php echo $v['iFollowerNum']?></span>
+			</td>
+			<td>
+				<span class="eng">&yen;<?php echo $v['iPrice1']?></span>
+			</td>
+			<td>
+				<span class="eng">&yen;<?php echo $v['iPrice2']?></span>
+			</td>
+			<td>
+				<span class="eng">&yen;<?php echo $v['iPrice3']?></span>
+			</td>
+			<td>
+				<span class="eng">&yen;<?php echo $v['iPrice4']?></span>
+			</td>
+			<td>
+				<span class="eng"><?php echo intval($v['iStatus'])==1?'已审核':(intval($v['iStatus'])==2?'待审核':'未发布完成')?></span>
+			</td>
+			<td>
+				<span class="eng"><?php echo intval($v['iVerifyState'])==1?'已认证':'未认证'?></span>
+			</td>
+			<td>
+			<?php if(intval($v['iVerifyState'])==0) {?>
+			    <span class="blue_link"><a class="verifybtn" data-verify="<?php echo $v['sVerifyCode']?>" href="/media/verify/id/<?php echo $v['iMediaID']?>.html">认证</a></span> |
+		    <?php }?>
+				<span class="blue_link"><a href="/media/add/id/<?php echo $v['iMediaID']?>.html">编辑</a></span>
+			</td>
+		</tr>
+		<?php }}?>
+	</tbody>
+</table>
+<?php }elseif ($iType == 2) {?>
+<table class="list_table">
+	<thead>
+		<tr>
+			<th>微信号</th>
+			<th>好友数量</th>
+			<th>转发报价</th>
+			<th>直发报价</th>
+			<th>审核状态</th>
+			<th>处理</th>
+		</tr>
+	</thead>
+	<tbody>
+	    <?php 
+	    if(empty($aData['aList'])){
+        ?>
+        <tr><td colspan="6" align="center">无</td></tr>
+        <?php 
+	    } else {
+	        foreach ($aData['aList'] as $k => $v) {
+        ?>
+		<tr>
+			<td>
+				<span class="eng"><?php echo $v['sMediaName']?></span>
+			</td>
+			<td>
+				<span class="eng red_text"><?php echo $v['iFollowerNum']?></span>
+			</td>
+			<td>
+				<span class="eng">&yen;<?php echo $v['iPrice1']?></span>
+			</td>
+			<td>
+				<span class="eng">&yen;<?php echo $v['iPrice2']?></span>
+			</td>
+			<td>
+				<span class="eng"><?php echo intval($v['iStatus'])==1?'已审核':(intval($v['iStatus'])==2?'待审核':'未发布完成')?></span>
+			</td>
+			<td>
+				<span class="blue_link"><a href="/media/add/id/<?php echo $v['iMediaID']?>.html">编辑</a></span>
+			</td>
+		</tr>
+		<?php }}?>
+	</tbody>
+</table>
+<?php }elseif ($iType == 3) {?>
+
+<table class="list_table">
+	<thead>
+		<tr>
+			<th>微博号</th>
+			<th>好友数量</th>
+			<th>转发报价</th>
+			<th>直发报价</th>
+			<th>审核状态</th>
+			<th>处理</th>
+		</tr>
+	</thead>
+	<tbody>
+	    <?php 
+	    if(empty($aData['aList'])){
+        ?>
+        <tr><td colspan="6" align="center">无</td></tr>
+        <?php 
+	    } else {
+	        foreach ($aData['aList'] as $k => $v) {
+        ?>
+		<tr>
+			<td>
+				<a target="_blank" href="<?php echo $v['sUrl']?>" class="pinka"><?php echo $v['sMediaName']?></a>
+			</td>
+			<td>
+				<span class="eng red_text"><?php echo $v['iFollowerNum']?></span>
+			</td>
+			<td>
+				<span class="eng">&yen;<?php echo $v['iPrice1']?></span>
+			</td>
+			<td>
+				<span class="eng">&yen;<?php echo $v['iPrice2']?></span>
+			</td>
+			<td>
+				<span class="eng"><?php echo intval($v['iStatus'])==1?'已审核':(intval($v['iStatus'])==2?'待审核':'未发布完成')?></span>
+			</td>
+			<td>
+				<span class="blue_link"><a href="/media/add/id/<?php echo $v['iMediaID']?>.html">编辑</a></span>
+			</td>
+		</tr>
+		<?php }}?>
+	</tbody>
+</table>
+<?php }?>
+
+<div class="pager">
+<?php echo $aData['aPager']?>
+</div>
+<dl class="cf2 w_1000 d_money">
+	<dd>
+		<a href="/media/add.html" class="red_btn_t">添加帐号</a>
+	</dd>
+</dl>
+<div id="glwx_box" style="display:none">
+    <div class="glwx_block">
+        <label class="glwx_lbl">将唯一码添加到图文消息素材中</label>
+        <div class="clear">
+            <div class="glwx-key">
+                <span id="glwx_key">A5A0B077CFBBE3D1B3DE7ADD7381C385</span>
+            </div>
+        </div>
+    </div>
+    <div class="glwx_block">
+        <label class="glwx_lbl">复制图文消息地址到下方</label>
+        <div class="clearfix">
+            <input id="glwx_url" style="width:350px;" class="fill_text hover_input" type="text" maxlength="1023" value="">
+        </div>
+    </div>
+    <div class="glwx_buttons clearfix">
+        <div class="glwx_buttons-right">
+            <button type="button" class="btn btn-success" id="wx_confirm">提交验证</button>
+        </div>
+    </div>
+</div>
+<link href="<?php echo $sStaticRoot ?>/easyDialog/easydialog.css" rel="stylesheet" type="text/css">
+<script src="<?php echo $sStaticRoot ?>/easyDialog/easydialog.min.js"></script>
+<script>
+$(function(){
+	var boxhtml = $('#glwx_box').html();
+	$('#glwx_box').empty();
+    $('.verifybtn').click(function(){
+        var verifyurl = this.href;
+        $(boxhtml).find('#glwx_key').html($(this).data('verify'));
+        easyDialog.open({
+            container : {
+                header : '绑定公众帐号<a target="_blank" class="olda" href="/help/index/index/type/bind.html">使用教程</a>',
+                content : boxhtml,
+                yesFn : false,
+                noFn : false
+            }
+        });
+        $('#wx_confirm').click(function(){
+            $.post(verifyurl, {'url':$('#glwx_url').val()}, function(ret) {
+                alert(ret.data);
+                if (ret.status) {
+                    location.reload();
+                }
+            });
+        })
+        return false;
+    });
+});
+</script>

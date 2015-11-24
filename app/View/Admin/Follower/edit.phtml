@@ -1,0 +1,67 @@
+<div class="pheader clearfix"><?php echo isset($aFollower['iAutoID'])?'编辑':'增加'?>搜索条件</div>
+<div class="pbody clearfix">
+    <form id="myform" class="form-horizontal" role="form" method="post" action="">
+        <input name="iAutoID" type="hidden" value="<?php echo isset($aFollower['iAutoID'])?$aFollower['iAutoID']:''?>">
+		<div class="form-group">
+			<label for="sTitle" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 搜索条件标题：</label>
+			<div class="col-sm-10">
+				<input name="sTitle" validate="!length:1-20" type="text" value="<?php echo isset($aFollower['sTitle'])?$aFollower['sTitle']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="iMinPrice" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 最小粉丝数：</label>
+			<div class="col-sm-10">
+			    <input name="iMinPrice" validate="!float:true" type="text" value="<?php echo isset($aFollower['iMinPrice'])?$aFollower['iMinPrice']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="iMaxPrice" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 最大粉丝数：</label>
+			<div class="col-sm-10">
+			    <input name="iMaxPrice" validate="!float:true" type="text" value="<?php echo isset($aFollower['iMaxPrice'])?$aFollower['iMaxPrice']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<?php if(isset($aFollower['iAutoID'])){ ?>
+    	<?php if(isset($aFollower['iUpdateTime']) && $aFollower['iUpdateTime'] > 0){ ?>
+    	<div class="form-group">
+    		<label for="iMoney" class="col-sm-2 control-label"> 更新时间：</label>
+    		<div class="col-sm-10">
+    			<?php echo date('Y-m-d H:i:s' , $aFollower['iUpdateTime']); ?>
+    		</div>
+    	</div>
+    	<?php } ?>
+    	<div class="form-group">
+    		<label for="iMoney" class="col-sm-2 control-label"> 创建时间：</label>
+    		<div class="col-sm-10">
+    			<?php echo date('Y-m-d H:i:s' , $aFollower['iCreateTime']); ?>
+    		</div>
+    	</div>
+    	<?php } ?>
+		<div class="form-group">
+			<label for="sPassword" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 修改密码：</label>
+			<div class="col-sm-10">
+			    <input name="pwd" validate="!length:2-50" type="password" value="" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+    	<div class="btn-toolbar text-center">
+        	<button id="save" class="btn btn-primary">保存</button>
+        	<button id="cancel"class="btn" onclick="location.href='/admin/follower/list/';return false;">取消</button>
+        </div>
+	</form>
+</div>
+<script type="text/javascript">
+$(function() {
+	$("#myform").validate({submitHandler: function(form) {
+	    $.post(form.action, $(form).serialize(), function(ret){
+	        alert(ret.data);
+	        if (ret.status) {
+	            location.href = '/admin/follower/list/';
+	        }
+	    }, 'json');
+		return false;
+	}});
+});
+</script>

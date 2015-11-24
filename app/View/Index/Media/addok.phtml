@@ -1,0 +1,38 @@
+<div class="cf2 step_o">
+	<div class="cf2 step_o_w">
+		<ul class="step_o cf2 step_m step2_3">
+			<li>
+				<span class="eng"></span>
+				<p>添加媒体</p>
+			</li>
+			<li>
+				<span class="eng"></span>
+				<p>填写报价</p>
+			</li>
+			<li>
+				<span class="eng"></span>
+				<p>等待接单</p>
+			</li>
+		</ul>
+	</div>
+	<!--end宽度-->
+</div>
+
+<div class="activate_w cf2">
+	<dl class="activate_w">
+		<dt>
+			<img src="/front/images/tool/icon_succeed.png" class="png" alt="ok">
+		</dt>
+		<dd>
+			<h4>恭喜，发布成功！</h4>
+			<p>
+				您已经成功的发布<?php echo $sType?> <font color="blue"><?php echo $aMedia['sMediaName']?></font>，媒体编号：<?php echo $aMedia['iMediaID']?><br>
+				我们审核通过后，会尽快为您安排投放，请注意查看您的个人中心 <a class="olda" href="/mcenter/account.html">账号中心</a>
+			</p>
+			<div>
+				<a href="/media/add/type/<?php echo $aMedia['iMediaType']?>.html" class="red_btn_t">继续添加媒体</a>
+				<a href="/mcenter/account.html" class="gray_btn">账号管理</a>
+			</div>
+		</dd>
+	</dl>
+</div>

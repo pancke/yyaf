@@ -1,0 +1,46 @@
+<?php $iTopNav=1; include 'topnav.phtml';?>
+
+<div class="cf2 gray_border box_w">
+	<dl class="gray_th">
+		<dd>提交预览</dd>
+	</dl>
+
+	<form autocomplete="off">
+	<input type="hidden" name="id" value="<?php echo $aAdMedia['iAutoID']?>">
+	<table class="fill_table">
+		<tr>
+			<th>
+				<span class="red_arrow">*</span>预览地址：
+			</th>
+			<td>
+				<input type="text" name="sPreviewUrl" placeholder="输入预览地址" class="fill_text" value="<?php echo empty($aAdMedia)?'':$aAdMedia['sPreviewUrl']?>" />
+        		<label class="error sPreviewUrl" style="display: none;"></label>
+			</td>
+		</tr>
+		<tfoot>
+			<tr>
+				<td colspan="2">
+					<input type="button" class="red_btn_t step_btn" value="提交">
+				</td>
+			</tr>
+		</tfoot>
+	</table>
+	</form>
+</div>
+
+<script>
+;$(function(){
+    $(".red_btn_t").click(function(){
+		var form = $(this).parents('form').get(0);
+	    $.post(form.action?form.action:location.href, $(form).serialize(), function(ret){
+	        if (ret.status) {
+		        alert(ret.data);
+	            location.href = '/mcenter/index/type/3.html';
+	        } else {
+		        showErrorInfo(form, ret.data);
+	        }
+	    }, 'json');
+		return false;
+	});
+});
+</script>

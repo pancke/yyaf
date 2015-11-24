@@ -1,0 +1,158 @@
+		<tr>
+			<th>
+				文章导入：
+			</th>
+			<td>
+				<div class="file-box file-box_s">
+					<input type='text' placeholder="可复制已有文章微信链接或公众号后台文章预览链接" name='sImportUrl' id='sImportUrl' class='fill_text hover_input' style="width: 400px;" value="<?php echo empty($aSetting)?'':$aSetting['sImportUrl']?>" />
+					<input type='button' class='btn gray_btn' id="sImportUrlBtn" value='导入' />
+					<label class="error sImportUrl" style="display: none;"></label>
+				</div>
+			</td>
+		</tr>
+		<!--
+		<tr>
+			<th>
+				<span class="red_arrow">*</span>内容上传：
+			</th>
+			<td>
+				<div class="file-box file-box_s">
+					<input type='text' readonly name='sWordFile' id='sWordFile' class='fill_text hover_input' style="width: 400px;" value="<?php echo empty($aSetting)?'':$aSetting['sWordFile']?>" />
+					<input type='button' class='btn gray_btn plupload' value='上传' data-target="#sWordFile" data-ext="docx,doc"/>
+					<label>限Word格式5M以内</label>
+					<label class="error sWordFile" style="display: none;"></label>
+				</div>
+			</td>
+		</tr>
+		-->
+		<tr>
+			<th>
+				<span class="red_arrow">*</span>标题：
+			</th>
+			<td>
+				<input type="text" placeholder="请不要超过50个字符，勿将转发、分享等文字加入其中，以免被微信屏蔽造成损失" class="fill_text hover_input" id="sTitle" name="sTitle" value="<?php echo empty($aSetting)?'':$aSetting['sTitle']?>">
+				<label class="error sTitle" style="display: none;"></label>
+			</td>
+		</tr>
+		<tr>
+			<th>
+				<span class="red_arrow">*</span>封面图片：
+			</th>
+			<td>
+				<img class="imageplus plupload" width="120px" height="120px" id="sCoverImgShow" src="<?php echo empty($aSetting)?'/front/images/tool/imageplus.png':Util_Uri::getDFSViewURL($aSetting['sCoverImg'])?>" data-target="#sCoverImg" data-img="#sCoverImgShow">
+			    <div class="imagetips">
+			        仅支持jpg、jpeg、gif图片且图片不能大于2M<br>建议尺寸：单图文图片尺寸900像素 * 500像素，第2-N条图片尺寸：200像素 * 200像素<br>
+				<label class="error sCoverImg" style="display: none"></label>
+			    </div>
+				<input type="hidden" name="sCoverImg" id="sCoverImg" value="<?php echo empty($aSetting)?'':$aSetting['sCoverImg']?>" />
+			</td>
+		</tr>
+		<tr>
+			<th>
+				<span class="red_arrow">*</span>封面插入正文：
+			</th>
+			<td>
+				<ul class="input_list">
+					<li>
+						<label for="b_1">
+							<div class="sel_box sel_box_r">
+								<input type="radio" id="b_1" name="iIsCover" <?php echo empty($aSetting)||$aSetting['iIsCover']==1?'checked':''?> />
+								<label for="b_1"></label>
+							</div>
+							是
+						</label>
+					</li>
+					<li>
+						<label for="b_2">
+							<div class="sel_box sel_box_r">
+								<input type="radio" id="b_2" name="iIsCover" <?php echo !empty($aSetting)&&$aSetting['iIsCover']==0?'checked':''?> />
+								<label for="b_2"></label>
+							</div>
+							否
+						</label>
+					</li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<th>
+				正文摘要：
+			</th>
+			<td>
+				<textarea class="fill_textarea hover_input" id="sAbstract" name="sAbstract"	style="width: 780px;"><?php echo empty($aSetting)?'':$aSetting['sAbstract sAbstract']?></textarea>
+				<label class="error " style="display: none;"></label>
+			</td>
+		</tr>
+		<tr>
+			<th>
+				<span class="red_arrow">*</span>正文内容：
+			</th>
+			<td>
+				<textarea id="sContent" name="sContent"	style="width: 800px; height: 200px;"><?php echo empty($aSetting)?'':$aSetting['sContent']?></textarea>
+				<label class="error sContent" style="display: none;"></label>
+			</td>
+		</tr>
+		<tr>
+			<th>
+				原文链接：
+			</th>
+			<td>
+				<input type="text" class="fill_text hover_input" id="sOriginalUrl" name="sOriginalUrl" value="<?php echo empty($aSetting)?'':$aSetting['sOriginalUrl']?>">
+				<label class="error sOriginalUrl" style="display: none;"></label>
+				<p class="note_gray">请输入手机版的原文链接(如：宝贝购买链接)，请确保该链接不被查封，若链接被封，所有后果均与51wom无关</p>
+			</td>
+		</tr>
+<script type="text/javascript" src="<?php echo $sStaticRoot ?>/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="<?php echo $sStaticRoot ?>/ueditor/ueditor.all.js"></script>
+<script>
+;$(function(){
+    var ue = UE.getEditor('sContent', {
+        toolbars: [['source', 'undo', 'redo', '|',
+            'bold', 'italic', 'underline', 'fontborder', 'strikethrough', 'removeformat', 'blockquote', 'pasteplain', '|',
+            'forecolor', 'backcolor', 'insertorderedlist', 'insertunorderedlist', '|',
+            'justifyleft', 'justifycenter', 'justifyright', '|',
+            'link', 'unlink', 'horizontal', '|',
+            'customstyle', 'paragraph', 'fontfamily', 'fontsize', '|',
+            //'imagenone', 'imageleft', 'imageright', 'imagecenter', '|',
+            'inserttable', //插入表格
+            'insertrow', //前插入行
+            'insertcol', //前插入列
+            'deleterow', //删除行
+            'deletecol', //删除列
+            'mergecells', //合并多个单元格
+            'deletetable', //删除表格
+            'edittable', //表格属性
+            'edittd', //单元格属性
+            'insertimage',
+            'insertvideo'
+            ]],
+        //关闭字数统计
+        wordCount: false,
+        //关闭elementPath
+        elementPathEnabled: false,
+        autoHeightEnabled: true,
+        autoFloatEnabled: true,
+        initialFrameHeight: 300,
+        serverUrl: '/ueditor/index'
+    });
+
+    $('#sImportUrlBtn').click(function(){
+        var sImportUrl = $('#sImportUrl').val().trim();
+        if (sImportUrl.length < 20) {
+            alert('请输入正确的地址');
+            return false;
+        }
+
+        $.post('/ad/import.html', {url:sImportUrl}, function(ret){
+            if (ret.status) {
+                //$('#sCoverImgShow').get(0).src = ret.data.sCover;
+                $('#sTitle').val(ret.data.sTitle);
+                //$('#sContent').val(ret.data.sContent);
+                ue.setContent(ret.data.sContent);
+            } else {
+                alert(ret.data);
+            }
+        });
+    });
+});
+</script>

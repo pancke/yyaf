@@ -1,0 +1,72 @@
+<div class="pheader clearfix">角色列表</div>
+<div class="pbody clearfix">
+    <div class="btn-toolbar list-toolbar">
+    	<button class="btn btn-primary" id="role_add">
+    		<i class="icon-plus"></i> 增加角色
+    	</button>
+    </div>
+    <table class="table table-bordered table-hover">
+    	<thead>
+    		<tr>
+    			<th class="col-sm-1 text-center">#</th>
+    			<th>角色名</th>
+    			<th>说明</th>
+    			<th class="text-center">操作</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+        <?php foreach ($aList['aList'] as $aRole) {?>
+            <tr>
+    			<td class="col-sm-1 text-center"><?php echo $aRole['iRoleID']?></td>
+    			<td><?php echo $aRole['sRoleName']?></td>
+    			<td><?php echo $aRole['sDesc']?></td>
+    			<td class="text-center">
+    			    <a href="/admin/role/edit?id=<?php echo $aRole['iRoleID']?>" title="编辑"><i class="icon-pencil icon-large"></i></a>
+    			    <a class="role_delete" href="/admin/role/del?id=<?php echo $aRole['iRoleID']?>" title="删除"><i class="icon-trash icon-large"></i></a>
+    			</td>
+    		</tr>
+        <?php }?>
+    	</tbody>
+    </table>
+    <?php echo $aList['aPager']?>
+</div>
+<script type="text/javascript" src="<?php echo $sStaticRoot ?>/js/xcConfirm.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo $sStaticRoot ?>/js/xcConfirm.css"/>
+<style type="text/css">
+.sgBtn{width: 135px; height: 35px; line-height: 35px; margin-left: 10px; margin-top: 10px; text-align: center; background-color: #0095D9; color: #FFFFFF; float: left; border-radius: 5px;}
+</style>
+<script>
+$('.role_delete').click(function() {
+	var url = this.href;
+	if (confirm("您确认要删除该角色吗？")) {
+		var txt=  "请输入密码：";
+		window.wxc.xcConfirm(txt, window.wxc.xcConfirm.typeEnum.input,{
+			onOk:function(v){
+				if (v.trim() != '') {
+					$.post('/admin/user/seditpwd', {'pwd':v.trim()}, function(ret){
+						if (ret.status) {
+							$.get(url, function(ret){
+								alert(ret.data);
+								if (ret.status) {
+									location.reload();
+								}
+							}, 'json');
+						}
+						else {
+							alert(ret.data);
+						}
+					}, 'json');
+				}
+				else {
+					alert('修改密码不可以为空');
+					//return false;
+				}
+			}
+		});
+	}
+	return false;
+});
+$('#role_add').click(function(){
+	location.href = '/admin/role/add';
+});
+</script>

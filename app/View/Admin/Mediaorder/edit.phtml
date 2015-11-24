@@ -1,0 +1,139 @@
+<div class="pheader clearfix"><?php echo isset($aAdMedia['iAutoID'])?'编辑':'增加'?>资源订单</div>
+<div class="pbody clearfix">
+    <form id="myform" class="form-horizontal" role="form" method="post" action="">
+        <input name="iAutoID" type="hidden" value="<?php echo isset($aAdMedia['iAutoID'])?$aAdMedia['iAutoID']:''?>">
+        <input name="iAdID" type="hidden" value="<?php echo isset($aAdMedia['iAdID'])?$aAdMedia['iAdID']:''?>">
+        <input name="iUserID" type="hidden" value="<?php echo isset($aAdMedia['iUserID'])?$aAdMedia['iUserID']:''?>">
+        <input name="iMediaID" type="hidden" value="<?php echo isset($aAdMedia['iMediaID'])?$aAdMedia['iMediaID']:''?>">
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"> 广告名称：</label>
+			<div class="col-sm-10">
+				<?php echo $aAd['sAdName']; ?>
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"> 用户名称：</label>
+			<div class="col-sm-10">
+				<?php echo $aUser['sRealName']; ?>
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"> 媒体名称：</label>
+			<div class="col-sm-10">
+				<?php echo $aMedia['sMediaName']; ?>
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"> 广告位：</label>
+			<div class="col-sm-10">
+				<select name="iPos" class="form-control" style="width:250px;">
+					<?php
+					foreach ($aPos as $key => $val) {
+					?>
+					<option value="<?php echo $key; ?>" <?php echo isset($aAdMedia['iPos'])&&$aAdMedia['iPos']==$key?'selected':''?>><?php echo $val; ?></option>
+					<?php
+					}
+					?>
+    		    </select>
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"> 价格：</label>
+			<div class="col-sm-10">
+				<input name="iMoney" type="text" value="<?php echo isset($aAdMedia['iMoney'])?$aAdMedia['iMoney']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"> 执行时间：</label>
+			<div class="col-sm-10">
+				<input type="text" name="iPlanTime" placeholder="选择日期和时间" class="fill_text date_text hover_input datetimepicker  form-control input-validate" value="<?php echo ((isset($aAdMedia['iPlanTime']) && $aAdMedia['iPlanTime'] > 0 )?date('Y-m-d H:i',$aAdMedia['iPlanTime']):'');?>" />
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"> 支付状态：</label>
+			<div class="col-sm-10">
+				<select name="iPayStatus" class="form-control" style="width:250px;">
+    				<option value="0" <?php echo isset($aAdMedia['iPayStatus'])&&$aAdMedia['iPayStatus']=='0'?'selected':''?>>未支付</option>
+    		        <option value="1" <?php echo isset($aAdMedia['iPayStatus'])&&$aAdMedia['iPayStatus']=='1'?'selected':''?>>已支付</option>
+    		    </select>
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"> 状态：</label>
+			<div class="col-sm-10">
+				<select name="iStatus" class="form-control" style="width:250px;">
+    				<option value="1" <?php echo isset($aAdMedia['iStatus'])&&$aAdMedia['iStatus']=='1'?'selected':''?>>等待接单</option>
+    		        <option value="2" <?php echo isset($aAdMedia['iStatus'])&&$aAdMedia['iStatus']=='2'?'selected':''?>>等待执行</option>
+    		        <option value="3" <?php echo isset($aAdMedia['iStatus'])&&$aAdMedia['iStatus']=='3'?'selected':''?>>执行中</option>
+    		        <option value="4" <?php echo isset($aAdMedia['iStatus'])&&$aAdMedia['iStatus']=='4'?'selected':''?>>已完成</option>
+    		        <option value="5" <?php echo isset($aAdMedia['iStatus'])&&$aAdMedia['iStatus']=='5'?'selected':''?>>拒绝接单</option>
+    		    </select>
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<?php if(isset($aAdMedia['iAutoID'])){ ?>
+    	<?php if(isset($aAdMedia['iUpdateTime']) && $aAdMedia['iUpdateTime'] > 0){ ?>
+    	<div class="form-group">
+    		<label for="iMoney" class="col-sm-2 control-label"> 更新时间：</label>
+    		<div class="col-sm-10">
+    			<?php echo date('Y-m-d H:i:s' , $aAdMedia['iUpdateTime']); ?>
+    		</div>
+    	</div>
+    	<?php } ?>
+    	<div class="form-group">
+    		<label for="iMoney" class="col-sm-2 control-label"> 创建时间：</label>
+    		<div class="col-sm-10">
+    			<?php echo date('Y-m-d H:i:s' , $aAdMedia['iCreateTime']); ?>
+    		</div>
+    	</div>
+    	<?php } ?>
+    	<div class="btn-toolbar text-center">
+        	<button id="save" class="btn btn-primary">保存</button>
+        	<button id="cancel"class="btn" onclick="location.href='/admin/mediaorder/list/';return false;">取消</button>
+        </div>
+	</form>
+</div>
+<script type="text/javascript">
+$(function() {
+	$("#myform").validate({submitHandler: function(form) {
+	    $.post(form.action, $(form).serialize(), function(ret){
+	        alert(ret.data);
+	        if (ret.status) {
+	            location.href = '/admin/mediaorder/list/';
+	        }
+	    }, 'json');
+		return false;
+	}});
+});
+</script>
+<script type="text/javascript" src="<?php echo $sStaticRoot ?>/front/js/jquery.datetimepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo $sStaticRoot ?>/front/css/jquery.datetimepicker.css"/ >
+<script>
+$(function(){
+    // 日期时间选择器
+    $(".datetimepicker").datetimepicker({
+        lang:"ch",
+        i18n:{
+        // 以中文显示月份
+        de:{
+            months:["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月",],
+        // 以中文显示每周（必须按此顺序，否则日期出错）
+            dayOfWeek:["日","一","二","三","四","五","六",]
+            }
+        },
+        // 显示成年月日，时间--
+        format:"Y-m-d H:i",
+        // 限制不能选取今天之前
+        minDate:0,
+        //取消时间选择
+        timepicker:true
+    });
+});
+</script>

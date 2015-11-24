@@ -1,0 +1,73 @@
+<?php $iTopNav=2; include 'topnav.phtml';?>
+<?php echo $aOrderStatus[$aRow['iStatus']] ?>
+<div class="tab_box tab_box_o">
+	<div>
+		<table class="list_table">
+			<thead>
+    			<tr>
+                    <th>订单号</th>
+                    <th>推广名称</th>
+                    <th>平台</th>
+                    <th>推广时间</th>
+                    <th>订单金额</th>
+                    <th>订单状态</th>
+                    <th>支付状态</th>
+                    <th>覆盖粉丝量</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($aData['aList'] as $aRow) {?>
+                <tr>
+                    <td><?php echo $aRow['iAdID']?></td>
+                    <td>
+                        <?php if ($aRow['iStatus'] != Model_Ad::STATUS_DELETE) {?>
+                            <a class="pinka" href="/index/index/ad/id/<?php echo $aRow['iAdID']?>.html"><?php echo $aRow['sAdName']?></a>
+                        <?php } else {?>
+                            <?php echo $aRow['sAdName']?>
+                        <?php }?>        
+                    </td>
+                    <td><?php echo $aMediaType[$aRow['iMediaType']]?></td>
+                    <td><?php echo date('Y-m-d H:i:s', time($aRow['iPlanTime']))?></td>
+                    <td><?php echo $aRow['iTotalMoney']?></td>
+                    <td>
+                        <?php if($aOrderStatus[$aRow['iStatus']]=='审核未通过') { ?>
+                            <span class="blue_link"><a href="/acenter/istatus?id=<?php echo $aRow['iAdID']?>">未通过审核</a></span>
+                        <?php } else { ?>
+                        <?php echo $aOrderStatus[$aRow['iStatus']]?>
+                        <?php } ?>
+                    </td>
+                    <td><?php echo $aRow['iPayStatus']?'已支付':'未支付'?></td>
+                    <td><?php echo $aRow['iFollowNum']?></td>
+                    <td>
+                        <?php if ($aRow['iPayStatus'] == 0) {?>
+                            <a href="/ad/wpay/id/<?php echo $aRow['iAdID']?>.html">支付</a> | 
+                            <a href="/ad/add/id/<?php echo $aRow['iAdID']?>.html">修改</a> | 
+                            <a class="addel" href="/ad/del/id/<?php echo $aRow['iAdID']?>.html">删除</a>
+                        <?php }?>
+                    </td>
+                </tr>
+                <?php }?>
+            </tbody>
+        </table>
+		<div class="pager">
+		<?php echo $aData['aPager']?>
+		</div>
+    </div>
+</div>
+<script>
+$(function(){
+	$('.addel').click(function(){
+		$.get(this.href, function(ret){
+			if (ret.status) {
+				alert(ret.data);
+				location.reload();
+			} else {
+				alert(ret.data);
+			}
+		});
+		
+		return false;
+	});
+});
+</script>

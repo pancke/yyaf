@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta charset="utf-8">
+<title><?php echo isset($aMeta['sTitle']) ? $aMeta['sTitle'] : '' ?></title>
+<meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+<meta name="keywords" content="<?php echo isset($aMeta['sKeyword']) ? $aMeta['sKeyword'] : '' ?>">
+<meta name="description" content="<?php echo isset($aMeta['sDescription']) ? $aMeta['sDescription'] : '' ?>">
+<link href="<?php echo $sStaticRoot ?>/front/css/css.css" rel="stylesheet" type="text/css">
+<link href="<?php echo $sStaticRoot ?>/front/css/dropdown.css" rel="stylesheet" type="text/css">
+<link href="<?php echo $sStaticRoot ?>/front/css/common.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="<?php echo $sStaticRoot?>/front/js/jquery-1.9.1.min.js"></script>
+
+<script type="text/javascript">
+    var global = {
+        static_url: '<?php echo $sStaticRoot?>'
+    };
+</script>
+</head>
+
+<body>
+	<div class="header">
+		<dl class="header">
+			<dt>
+			    <span>昨日订单数：</span><font color="red"><?php echo $_iYAdTotal?></font>
+			    <span>昨日投放客数：</span><font color="red"><?php echo $_iYUserTotal?></font>
+			    <span>自媒体数：</span><font color="red"><?php echo $_iMediaTotal?></font>
+			</dt>
+			<dd>
+			    <?php if (! empty($_aCurrUser)) {?>
+			    <span style="font-size:14px">
+    			          <span style="color: #000;font-size:14px">欢迎您！<?php echo $_aCurrUser['sEmail']?></span>&nbsp;&nbsp;&nbsp;&nbsp;<a style="color: #F00;" href="<?php echo $_aCurrUser['iType']==2?'/mcenter/index.html':'/acenter/index.html'?>">个人中心</a>
+    			    &nbsp;&nbsp;
+    			    <a style="color: #F00;" href="/user/logout/type/<?php echo $_aCurrUser['iType']?>.html">退出</a>
+			    </span>
+			    <?php }?>
+			    &nbsp;&nbsp;
+			    <i><img style="margin-top:5px;" src="/front/images/pic/iphone.png" width="20"></i>
+			    <span style="color: #000; font-size:14px">400- 878-9551</span>
+			</dd>
+		</dl>
+	</div>
+	<!--end头文件-->
+	<div class="i_header_c">
+		<div class="header_c">
+			<div class="logo">
+				<a href="/"><img src="/front/images/logo.png" alt="51wom"  width="180"></a>
+			</div>
+			<!--end标志-->
+			<div class="nav">
+				<ul class="nav">
+					<li id="nav_hover01"><a href="/" <?php echo $sTopMenu=='home' ? 'class="nav_active"' : ''?>>首页</a></li>
+					<li id="nav_hover03"><a href="/ad/add.html" <?php echo $sTopMenu=='aadd' ? 'class="nav_active"' : ''?>>想投广告</a></li>
+					<li id="nav_hover02"><a href="/media/add.html" <?php echo $sTopMenu=='madd' ? 'class="nav_active"' : ''?>>想要接单</a></li>
+					<li id="nav_hover04"><a href="/media/index.html" <?php echo $sTopMenu=='media' ? 'class="nav_active"' : ''?>>媒体中心</a></li>
+					<li id="nav_hover05"><a href="/help/case.html" <?php echo $sTopMenu=='case' ? 'class="nav_active"' : ''?>>案例中心</a></li>
+					<li id="nav_hover07"><a href="/help/index/type/home.html" <?php echo $sTopMenu=='help' ? 'class="nav_active"' : ''?>>帮助中心</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	
+	<div class="body clearfix" style="min-height:475px;margin-bottom:3.2em">
+	<?php include $_script; ?>
+	</div>
+	
+	<ul class="footer">
+		<li>
+		    <a href="/help/index/type/about.phtml">关于51wom</a><em class="china">|</em>
+		    <a href="/help/index/type/join.phtml">加入51wom</a><em class="china">|</em>
+			<a href="/help/index/type/contact.phtml">联系我们</a><em class="china">|</em>
+			<a href="/help/index/type/exemption.phtml">免责说明</a><em class="china">|</em>
+			<span>沪ICP备<a target="_blank" href="http://www.miitbeian.gov.cn/">11022867号-1</a></span>
+		</li>
+	</ul>
+	
+	<?php if ($isMCenter || $isACenter) {?>
+	<script type="text/javascript" src="/js/kefu.js"></script>
+	<?php }?>
+	<link href="<?php echo $sStaticRoot ?>/minitip/minitip.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="<?php echo $sStaticRoot?>/minitip/minitip.js"></script>
+	<script type="text/javascript" src="<?php echo $sStaticRoot?>/front/js/global.js"></script>
+
+	<!--[if lt IE 10]>
+    <script type="text/javascript" src="/js/pie.js"></script>
+	<script language="javascript">
+        $(function () {
+            if (window.PIE) {
+                $('.rounded').each(function () {
+                    PIE.attach(this);
+                });
+            }
+        });
+    </script>
+    <![endif]-->
+    <!--[if IE 6]>
+    <script type="text/javascript" src="js/DD_belatedPNG.js"></script>
+    <script>
+    DD_belatedPNG.fix('.png');
+    </script>
+    <![endif]-->
+	<script type="text/javascript" src="<?php echo $sStaticRoot ?>/js/jquery.json.js"></script>
+    <script type="text/javascript" src="<?php echo $sStaticRoot ?>/front/js/common.js"></script>
+    <script type="text/javascript" src="<?php echo $sStaticRoot ?>/js/inputlimit.js"></script>
+    <?php if (Util_Common::isDebug()) {?>
+	<script type="text/javascript"><?php echo @$__showDebugInfo__ ?></script>
+	<?php }?>
+	
+	
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"1","bdPos":"right","bdTop":"100"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+	
+	<script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?9d21dbb3c4c10177842bc6fca694fc82";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<div class="pheader clearfix"><?php echo isset($aWebSite['iAutoID'])?'编辑':'增加'?>网站内容</div>
+<div class="pbody clearfix">
+    <form id="myform" class="form-horizontal" role="form" method="post" action="">
+        <input name="iWebSiteID" type="hidden" value="<?php echo isset($aWebSite['iWebSiteID'])?$aWebSite['iWebSiteID']:''?>">
+		<div class="form-group">
+			<label for="iPersonCharge" class="col-sm-2 control-label"> 上级标题：</label>
+			<div class="col-sm-10">
+				<select name="iParentID" class="form-control" style="width:250px;">
+					<option value="0" <?php echo !isset($aWebSite['iParentID'])||$aWebSite['iParentID']==0?'selected':''?>>顶级</option>
+    		    <?php foreach ($parentWebsite as $k => $v) {?>
+    		        <option value="<?php echo $v['iWebSiteID']?>" <?php echo isset($aWebSite['iParentID'])&&$aWebSite['iParentID']==$v['iWebSiteID']?'selected':''?>><?php echo $v['sTitle']?></option>
+    		    <?php }?>
+    		    </select>
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="iPersonCharge" class="col-sm-2 control-label"> 分类：</label>
+			<div class="col-sm-10">
+				<select name="iType" class="form-control" style="width:250px;">
+					<option value="0" <?php echo !isset($aWebSite['iType'])||$aWebSite['iType']==0?'selected':''?>>无</option>
+    		    <?php foreach ($iType as $k => $v) {?>
+    		        <option value="<?php echo $k?>" <?php echo isset($aWebSite['iType'])&&$aWebSite['iType']==$k?'selected':''?>><?php echo $v?></option>
+    		    <?php }?>
+    		    </select>
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 页面名称：</label>
+			<div class="col-sm-10">
+				<input name="sPage" type="text" validate="!length:1-50" value="<?php echo isset($aWebSite['sPage'])?$aWebSite['sPage']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 标题：</label>
+			<div class="col-sm-10">
+				<input name="sTitle" type="text" validate="!length:1-50" value="<?php echo isset($aWebSite['sTitle'])?$aWebSite['sTitle']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 关键字：</label>
+			<div class="col-sm-10">
+				<input name="skeywords" type="text" validate="!length:1-50" value="<?php echo isset($aWebSite['skeywords'])?$aWebSite['skeywords']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sWord" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 简介：</label>
+			<div class="col-sm-10">
+				<input name="sdescription" type="text" validate="!length:1-50" value="<?php echo isset($aWebSite['sdescription'])?$aWebSite['sdescription']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="sContent" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 内容：</label>
+			<div class="col-sm-10">
+				<!-- <textarea name="sContent" class="form-control input-validate" rows="3" cols="20"><?php echo isset($aWebSite['sContent'])?$aWebSite['sContent']:''?></textarea> -->
+				<script type="text/plain" id="editor" name="sContent" height="400px"><?php echo isset($aWebSite['sContent'])?$aWebSite['sContent']:''?></script>
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+		<?php if(isset($aWebSite['iWebSiteID'])){ ?>
+    	<?php if(isset($aWebSite['iUpdateTime']) && $aWebSite['iUpdateTime'] > 0){ ?>
+    	<div class="form-group">
+    		<label for="iMoney" class="col-sm-2 control-label"> 更新时间：</label>
+    		<div class="col-sm-10">
+    			<?php echo date('Y-m-d H:i:s' , $aWebSite['iUpdateTime']); ?>
+    		</div>
+    	</div>
+    	<?php } ?>
+    	<div class="form-group">
+    		<label for="iMoney" class="col-sm-2 control-label"> 创建时间：</label>
+    		<div class="col-sm-10">
+    			<?php echo date('Y-m-d H:i:s' , $aWebSite['iCreateTime']); ?>
+    		</div>
+    	</div>
+    	<?php } ?>
+    	<div class="btn-toolbar text-center">
+        	<button id="save" class="btn btn-primary">保存</button>
+        	<button id="cancel"class="btn" onclick="location.href='/admin/website/list/';return false;">取消</button>
+        </div>
+	</form>
+</div>
+<script type="text/javascript" src="<?php echo $sStaticRoot ?>/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="<?php echo $sStaticRoot ?>/ueditor/ueditor.all.js"></script>
+<script type="text/javascript">
+var ue = UE.getEditor('editor');
+$(function() {
+	$("#myform").validate({submitHandler: function(form) {
+	    $.post(form.action, $(form).serialize(), function(ret){
+	        alert(ret.data);
+	        if (ret.status) {
+	            location.href = '/admin/website/list/';
+	        }
+	    }, 'json');
+		return false;
+	}});
+});
+</script>

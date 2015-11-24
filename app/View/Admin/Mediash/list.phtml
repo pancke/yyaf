@@ -1,0 +1,194 @@
+<div class="pheader clearfix">自媒体列表</div>
+<div class="pbody clearfix">
+	<form class="form-inline search-form" role="form" method="post" id="myform" action="">
+        <div class="row sousuo_now">
+        	<div class="form-group">
+                <label>媒体类型：</label>
+    		    <select name="iMediaType" class="form-control">
+    		        <option value="">选择类型</option>
+    		        <?php foreach ($MediaType as $k => $v){ ?>
+    		        <option value="<?php echo $k?>" <?php echo isset($aParam['iMediaType'])&&$aParam['iMediaType']==$k?'selected':''?>><?php echo $v?></option>
+    		        <?php } ?>
+    		    </select>
+        	</div>
+            <div class="form-group">
+                <label>账号名称：</label>
+    		    <input type="text" value="<?php echo isset($aParam['sMediaName']) ? $aParam['sMediaName'] : '' ?>" class="form-control" name="sMediaName" style="width: 100px">
+        	</div>
+           <div class="form-group">
+                <label>状态：</label>
+    		    <select name="iStatus" class="form-control">
+    		        <option value="">选择状态</option>
+    		        <option value="1" <?php echo isset($aParam['iStatus'])&&$aParam['iStatus']=='1'?'selected':''?>>已审核</option>
+    		        <option value="2" <?php echo isset($aParam['iStatus'])&&$aParam['iStatus']=='2'?'selected':''?>>未审核</option>
+    		    </select>
+        	</div>
+            <div class="form-group">
+                <input type="hidden" id="iUserID" name="iUserID" value="<?php echo isset($aParam['iUserID']) ? $aParam['iUserID'] : '' ?>" />
+                <!-- <input type="submit" id="formquerybtn" class="btn btn-default btn-sm" value="搜索"> -->
+                <button class="btn btn-default btn-sm" id="formquerybtn">搜索</button>
+                <button class="btn btn-default btn-sm" id="formexplodebtn">导出</button>
+            </div>
+        </div>
+    </form>
+    <hr>
+    <div class="btn-toolbar list-toolbar">
+<!--    	<button class="btn btn-primary" id="media_add_weixin">-->
+<!--    		<i class="icon-plus"></i> 增加微信公众号-->
+<!--    	</button>-->
+<!--    	<button class="btn btn-primary" id="media_add_friend">-->
+<!--    		<i class="icon-plus"></i> 增加微信朋友圈-->
+<!--    	</button>-->
+<!--    	<button class="btn btn-primary" id="media_add_weibo">-->
+<!--    		<i class="icon-plus"></i> 增加新浪微博-->
+<!--    	</button>-->
+<!--    	<button class="btn btn-primary" id="media_add_news">-->
+<!--    		<i class="icon-plus"></i> 增加新闻&论坛-->
+<!--    	</button>-->
+		<form  style="width: 100px;float: left; " role="form" method="post" id="myform1" action="">
+			<input type="hidden" value="2" name="iStatus">
+			<button id="formquerybtn1">未审核</button>
+		</form>
+		<form style="width: 100px;float: left;" role="form" method="post" id="myform2" action="">
+			<input type="hidden" value="1" name="iStatus">
+			<button id="formquerybtn2">已审核</button>
+		</form>
+		<form style="width: 130px;float: left;" role="form" method="post" id="myform3" action="">
+			<input type="hidden" value="3" name="iStatus">
+			<button id="formquerybtn3">未通过审核</button>
+		</form>
+		<form style="width: 100px;float: left;" role="form" method="post" id="myform4" action="">
+			<input type="hidden" value="1" name="iPut">
+			<button id="formquerybtn4">上架</button>
+		</form>
+		<form style="width: 100px;float: left;" role="form" method="post" id="myform5" action="">
+			<input type="hidden" value="2" name="iPut">
+			<button id="formquerybtn5">下架</button>
+		</form>
+		<div style="float: none;clear: both;width: 0;height: 0;"></div>
+    </div>
+    <table class="table table-bordered table-hover">
+    	<thead>
+    		<tr>
+    			<th class="col-sm-1 text-center">编号</th>
+    			<th class="text-center">归属账户</th>
+    			<th class="text-center">媒体类型</th>
+    			<th class="text-center">账号名称</th>
+    			<th class="text-center">公众号名称</th>
+    			<th class="text-center">粉丝数量</th>
+    			<th class="text-center">认证截图</th>
+    			<th class="text-center">单图文报价</th>
+    			<th class="text-center">上下架</th>
+    			<th class="text-center">状态</th>
+    			<th class="text-center">操作</th>
+    		</tr>
+    	</thead>
+    	<tbody>
+        <?php foreach ($aList['aList'] as $v) {?>
+            <tr>
+    			<td class="col-sm-1 text-center"><?php echo $v['iMediaID']?></td>
+    			<td class="text-center"><?php echo isset($userData) ? $userData[$v['iUserID']]['sEmail'] : '';?></td>
+    			<td class="text-center"><?php echo $MediaType[$v['iMediaType']];?></td>
+    			<td class="text-center"><?php echo ((isset($v['sWxLink']) && $v['sWxLink'] != '') ? '<a href="'.$v['sWxLink'].'" target="_blank">' : '');?><?php echo $v['sMediaName']?><?php echo ((isset($v['sWxLink']) && $v['sWxLink'] != '') ? '</a>' : '');?></td>
+    			<td class="text-center"><?php echo $v['sOpenName']?></td>
+    			<td class="text-center"><?php echo $v['iFollowerNum']?></td>
+    			<td class="text-center"><img src="<?php echo Util_Uri::getDFSViewURL($v['sFollowerImg'], 60, 60, 'c')?>" width="60" height="60" ></td>
+				<td class="text-center"><?php echo $v['iPrice1']?></td>
+    			<td class="text-center"><?php echo ((isset($v['iPut']) && $v['iPut'] == '1') ? '上架' : '下架');?></td>
+    			<td class="text-center">
+					<?php
+					if(isset($v['iStatus'])&&$v['iStatus']=='1'){
+						 echo '已审核';
+					}  elseif(isset($v['iStatus'])&&$v['iStatus']=='3'){
+						echo '未通过审核';
+					}else{
+						echo '待审核';
+					}
+					?></td>
+    			<td class="text-center">
+    			    <a href="/admin/mediash/edit?id=<?php echo $v['iMediaID']?>" title="审核"><i class="icon-pencil icon-large"></i></a>
+<!--    			    <a class="media_delete" href="/admin/mediash/del?id=--><?php //echo $v['iMediaID']?><!--" role="button" data-toggle="modal" title="删除"><i class="icon-trash icon-large"></i></a>-->
+    			</td>
+    		</tr>
+        <?php }?>
+    	</tbody>
+    </table>
+    <?php echo $aList['aPager']?>
+</div>
+<script>
+$('.media_delete').click(function() {
+	if (confirm("您确认要删除该自媒体吗？")) {
+		$.get(this.href, function(ret){
+			alert(ret.data);
+		    if (ret.status) {
+			    location.reload();
+		    }
+		}, 'json');
+	}
+	return false;
+});
+$("#formquerybtn").bind("click", function() {
+	var url = "/admin/mediash/list.html";
+	//更改form的action
+	$("#myform").attr("action", url);
+	//触发submit事件，提交表单
+	$("#myform").submit();
+});
+$("#formquerybtn1").bind("click", function() {
+	var url = "/admin/mediash/list.html";
+	//更改form的action
+	$("#myform1").attr("action", url);
+	//触发submit事件，提交表单
+	$("#myform1").submit();
+});
+$("#formquerybtn2").bind("click", function() {
+	var url = "/admin/mediash/list.html";
+	//更改form的action
+	$("#myform2").attr("action", url);
+	//触发submit事件，提交表单
+	$("#myform2").submit();
+});
+$("#formquerybtn3").bind("click", function() {
+	var url = "/admin/mediash/list.html";
+	//更改form的action
+	$("#myform3").attr("action", url);
+	//触发submit事件，提交表单
+	$("#myform3").submit();
+});
+
+$("#formquerybtn4").bind("click", function() {
+	var url = "/admin/mediash/list.html";
+	//更改form的action
+	$("#myform4").attr("action", url);
+	//触发submit事件，提交表单
+	$("#myform4").submit();
+});
+
+$("#formquerybtn5").bind("click", function() {
+	var url = "/admin/mediash/list.html";
+	//更改form的action
+	$("#myform5").attr("action", url);
+	//触发submit事件，提交表单
+	$("#myform5").submit();
+});
+
+$("#formexplodebtn").bind("click", function() {  
+    var url = "/admin/mediash/explode.html";  
+    //更改form的action  
+    $("#myform").attr("action", url);  
+    //触发submit事件，提交表单   
+    $("#myform").submit();  
+});
+$('#media_add_weixin').click(function(){
+	location.href = '/admin/mediash/add?iMediaType=1';
+});
+$('#media_add_friend').click(function(){
+	location.href = '/admin/mediash/add?iMediaType=2';
+});
+$('#media_add_weibo').click(function(){
+	location.href = '/admin/mediash/add?iMediaType=3';
+});
+$('#media_add_news').click(function(){
+	location.href = '/admin/mediash/add?iMediaType=4';
+});
+</script>

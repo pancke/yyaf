@@ -1,0 +1,100 @@
+<div class="pheader clearfix"><?php echo isset($aUser['iAdminID'])?'编辑':'增加'?>用户</div>
+<div class="pbody clearfix">
+    <form id="myform" class="form-horizontal" role="form" method="post">
+        <input name="iAdminID" type="hidden" value="<?php echo isset($aUser['iAdminID'])?$aUser['iAdminID']:''?>">
+    	<div class="form-group">
+    		<label for="sAdminName" class="col-sm-2 control-label"><span style="color:red;">*</span> 用户名称：</label>
+    		<div class="col-sm-10">
+    			<input name="sAdminName" type="text" validate="!length:3-50" value="<?php echo isset($aUser['sAdminName'])?$aUser['sAdminName']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+    		</div>
+    	</div>
+    	<div class="form-group">
+    		<label for="sPassword" class="col-sm-2 control-label"><?php if(!isset($aUser['iAdminID'])):?><span style="color:red;">*</span> <?php endif;?>登录密码：</label>
+    		<div class="col-sm-10">
+    			<input name="sPassword" type="password" validate="<?php if(!isset($aUser['iAdminID'])){?>!length:6-20<?php }else{?>length:6-20<?php } ?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+    		</div>
+    	</div>
+    	<div class="form-group">
+    		<label for="sMobile" class="col-sm-2 control-label"><span style="color:red;">*</span> 手机号码：</label>
+    		<div class="col-sm-10">
+    			<input name="sMobile" type="text" validate="!mobile:true" value="<?php echo isset($aUser['sMobile'])?$aUser['sMobile']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+    		</div>
+    	</div>
+    	<div class="form-group">
+    		<label for="sEmail" class="col-sm-2 control-label"><span style="color:red;">*</span> 公司邮箱：</label>
+    		<div class="col-sm-10">
+    			<input name="sEmail" type="text" validate="!email:true" value="<?php echo isset($aUser['sEmail'])?$aUser['sEmail']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+    		</div>
+    	</div>
+    	<div class="form-group">
+    		<label for="sRealName" class="col-sm-2 control-label"><span style="color:red;">*</span> 真实姓名：</label>
+    		<div class="col-sm-10">
+    			<input name="sRealName" type="text" validate="!chinese:2-20" value="<?php echo isset($aUser['sRealName'])?$aUser['sRealName']:''?>" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+    		</div>
+    	</div>
+    	<div class="form-group">
+    		<label for="sRealName" class="col-sm-2 control-label"><span style="color:red;">*</span> 默认城市：</label>
+    		<div class="col-sm-10">
+    		    <select validate="!required:请选择默认城市" name="iCityID" class="form-control input-validate">
+    		    <?php foreach ($aCity as $k => $v) {?>
+    		        <option value="<?php echo $k?>" <?php echo isset($aUser['iCityID'])&&$aUser['iCityID']==$k?'selected':''?>><?php echo $v?></option>
+    		    <?php }?>
+    		    </select>
+				<span class="validate_checktip"></span>
+    		</div>
+    	</div>
+    	<div class="form-group">
+    		<label for="sRealName" class="col-sm-2 control-label"><span style="color:red;">*</span> 角色选择：</label>
+    		<div class="col-sm-10">
+    		    <div class="col-sm-8" validate="!checkbox:aRoleID[]|sAdminID:1:角色">
+        		    <input type="checkbox" class="checkbox-inline" name="sAdminID" value="1" <?php echo isset($aUser['sRoleID'])&&$aUser['sRoleID']=='-1'?'checked':''?>> 管理员<br>
+    		    <?php $n = 1; foreach ($aRole as $k => $v) {?>
+    		        <input type="checkbox" class="checkbox-inline" name="aRoleID[]" value="<?php echo $k?>" <?php echo isset($aUser['aRoleID'])&&in_array($k,$aUser['aRoleID'])?'checked':''?>> <?php echo $v?>
+    		    <?php if ($n++ % 8 == 0){echo '<br>';}}?>
+		        </div>
+				<span class="validate_checktip"></span>
+    		</div>
+    	</div>
+    	<div class="form-group">
+    		<label for="sRealName" class="col-sm-2 control-label"><span style="color:red;">*</span> 城市选择：</label>
+    		<div class="col-sm-10">
+    		    <div class="col-sm-8" validate="!checkbox:aCityID[]|sAllCityID:1:城市">
+        		    <input type="checkbox" class="checkbox-inline" name="sAllCityID" value="1" <?php echo isset($aUser['sCityID'])&&$aUser['sCityID']=='-1'?'checked':''?>> 所有城市<br>
+    		    <?php $n = 1; foreach ($aCity as $k => $v) {?>
+    		        <input type="checkbox" class="checkbox-inline" name="aCityID[]" value="<?php echo $k?>" <?php echo isset($aUser['aCityID'])&&in_array($k,$aUser['aCityID'])?'checked':''?>> <?php echo $v?>
+    		    <?php if ($n++ % 8 == 0){echo '<br>';}}?>
+		        </div>
+				<span class="validate_checktip"></span>
+    		</div>
+    	</div>
+		<div class="form-group">
+			<label for="sPassword" class="col-sm-2 control-label"><strong style="color:red;">*</strong> 修改密码：</label>
+			<div class="col-sm-10">
+			    <input name="pwd" validate="!length:2-50" type="password" value="" class="form-control input-validate">
+				<span class="validate_checktip"></span>
+			</div>
+		</div>
+    	<div class="btn-toolbar text-center">
+        	<button id="save" class="btn btn-primary">保存</button>
+        	<button id="cancel"class="btn" onclick="location.href='/admin/user/list/';return false;">取消</button>
+        </div>
+    </form>
+</div>
+<script type="text/javascript">
+$(function() {
+	$("#myform").validate({submitHandler: function(form) {
+	    $.post(form.action, $(form).serialize(), function(ret){
+	        alert(ret.data);
+	        if (ret.status) {
+	           location.href = '/admin/user/list/';
+	        }
+	    }, 'json');
+		return false;
+	}});
+});
+</script>

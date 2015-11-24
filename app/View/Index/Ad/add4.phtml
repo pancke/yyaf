@@ -1,0 +1,139 @@
+<div class="cf2 step_o">
+	<div class="cf2 step_o_w">
+		<ul class="step_o cf2 step_4">
+			<li>
+				<span class="eng"></span>
+				<p>添加推广</p>
+			</li>
+			<li>
+				<span class="eng"></span>
+				<p>选择媒介</p>
+			</li>
+			<li>
+				<span class="eng"></span>
+				<p>设置广告</p>
+			</li>
+			<li class="light">
+				<span class="eng"></span>
+				<p>支付款项</p>
+			</li>
+		</ul>
+	</div>
+	<!--end宽度-->
+</div>
+<!--end步骤-->
+
+
+<h4 class="th_text">订单列表</h4>
+<form autocomplete="off">
+<input type="hidden" name="iAdID" value="<?php echo $aAd['iAdID']?>">
+<table class="list_table">
+	<thead>
+		<tr>
+			<th width="5%;">
+				<div class="sel_box">
+					<input type="checkbox" id="a-sel" class="sel_shop" />
+					<label for="a-sel"></label>
+				</div>
+			</th>
+			<th>订单号</th>
+			<th>媒体类型</th>
+			<th>广告位</th>
+			<th>执行时间</th>
+			<th>订单状态</th>
+			<th>结算状态</th>
+			<th>帐号</th>
+			<th>预计总消费</th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php foreach ($aList as $v) {?>
+		<tr>
+			<td>
+				<div class="sel_box">
+					<input type="checkbox" name="aChoose[]" data-money="<?php echo $v['iMoney']?>" id="mid-<?php echo $v['iAutoID']?>" <?php echo $v['iChoose']?'checked':''?> value="<?php echo $v['iAutoID']?>" />
+					<label for="mid-<?php echo $v['iAutoID']?>"></label>
+				</div>
+			</td>
+			<td>
+				<span class="eng"><?php echo $v['iAdID']?></span>
+			</td>
+			<td><?php echo $sMediaType?></td>
+			<td>
+			    <select style="padding: 5px;" class="adpos" data-id="<?php echo $v['iAutoID']?>" name="aAdPos[<?php echo $v['iAutoID']?>]">
+			    <?php foreach ($aPos as $kk => $vv) {?>
+			        <option <?php echo $kk==$v['iAdPos']?'selected':''?> value="<?php echo $kk?>" data-price="<?php echo $v['aMedia']['iPrice'.$kk]?>"><?php echo $vv?></option>
+			    <?php }?>
+			    </select>
+			</td>
+			<td>
+				<span class="eng"><?php echo date('Y-m-d H:i', $v['iPlanTime'])?></span>
+			</td>
+			<td><?php echo $aStatus[$v['iStatus']]?></td>
+			<td>
+				<span class="blue_text"><?php echo $v['iPayStatus']?'已支付':'未支付'?></span>
+			</td>
+			<td><?php echo $v['aMedia']['sMediaName']?></td>
+			<td>
+				<span class="eng red_text" id="admony-<?php echo $v['iAutoID']?>">&yen;<?php echo $v['iMoney']?></span>
+			</td>
+		</tr>
+	<?php }?>
+	</tbody>
+</table>
+
+<dl class="cf2 w_1000 d_money">
+	<dt>
+		已选帐户<span class="eng blue_text" id="totalmedia"><?php echo $iTotalMedia?></span>个，总共需要支付：<b
+			class="eng red_text" id="totalmoney">&yen;<?php echo $iTotalMoney?></b>
+	</dt>
+	<dd>
+		<input type="button" class="red_btn_t step_btn" value="立即支付">
+	</dd>
+</dl>
+</form>
+<script>
+$(function(){
+    $(".red_btn_t").click(function(){
+    	var form = $(this).parents('form').get(0);
+        $.post(form.action?form.action:location.href, $(form).serialize(), function(ret){
+            if (ret.status) {
+                location.href = '/ad/wpay/id/'+ret.data+'.html';
+            } else {
+    	        showErrorInfo(form, ret.data);
+            }
+        }, 'json');
+    	return false;
+    });
+    
+    $('#a-sel').click(function(){
+        var checked = $(this).prop('checked');
+        $('.sel_box :checkbox').prop('checked', checked);
+        countMoney();
+    });
+
+    $('.sel_box :checkbox').click(countMoney);
+    $('.adpos').change(function(){
+        var price = $(this).find(':checked').data('price');
+    	$('#mid-' + $(this).data('id')).data('money', price);
+    	$('#admony-' + $(this).data('id')).html('&yen;' + price);
+    	countMoney();
+    });
+
+    function countMoney() {
+        var iMoney = iCount = 0;
+    	$('.sel_box :checkbox').each(function(){
+        	if (this.checked) {
+        		var money = $(this).data('money');
+            	if (money) {
+            		iMoney += parseInt(money, 0);
+            		iCount += 1;
+            	}
+        	}
+        });
+
+    	$('#totalmoney').html('&yen;' + iMoney);
+    	$('#totalmedia').html('' + iCount);
+    }
+});
+</script>

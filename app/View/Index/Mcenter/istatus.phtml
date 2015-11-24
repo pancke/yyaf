@@ -1,0 +1,12 @@
+<?php $iTopNav=2; include 'topnav.phtml';?>
+<div class="cf2 box_w gray_border">
+    <form >
+       <?php foreach ($aData['aList'] as $k => $v) { ?>
+
+                        <div style="font-size: 24px;width: 100%; text-align: center; padding: 1em 0;"><?php echo $v['sMediaName']?></div>
+                        <div style=" margin-top: -10px;width: 100%; text-align: center;" ><?php echo date('Y-m-d H:i:s', $v['iCreateTime'])?></div>
+
+        <div style="width: 100%;"><span style="width: 10%;margin-left: 10%;">失败原因：</span><?php echo $v['iExplain']?></div>
+    </form>
+    <?php } ?>
+</div>

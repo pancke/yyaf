@@ -1,0 +1,78 @@
+<div class="cf2 cms_w gray_border">
+	<div class="l_200">
+		<dl class="cms_nav">
+			<dt>
+				<a href="javascript:;" class="m_1">帮助中心</a>
+			</dt>
+			<dt>
+				<a href="javascript:;" class="m_2" onclick="">常见问题解答</a>
+			</dt>
+			<dd class="cf2">
+			<?php foreach ($aQuestion as $v) {?>
+				<p <?php echo $v['iWebSiteID']==$aData['iWebSiteID']?'class="light"':''?>>
+					<a href="/help/index/type/<?php echo $v['sPage']?$v['sPage']:$v['iWebSiteID']?>.html"><?php echo $v['sTitle']?></a>
+				</p>
+		    <?php }?>
+			</dd>
+			<dt>
+				<a href="javascript:;" class="m_3">平台运营规则</a>
+			</dt>
+			<dd class="cf2">
+				<?php foreach ($aOperate as $v) {?>
+					<p <?php echo $v['iWebSiteID']==$aData['iWebSiteID']?'class="light"':''?>>
+						<a href="/help/index/type/<?php echo $v['sPage']?$v['sPage']:$v['iWebSiteID']?>.html"><?php echo $v['sTitle']?></a>
+					</p>
+				<?php }?>
+			</dd>
+			<dt>
+				<a href="javascript:;" class="m_4">广告主</a>
+			</dt>
+			<dd class="cf2">
+				<?php foreach ($aMCenter as $v) {?>
+					<p <?php echo $v['iWebSiteID']==$aData['iWebSiteID']?'class="light"':''?>>
+						<a href="/help/index/type/<?php echo $v['sPage']?$v['sPage']:$v['iWebSiteID']?>.html"><?php echo $v['sTitle']?></a>
+					</p>
+				<?php }?>
+			</dd>
+			<dt>
+				<a href="javascript:;" class="m_5">自媒体</a>
+			</dt>
+			<dd class="cf2">
+				<?php foreach ($aPCenter as $v) {?>
+					<p <?php echo $v['iWebSiteID']==$aData['iWebSiteID']?'class="light"':''?>>
+						<a href="/help/index/type/<?php echo $v['sPage']?$v['sPage']:$v['iWebSiteID']?>.html"><?php echo $v['sTitle']?></a>
+					</p>
+				<?php }?>
+			</dd>
+			<dt>
+				<a href="javascript:;" class="m_6">通知公告</a>
+			</dt>
+
+			<dt>
+				<a href="javascript:;" class="m_7">其他</a>
+			</dt>
+			<dd class="cf2">
+				<?php foreach ($aOther as $v) {?>
+					<p <?php echo $v['iWebSiteID']==$aData['iWebSiteID']?'class="light"':''?>>
+						<a href="/help/index/type/<?php echo $v['sPage']?$v['sPage']:$v['iWebSiteID']?>.html">
+							<?php echo $v['sTitle']?></a>
+					</p>
+				<?php }?>
+			</dd>
+		</dl>
+	</div>
+	<!--end左边-->
+	<div class="r_720">
+		<dl class="d_th cf2">
+			<dt>
+				<h1><?php echo $aData['sTitle']?></h1>
+			</dt>
+			<dd class="eng"><?php echo date('Y-m-d H:i:s', $aData['iUpdateTime'])?></dd>
+		</dl>
+		<div class="cf2 d_text">
+		    <?php echo $aData['sContent']?>
+		</div>
+	</div>
+	<!--end右边-->
+</div>
+<!--end中间区域-->
